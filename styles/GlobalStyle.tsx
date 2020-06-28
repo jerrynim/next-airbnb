@@ -6,10 +6,11 @@ const globalStyle = css`
   ${reset};
   * {
     box-sizing: border-box;
+    color: ${pallete.black};
   }
+
   body {
     font-family: Airbnb Cereal, sans-serif;
-    color: ${pallete.black};
   }
 
   @font-face {
