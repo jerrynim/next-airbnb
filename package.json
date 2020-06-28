@@ -11,6 +11,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react-dom": "^16.9.8",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-styled-components": "^1.10.7",
     "next": "^9.4.4",

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import pallete from "../../styles/pallete";
-import AirbnbLogoIcon from "../../public/static/logo/airbnb_logo.svg";
-import AirbnbLogoText from "../../public/static/logo/airbnb_logo_text.svg";
 import Link from "next/link";
+import pallete from "../styles/pallete";
+import AirbnbLogoIcon from "../public/static/svg/logo/airbnb_logo.svg";
+import AirbnbLogoText from "../public/static/svg/logo/airbnb_logo_text.svg";
+import SignUpModal from "./auths/SignUpModal";
+import usePortal from "../hooks/usePortal";
 
 const Container = styled.div`
   width: 100%;
@@ -53,34 +55,10 @@ const Container = styled.div`
       }
     }
   }
-
-  .modal-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    .modal-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.75);
-      z-index: 10;
-    }
-    .modal-contents {
-      width: 400px;
-      height: 400px;
-      background-color: white;
-      z-index: 11;
-    }
-  }
 `;
 
 const Header: React.FC = () => {
-  const [modalOpened, setModalOpened] = useState(false);
+  const { openModalPortal, ModalPortal } = usePortal();
   return (
     <Container>
       <Link href="/">
@@ -92,21 +70,18 @@ const Header: React.FC = () => {
       <div className="header-auth-buttons">
         <button
           className="header-sign-up-button"
-          onClick={() => setModalOpened(true)}
+          onClick={openModalPortal}
+          type="button"
         >
           회원가입
         </button>
-        <button className="header-login-button">로그인</button>
+        <button className="header-login-button" type="button">
+          로그인
+        </button>
       </div>
-      {modalOpened && (
-        <div className="modal-wrapper">
-          <div
-            className="modal-background"
-            onClick={() => setModalOpened(false)}
-          />
-          <div className="modal-contents" />
-        </div>
-      )}
+      <ModalPortal>
+        <SignUpModal />
+      </ModalPortal>
     </Container>
   );
 };
