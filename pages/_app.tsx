@@ -1,8 +1,8 @@
-import App, { AppInitialProps, AppContext, AppProps } from "next/app";
+import App, { AppContext, AppProps } from "next/app";
 import GlobalStyle from "../styles/GlobalStyle";
 import Header from "../components/Header";
 
-const app = ({ Component, pageProps }: AppProps & AppInitialProps) => {
+const app = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Header />
@@ -14,7 +14,7 @@ const app = ({ Component, pageProps }: AppProps & AppInitialProps) => {
 };
 
 app.getInitialProps = async (context: AppContext) => {
-  const appInitialProps: AppInitialProps = await App.getInitialProps(context);
+  const appInitialProps = await App.getInitialProps(context);
   return { ...appInitialProps };
 };
 

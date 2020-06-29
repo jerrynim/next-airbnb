@@ -3,6 +3,7 @@ export default {
   bittersweet: "#ff5a5f",
   tawny: "#D93900",
   black: "#222222",
+  charcoal: "#484848",
   snow: "#FFF8F6",
   gray_71: "#717171",
   gray_76: "#767676",
@@ -12,7 +13,6 @@ export default {
   gray_dd: "#ddd",
   gray_eb: "#ebebeb",
   gray_f7: "#f7f7f7",
-
   dark_cyan: "#008489",
   green: "#008A05",
 };

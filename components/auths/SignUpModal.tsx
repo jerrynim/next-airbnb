@@ -1,60 +1,125 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import CloseXIcon from "../../public/static/svg/modal/modal_colose_x_icon.svg";
 import MailIcon from "../../public/static/svg/input/mail.svg";
 import PersonIcon from "../../public/static/svg/input/person.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
+import Input from "../common/Input";
 import pallete from "../../styles/pallete";
+import Selector from "../common/Selector";
+import { monthsList, daysList, yearsList } from "../../lib/staticData";
 
 const Container = styled.div`
-  width: 568px;
-  height: 614px;
-  padding: 32px;
-  background-color: white;
-  z-index: 11;
-
-  .mordal-close-x-icon {
-    cursor: pointer;
-    display: block;
-    margin: 0 0 40px auto;
+  .sign-up-input-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .sign-up-password-input-wrapper {
+    svg {
+      cursor: pointer;
+    }
   }
 
-  .input-wrapper {
-    position: relative;
-    input {
-      position: relative;
-      width: 100%;
-      height: 46px;
-      padding: 0 44px 0 11px;
-      border: 1px solid ${pallete.gray_eb};
-      border-radius: 4px;
-      font-size: 16px;
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
 
-      ::placeholder {
-        color: ${pallete.gray_76};
-      }
+  .sign-up-modal-birthday-info {
+    margin-bottom: 16px;
+    color: ${pallete.charcoal};
+  }
+
+  .sign-up-modal-birthday-selectors {
+    display: flex;
+    margin-bottom: 24px;
+    .sign-up-modal-birthday-month-selector {
+      margin-right: 16px;
+      flex-grow: 1;
     }
-    svg {
-      position: absolute;
-      right: 11px;
-      top: 16px;
+    .sign-up-modal-birthday-day-selector {
+      margin-right: 16px;
+      width: 25%;
+    }
+    .sign-up-modal-birthday-year-selector {
+      width: 33.3333%;
     }
   }
 `;
 
 const SignUpModal: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [password, setPassword] = useState("");
+  const [hidePassword, setHidePassword] = useState(true);
+
+  //*비밀번호 숨김 토글하기
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <Container>
-      <CloseXIcon className="mordal-close-x-icon" />
-      <div className="input-wrapper">
-        <input placeholder="이메일 주소" />
-        <MailIcon />
-      </div>
-      <div className="input-wrapper">
-        <input placeholder="이름(예:길동)" />
-        <PersonIcon />
-      </div>
+      <form>
+        <div className="sign-up-input-wrapper">
+          <Input
+            placeholder="이메일 주소"
+            type="email"
+            icon={<MailIcon />}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="sign-up-input-wrapper">
+          <Input
+            placeholder="이름(예:길동)"
+            icon={<PersonIcon />}
+            value={lastname}
+            onChange={(e) => setLastname(e.target.value)}
+          />
+        </div>
+        <div className="sign-up-input-wrapper">
+          <Input
+            placeholder="성(예: 홍)"
+            icon={<PersonIcon />}
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
+          />
+        </div>
+        <div className="sign-up-input-wrapper sign-up-password-input-wrapper">
+          <Input
+            placeholder="비밀번호 설정하기"
+            type={hidePassword ? "password" : "text"}
+            icon={
+              hidePassword ? (
+                <ClosedEyeIcon onClick={toggleHidePassword} />
+              ) : (
+                <OpenedEyeIcon onClick={toggleHidePassword} />
+              )
+            }
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <h4>생일</h4>
+        <p className="sign-up-modal-birthday-info">
+          만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
+          에어비앤비 이용자에게 공개되지 않습니다.
+        </p>
+        <div className="sign-up-modal-birthday-selectors">
+          <div className="sign-up-modal-birthday-month-selector">
+            <Selector options={monthsList} />
+          </div>
+          <div className="sign-up-modal-birthday-day-selector">
+            <Selector options={daysList} />
+          </div>
+          <div className="sign-up-modal-birthday-year-selector">
+            <Selector options={yearsList} />
+          </div>
+        </div>
+      </form>
     </Container>
   );
 };
