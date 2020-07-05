@@ -39,6 +39,7 @@ module.exports = {
     "jsx-a11y/anchor-is-valid": "off", // next js에서는 a에 href없이 사용
     "global-require": "off", //함수 내에서 require 사용가능
     "import/prefer-default-export": "off", //export default 를 사용하라.
+    "no-param-reassign": "off",
     "react/jsx-filename-extension": [
       1,
       { extensions: [".js", ".jsx", ".tsx"] }, //jsx사용가능한 확장자 설정

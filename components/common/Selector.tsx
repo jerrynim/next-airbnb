@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import DownArrowClose from "../../public/static/svg/selector/selector_down_arrow.svg";
 import pallete from "../../styles/pallete";
 
 const Container = styled.div`
@@ -10,6 +9,7 @@ const Container = styled.div`
   select {
     width: 100%;
     height: 100%;
+    background-color: white;
     border: 1px solid ${pallete.gray_eb};
     padding: 0 11px;
     border-radius: 4px;

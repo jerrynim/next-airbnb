@@ -22,7 +22,7 @@ const Container = styled.div`
 
   .modal-contents {
     width: 568px;
-    height: 614px;
+    min-height: 614px;
     padding: 32px;
     background-color: white;
     z-index: 11;
@@ -70,7 +70,10 @@ export default () => {
             role="presentation"
           />
           <div className="modal-contents">
-            <CloseXIcon className="modal-close-x-icon" />
+            <CloseXIcon
+              className="modal-close-x-icon"
+              onClick={closeModalPortal}
+            />
             {children}
           </div>
         </Container>,
