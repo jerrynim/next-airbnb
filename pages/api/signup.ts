@@ -1,5 +1,7 @@
 import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { SingUpAPIBody } from "../../types/api/auth";
 
 type StoredUserType = { id: number } & SingUpAPIBody;
@@ -22,47 +24,66 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       //* 파일이 있는지 확인
-      fs.exists("users.json", (exists) => {
+      fs.exists("data/users.json", (exists) => {
         //* 파일이 없다면
+        const hashedPassword = bcrypt.hashSync(password, 8);
+
         if (!exists) {
           const newUser: StoredUserType = {
-            id: 1,
             ...req.body,
+            id: 1,
+            password: hashedPassword,
           };
-
-          fs.writeFile("users.json", JSON.stringify([newUser]), (err) => {
+          const userJsonString = JSON.stringify([newUser]);
+          fs.writeFile("data/users.json", userJsonString, (err) => {
             if (err) {
               console.log(err.message);
               res.status(500).send(err.message);
             }
           });
-          delete newUser.password;
-          res.status(201).send(JSON.stringify([newUser]));
-        }
-        //* 파일이 존재한다면
-        fs.readFile("users.json", (err, data) => {
-          if (err) {
-            console.log(err.message);
-            res.status(500).send(err.message);
-          }
-
-          const users: StoredUserType[] = JSON.parse(data.toString());
-          //* 유저가 비어있다면 Id는 1 아니라면 마지막 유저 id +1
-          const newTodoId =
-            users.length === 0 ? 1 : users[users.length - 1].id + 1;
-          const newUser = { id: newTodoId, ...req.body };
-          users.push(newUser);
-
-          fs.writeFile("users.json", JSON.stringify(users), (err) => {
+          const token = jwt.sign(String(newUser.id), "my_private_secret");
+          res.status(200).send(token);
+        } else {
+          //* 파일이 존재한다면
+          fs.readFile("data/users.json", (err, data) => {
             if (err) {
+              console.log(err.message);
+
               res.status(500).send(err.message);
+              return;
             }
+
+            const users: StoredUserType[] = JSON.parse(data.toString());
+            //* 유저가 비어있다면 Id는 1 아니라면 마지막 유저 id +1
+            const newTodoId =
+              users.length === 0 ? 1 : users[users.length - 1].id + 1;
+
+            //   //* 유저의 password bcrypt 암호화
+
+            const newUser = {
+              ...req.body,
+              id: newTodoId,
+              password: hashedPassword,
+            };
+            users.push(newUser);
+            const userJsonString = JSON.stringify(users);
+
+            fs.writeFile("data/users.json", userJsonString, (err) => {
+              if (err) {
+                console.log(err.message);
+                res.status(500).send(err.message);
+              }
+            });
+            const token = jwt.sign(String(newUser.id), "my_private_secret");
+            res.setHeader(
+              "Set-Cookie",
+              `access_token=${token}; path=/; expires=${
+                new Date() + 100000
+              }; httponly`
+            );
+            res.status(200).send(token);
           });
-          users.forEach((user) => {
-            delete user.password;
-          });
-          res.status(200).send(JSON.stringify(users));
-        });
+        }
       });
     }
   } catch (e) {

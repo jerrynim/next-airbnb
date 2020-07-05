@@ -3,4 +3,4 @@ import { SingUpAPIBody } from "../../types/api/auth";
 
 //* 회원 가입 api
 export const signupAPI = (body: SingUpAPIBody) =>
-  axios.post<string>("/api/signup", body);
+  axios.post("/api/signup", body);

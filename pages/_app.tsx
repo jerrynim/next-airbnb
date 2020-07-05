@@ -15,6 +15,7 @@ const app = ({ Component, pageProps }: AppProps) => {
 
 app.getInitialProps = async (context: AppContext) => {
   const appInitialProps = await App.getInitialProps(context);
+  console.log(context.ctx.req?.headers.cookie);
   return { ...appInitialProps };
 };
 

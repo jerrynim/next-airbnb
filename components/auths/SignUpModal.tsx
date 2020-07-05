@@ -61,10 +61,10 @@ const Container = styled.div`
 const PASSWORD_MIN_LENGTH = 8;
 
 const SignUpModal: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("tt@ttt.com");
+  const [lastname, setLastname] = useState("길동");
+  const [firstname, setFirstname] = useState("홍");
+  const [password, setPassword] = useState("1231222222");
   const [hidePassword, setHidePassword] = useState(true);
   const [birthYear, setBirthYear] = useState("2020");
   const [birthDay, setBirthDay] = useState("1");
@@ -91,7 +91,7 @@ const SignUpModal: React.FC = () => {
 
   //* 비밀번호가 최수 자리수 이상인지
   const isPasswordOverMinLength = useMemo(
-    () => password && password.length > PASSWORD_MIN_LENGTH,
+    () => password.length >= PASSWORD_MIN_LENGTH,
     [password]
   );
   //* 비밀번호가 숫자나 특수기호를 포함하는지
@@ -115,9 +115,9 @@ const SignUpModal: React.FC = () => {
     }
     if (
       !password ||
-      !isPasswordHasNameOrEmail ||
-      isPasswordHasNumberOrSymbol ||
-      isPasswordOverMinLength
+      isPasswordHasNameOrEmail ||
+      !isPasswordHasNumberOrSymbol ||
+      !isPasswordOverMinLength
     ) {
       return false;
     }
@@ -128,6 +128,11 @@ const SignUpModal: React.FC = () => {
   const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
+    console.log(
+      "api",
+      validateSignUpForm(),
+      new Date(`${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`)
+    );
     if (validateSignUpForm()) {
       try {
         const signUpAPIBody = {
@@ -135,8 +140,11 @@ const SignUpModal: React.FC = () => {
           lastname,
           firstname,
           password,
-          birthday: new Date(`${birthYear}-${birthMonth}=${birthDay}`),
+          birthday: new Date(
+            `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
+          ),
         };
+
         await signupAPI(signUpAPIBody);
       } catch (e) {
         console.log(e);
@@ -209,11 +217,11 @@ const SignUpModal: React.FC = () => {
               errorMessage="비밀번호에 본인 이름이나 이메일 주소를 포함할 수 없습니다."
             />
             <PasswordWarning
-              error={!passwordOverMinLength}
+              error={!isPasswordOverMinLength}
               errorMessage="최소 8자"
             />
             <PasswordWarning
-              error={!passwordHasNumberOrSymbol}
+              error={!isPasswordHasNumberOrSymbol}
               errorMessage="숫자나 기호를 포함하세요."
             />
           </>
