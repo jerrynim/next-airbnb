@@ -128,11 +128,7 @@ const SignUpModal: React.FC = () => {
   const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
-    console.log(
-      "api",
-      validateSignUpForm(),
-      new Date(`${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`)
-    );
+
     if (validateSignUpForm()) {
       try {
         const signUpAPIBody = {
