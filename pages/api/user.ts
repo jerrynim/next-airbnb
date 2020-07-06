@@ -1,14 +1,14 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
 import fs from "fs";
-import { UserType } from "../../types/data";
+import { UserType, StoredUserType } from "../../types/data";
 
 //*fs로 유저 데이터 받아오기
 export const getUsers = () =>
-  new Promise<UserType[]>((resolve, reject) => {
+  new Promise<StoredUserType[]>((resolve, reject) => {
     fs.readFile("data/users.json", (err, data) => {
       if (err) reject(err);
-      const users: UserType[] = JSON.parse(data.toString());
+      const users: StoredUserType[] = JSON.parse(data.toString());
       resolve(users);
     });
   });
@@ -21,7 +21,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const userId = jwt.verify(accessToken, process.env.JWT_SECRET!);
         const users = await getUsers();
         const user = users.find((user) => user.id === Number(userId));
-        res.status(200).send(user);
+        if (user) {
+          delete user.password;
+          res.status(200).send(user);
+          return;
+        }
+        res.status(404).send("해당 유저 데이터가 없습니다.");
       }
     } catch (e) {
       res.status(500).send(e.message);
