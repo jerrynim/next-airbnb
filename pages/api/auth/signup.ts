@@ -2,7 +2,7 @@ import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { SingUpAPIBody } from "../../types/api/auth";
+import { SingUpAPIBody } from "../../../types/api/auth";
 
 type StoredUserType = { id: number } & SingUpAPIBody;
 
@@ -33,6 +33,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             ...req.body,
             id: 1,
             password: hashedPassword,
+            profileImage: "/static/image/default_user_profile_image.jpg",
           };
           const userJsonString = JSON.stringify([newUser]);
           fs.writeFile("data/users.json", userJsonString, (err) => {
@@ -58,12 +59,13 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             const newTodoId =
               users.length === 0 ? 1 : users[users.length - 1].id + 1;
 
-            //   //* 유저의 password bcrypt 암호화
+            //* 유저의 password bcrypt 암호화
 
             const newUser = {
               ...req.body,
               id: newTodoId,
               password: hashedPassword,
+              profileImage: "/static/image/default_user_profile_image.jpg",
             };
             users.push(newUser);
             const userJsonString = JSON.stringify(users);
@@ -81,7 +83,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
                 new Date() + 100000
               }; httponly`
             );
-            res.status(200).send(token);
+            delete newUser.password;
+            res.status(200).send(newUser);
           });
         }
       });

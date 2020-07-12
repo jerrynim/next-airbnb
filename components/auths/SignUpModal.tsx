@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/user";
 import MailIcon from "../../public/static/svg/input/mail.svg";
 import PersonIcon from "../../public/static/svg/input/person.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
@@ -60,7 +62,11 @@ const Container = styled.div`
 
 const PASSWORD_MIN_LENGTH = 8;
 
-const SignUpModal: React.FC = () => {
+interface IProps {
+  closeModalPortal: () => void;
+}
+
+const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [email, setEmail] = useState("tt@ttt.com");
   const [lastname, setLastname] = useState("길동");
   const [firstname, setFirstname] = useState("홍");
@@ -73,6 +79,8 @@ const SignUpModal: React.FC = () => {
   const [validateMode, setValidateMode] = useState(false);
 
   const [passwordFocused, setPasswordFocused] = useState(false);
+
+  const dispatch = useDispatch();
 
   //*비밀번호 숨김 토글하기
   const toggleHidePassword = () => {
@@ -140,8 +148,9 @@ const SignUpModal: React.FC = () => {
             `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
           ),
         };
-
-        await signupAPI(signUpAPIBody);
+        const { data } = await signupAPI(signUpAPIBody);
+        dispatch(userActions.setUser(data));
+        closeModalPortal();
       } catch (e) {
         console.log(e);
       }

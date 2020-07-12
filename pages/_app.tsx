@@ -21,10 +21,14 @@ const app = ({ Component, pageProps }: AppProps) => {
 app.getInitialProps = async (context: AppContext) => {
   const appInitialProps = await App.getInitialProps(context);
   const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
+  const { store } = context.ctx;
+  const { isLogged } = store.getState().user;
   try {
-    axios.defaults.headers.Cookie = cookieObject.access_token;
-    const { data } = await getUser();
-    context.ctx.store.dispatch(userActions.setUser(data));
+    if (!isLogged && cookieObject.access_token) {
+      axios.defaults.headers.Cookie = cookieObject.access_token;
+      const { data } = await getUser();
+      store.dispatch(userActions.setUser(data));
+    }
   } catch (e) {
     console.log(e);
   }

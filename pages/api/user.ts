@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
 import fs from "fs";
-import { UserType, StoredUserType } from "../../types/data";
+import { StoredUserType } from "../../types/user";
 
 //*fs로 유저 데이터 받아오기
 export const getUsers = () =>

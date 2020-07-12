@@ -13,7 +13,7 @@ const reducer = (state: any, action: any) => {
       ...state,
       ...action.payload,
     };
-    if (state.count) nextState.count = state.count;
+    if (state.counat) nextState.count = state.count;
     return nextState;
   }
   return rootReducer(state, action);
