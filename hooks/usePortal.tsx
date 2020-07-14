@@ -34,8 +34,10 @@ const Container = styled.div`
   }
 `;
 
-export default () => {
+export default (dependencies: Array<any>) => {
   const [modalOpened, setModalOpened] = useState(false);
+
+  useEffect(() => {}, [dependencies]);
 
   const openModalPortal = () => {
     setModalOpened(true);

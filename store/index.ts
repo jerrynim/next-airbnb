@@ -1,9 +1,13 @@
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux";
+import {
+  TypedUseSelectorHook,
+  useSelector as useReduxSelector,
+} from "react-redux";
 import user from "./user";
+import auth from "./auth";
 
-const rootReducer = combineReducers({ user: user.reducer });
+const rootReducer = combineReducers({ user: user.reducer, auth: auth.reducer });
 //* 스토어의 타입
 export type RootState = ReturnType<typeof rootReducer>;
 

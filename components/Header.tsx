@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useDispatch } from "react-redux";
 import pallete from "../styles/pallete";
 
 import AirbnbLogoIcon from "../public/static/svg/logo/airbnb_logo.svg";
 import AirbnbLogoText from "../public/static/svg/logo/airbnb_logo_text.svg";
 import HamburgerIcon from "../public/static/svg/header/hamburger.svg";
 
-import SignUpModal from "./auths/SignUpModal";
 import usePortal from "../hooks/usePortal";
 import { useSelector } from "../store";
 import { logoutAPI } from "../lib/api/auth";
-import { useDispatch } from "react-redux";
 import { userActions } from "../store/user";
+import AuthModal from "./auths/AuthModal";
+import { authActions } from "../store/auth";
 
 const Container = styled.div`
   width: 100%;
@@ -120,11 +121,11 @@ const Container = styled.div`
 `;
 
 const Header: React.FC = () => {
-  const { openModalPortal, ModalPortal, closeModalPortal } = usePortal();
+  const { openModalPortal, closeModalPortal, ModalPortal } = usePortal([]);
+
   //* 유저메뉴 열고,닫힘 여부
   const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
   //* 로그아웃 하기
@@ -149,12 +150,22 @@ const Header: React.FC = () => {
         <div className="header-auth-buttons">
           <button
             className="header-sign-up-button"
-            onClick={openModalPortal}
+            onClick={() => {
+              dispatch(authActions.setAuthMode("signup"));
+              openModalPortal();
+            }}
             type="button"
           >
             회원가입
           </button>
-          <button className="header-login-button" type="button">
+          <button
+            className="header-login-button"
+            type="button"
+            onClick={() => {
+              dispatch(authActions.setAuthMode("login"));
+              openModalPortal();
+            }}
+          >
             로그인
           </button>
         </div>
@@ -191,10 +202,10 @@ const Header: React.FC = () => {
         </OutsideClickHandler>
       )}
       <ModalPortal>
-        <SignUpModal closeModalPortal={closeModalPortal} />
+        <AuthModal closeModalPortal={closeModalPortal} />
       </ModalPortal>
     </Container>
   );
 };
 
-export default Header;
+export default React.memo(Header, () => false);

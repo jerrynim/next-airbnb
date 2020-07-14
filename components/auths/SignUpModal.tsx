@@ -14,6 +14,7 @@ import { monthsList, daysList, yearsList } from "../../lib/staticData";
 import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
 import PasswordWarning from "./PasswordWarning";
+import { authActions } from "../../store/auth";
 
 const Container = styled.div`
   .sign-up-input-wrapper {
@@ -53,10 +54,15 @@ const Container = styled.div`
     }
   }
 
-  .sign-up-modal-submi-button-wrapper {
+  .sign-up-modal-submit-button-wrapper {
     margin-bottom: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid ${pallete.gray_eb};
+  }
+  .sign-up-modal-set-login {
+    color: ${pallete.dark_cyan};
+    margin-left: 8px;
+    cursor: pointer;
   }
 `;
 
@@ -76,11 +82,11 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [birthDay, setBirthDay] = useState("1");
   const [birthMonth, setBirthMonth] = useState("1");
 
+  const dispatch = useDispatch();
+
   const [validateMode, setValidateMode] = useState(false);
 
   const [passwordFocused, setPasswordFocused] = useState(false);
-
-  const dispatch = useDispatch();
 
   //*비밀번호 숨김 토글하기
   const toggleHidePassword = () => {
@@ -260,13 +266,19 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             />
           </div>
         </div>
-        <div className="sign-up-modal-submi-button-wrapper">
+        <div className="sign-up-modal-submit-button-wrapper">
           <Button type="submit">가입 하기</Button>
         </div>
-        <p>이미 에어비앤비 계정이 있나요?</p>
-        <Link href="">
-          <a>로그인</a>
-        </Link>
+        <p>
+          이미 에어비앤비 계정이 있나요?
+          <span
+            className="sign-up-modal-set-login"
+            role="presentation"
+            onClick={() => dispatch(authActions.setAuthMode("login"))}
+          >
+            로그인
+          </span>
+        </p>
       </form>
     </Container>
   );
