@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import pallete from "../../styles/pallete";
 
@@ -65,16 +65,22 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
 }
 
-const Input: React.FC<IProps> = ({
+const SelfInput: React.FC<IProps> = ({
   icon,
   error = false,
   validation = false,
   errorMessage,
   ...props
 }) => {
+  const [value, setValue] = useState("");
+
   return (
     <Container iconExist={!!icon} error={error} validation={validation}>
-      <input {...props} />
+      <input
+        {...props}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
       {icon}
       {validation && error && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
@@ -83,4 +89,4 @@ const Input: React.FC<IProps> = ({
   );
 };
 
-export default React.memo(Input);
+export default React.memo(SelfInput);

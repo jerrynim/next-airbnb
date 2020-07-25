@@ -10,6 +10,8 @@ import pallete from "../../styles/pallete";
 import Button from "../common/Button";
 import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
+import SelfInput from "../common/SelfInput";
+import { LoginAPIBody } from "../../types/api/auth";
 
 const Container = styled.div`
   .login-input-wrapper {
@@ -56,8 +58,21 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
+    const form: any = event.target;
+    const loginBody: LoginAPIBody & { [key: string]: any } = {
+      email: "",
+      password: "",
+    };
+
+    Object.keys(loginBody).forEach((name) => {
+      if (form.elements[name]) {
+        const inputValue = form.elements[name].value;
+        loginBody[name] = inputValue;
+      }
+    });
+    console.log(loginBody);
     try {
-      const { data } = await loginAPI({ email, password });
+      const { data } = await loginAPI(loginBody);
       dispatch(userActions.setUser(data));
       closeModalPortal();
     } catch (e) {
@@ -69,8 +84,9 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
     <Container>
       <form onSubmit={onSubmitLogin}>
         <div className="login-input-wrapper">
-          <Input
+          <SelfInput
             placeholder="이메일 주소"
+            name="email"
             type="email"
             icon={<MailIcon />}
             value={email}
@@ -82,8 +98,9 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
         </div>
 
         <div className="login-input-wrapper sign-up-password-input-wrapper">
-          <Input
+          <SelfInput
             placeholder="비밀번호 설정하기"
+            name="password"
             type={isPasswordHided ? "password" : "text"}
             icon={
               isPasswordHided ? (
@@ -117,4 +134,4 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
   );
 };
 
-export default LoginModal;
+export default React.memo(LoginModal);

@@ -15,6 +15,8 @@ import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";
 import PasswordWarning from "./PasswordWarning";
 import { authActions } from "../../store/auth";
+import SelfInput from "../common/SelfInput";
+import { SingUpAPIBody } from "../../types/api/auth";
 
 const Container = styled.div`
   .sign-up-input-wrapper {
@@ -143,18 +145,26 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     event.preventDefault();
     setValidateMode(true);
 
+    const form: any = event.target;
+    const signUpBody: SingUpAPIBody & { [key: string]: any } = {
+      email: "",
+      lastname: "",
+      firstname: "",
+      password: "",
+      birthday: new Date(
+        `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
+      ),
+    };
+
+    Object.keys(signUpBody).forEach((name) => {
+      if (form.elements[name]) {
+        const inputValue = form.elements[name].value;
+        signUpBody[name] = inputValue;
+      }
+    });
     if (validateSignUpForm()) {
       try {
-        const signUpAPIBody = {
-          email,
-          lastname,
-          firstname,
-          password,
-          birthday: new Date(
-            `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
-          ),
-        };
-        const { data } = await signupAPI(signUpAPIBody);
+        const { data } = await signupAPI(signUpBody);
         dispatch(userActions.setUser(data));
         closeModalPortal();
       } catch (e) {
@@ -168,7 +178,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     <Container>
       <form onSubmit={onSubmitSignUp}>
         <div className="sign-up-input-wrapper">
-          <Input
+          <SelfInput
+            name="email"
             placeholder="이메일 주소"
             type="email"
             icon={<MailIcon />}
@@ -180,7 +191,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
           />
         </div>
         <div className="sign-up-input-wrapper">
-          <Input
+          <SelfInput
+            name="lastname"
             placeholder="이름(예:길동)"
             icon={<PersonIcon />}
             value={lastname}
@@ -191,7 +203,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
           />
         </div>
         <div className="sign-up-input-wrapper">
-          <Input
+          <SelfInput
+            name="firstname"
             placeholder="성(예: 홍)"
             icon={<PersonIcon />}
             value={firstname}
@@ -202,7 +215,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
           />
         </div>
         <div className="sign-up-input-wrapper sign-up-password-input-wrapper">
-          <Input
+          <SelfInput
+            name="password"
             placeholder="비밀번호 설정하기"
             type={isPasswordHided ? "password" : "text"}
             icon={

@@ -61,8 +61,10 @@ const find = async ({ id, email }: { id?: number; email?: string }) => {
 const exist = async ({ id, email }: { id?: number; email?: string }) => {
   try {
     const users = await getList();
-    const user = users.some((user) => user.id === id || user.email === email);
-    return user;
+    const userExist = users.some(
+      (user) => user.id === id || user.email === email
+    );
+    return userExist;
   } catch (e) {
     console.log(e);
     return false;

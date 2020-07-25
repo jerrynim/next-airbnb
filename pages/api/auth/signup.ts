@@ -18,7 +18,6 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         body: SingUpAPIBody;
       } = req;
       const { email, firstname, lastname, password, birthday } = body;
-
       if (!email || !firstname || !lastname || !password || !birthday) {
         res.status(400).send("필수 데이터가 없습니다.");
         return;
@@ -28,7 +27,6 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       fs.exists("data/users.json", (exists) => {
         //* 파일이 없다면
         const hashedPassword = bcrypt.hashSync(password, 8);
-
         if (!exists) {
           const newUser: StoredUserType = {
             ...req.body,
@@ -43,6 +41,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
               res.status(500).send(err.message);
             }
           });
+
           const token = jwt.sign(String(newUser.id), "my_private_secret");
           res.status(200).send(token);
         } else {
@@ -56,7 +55,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
             const userExists = await Data.user.exist({ email });
             if (userExists) {
-              res.status(409);
+              res.status(409).end();
               return;
             }
             const users = await Data.user.getList();
@@ -73,7 +72,6 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             };
             users.push(newUser);
             const userJsonString = JSON.stringify(users);
-
             fs.writeFile("data/users.json", userJsonString, (err) => {
               if (err) {
                 console.log(err.message);
