@@ -6,3 +6,9 @@ export type SingUpAPIBody = {
   password: string;
   birthday: Date;
 };
+
+//* 로그인 body
+export type LoginAPIBody = {
+  email: string;
+  password: string;
+};

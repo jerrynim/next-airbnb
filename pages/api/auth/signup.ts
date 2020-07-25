@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { SingUpAPIBody } from "../../../types/api/auth";
+import Data from "../../../lib/data";
 
 type StoredUserType = { id: number } & SingUpAPIBody;
 
@@ -46,21 +47,24 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
           res.status(200).send(token);
         } else {
           //* 파일이 존재한다면
-          fs.readFile("data/users.json", (err, data) => {
+          fs.readFile("data/users.json", async (err, data) => {
             if (err) {
               console.log(err.message);
-
               res.status(500).send(err.message);
               return;
             }
 
-            const users: StoredUserType[] = JSON.parse(data.toString());
+            const userExists = await Data.user.exist({ email });
+            if (userExists) {
+              res.status(409);
+              return;
+            }
+            const users = await Data.user.getList();
             //* 유저가 비어있다면 Id는 1 아니라면 마지막 유저 id +1
             const newTodoId =
               users.length === 0 ? 1 : users[users.length - 1].id + 1;
 
             //* 유저의 password bcrypt 암호화
-
             const newUser = {
               ...req.body,
               id: newTodoId,
@@ -79,9 +83,9 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             const token = jwt.sign(String(newUser.id), "my_private_secret");
             res.setHeader(
               "Set-Cookie",
-              `access_token=${token}; path=/; expires=${
-                new Date() + 100000
-              }; httponly`
+              `access_token=${token}; path=/; expires=${new Date(
+                Date.now() + 60 * 60 * 24 * 1000 * 3 //3일
+              )}; httponly`
             );
             delete newUser.password;
             res.status(200).send(newUser);

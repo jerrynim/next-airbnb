@@ -77,7 +77,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [lastname, setLastname] = useState("길동");
   const [firstname, setFirstname] = useState("홍");
   const [password, setPassword] = useState("1231222222");
-  const [hidePassword, setHidePassword] = useState(true);
+  const [isPasswordHided, setIsPasswordHided] = useState(true);
   const [birthYear, setBirthYear] = useState("2020");
   const [birthDay, setBirthDay] = useState("1");
   const [birthMonth, setBirthMonth] = useState("1");
@@ -89,8 +89,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
 
   //*비밀번호 숨김 토글하기
-  const toggleHidePassword = () => {
-    setHidePassword(!hidePassword);
+  const togglePasswordHiding = () => {
+    setIsPasswordHided(!isPasswordHided);
   };
 
   //* password가 이름이나 이메일을 포함하는지
@@ -204,12 +204,12 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
         <div className="sign-up-input-wrapper sign-up-password-input-wrapper">
           <Input
             placeholder="비밀번호 설정하기"
-            type={hidePassword ? "password" : "text"}
+            type={isPasswordHided ? "password" : "text"}
             icon={
-              hidePassword ? (
-                <ClosedEyeIcon onClick={toggleHidePassword} />
+              isPasswordHided ? (
+                <ClosedEyeIcon onClick={togglePasswordHiding} />
               ) : (
-                <OpenedEyeIcon onClick={toggleHidePassword} />
+                <OpenedEyeIcon onClick={togglePasswordHiding} />
               )
             }
             onFocus={() => setPasswordFocused(true)}
