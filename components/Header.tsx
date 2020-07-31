@@ -192,7 +192,17 @@ const Header: React.FC = () => {
           </button>
           {isUsermenuOpened && (
             <ul className="header-usermenu">
-              <li>계정</li>
+              <li>숙소 관리</li>
+              <Link href="/room/register/building">
+                <a
+                  role="presentation"
+                  onClick={() => {
+                    setIsUsermenuOpened(false);
+                  }}
+                >
+                  <li>숙소 등록하기</li>
+                </a>
+              </Link>
               <div className="header-usermenu-divider" />
               <li role="presentation" onClick={logout}>
                 로그아웃

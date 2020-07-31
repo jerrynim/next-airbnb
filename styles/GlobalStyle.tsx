@@ -13,6 +13,10 @@ const globalStyle = css`
     font-family: Airbnb Cereal, sans-serif;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   @font-face {
     font-family: Airbnb Cereal;
     font-weight: 400;
