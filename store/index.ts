@@ -6,8 +6,13 @@ import {
 } from "react-redux";
 import user from "./user";
 import auth from "./auth";
+import registerRoom from "./registerRoom";
 
-const rootReducer = combineReducers({ user: user.reducer, auth: auth.reducer });
+const rootReducer = combineReducers({
+  user: user.reducer,
+  auth: auth.reducer,
+  registerRoom: registerRoom.reducer,
+});
 
 //* 스토어의 타입
 export type RootState = ReturnType<typeof rootReducer>;

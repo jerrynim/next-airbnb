@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import pallete from "../../styles/pallete";
+import pallete from "../../../styles/pallete";
 
 const Container = styled.div`
   width: 100%;
@@ -33,8 +33,8 @@ const Selector: React.FC<IProps> = ({ options, ...props }) => {
   return (
     <Container>
       <select {...props}>
-        {options?.map((option) => (
-          <option key={option}>{option}</option>
+        {options?.map((option, index) => (
+          <option key={index}>{option}</option>
         ))}
       </select>
     </Container>

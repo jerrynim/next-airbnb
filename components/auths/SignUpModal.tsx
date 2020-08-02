@@ -9,7 +9,7 @@ import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
 import Input from "../common/Input";
 import pallete from "../../styles/pallete";
-import Selector from "../common/Selector";
+import Selector from "../common/Selector/Selector";
 import { monthsList, daysList, yearsList } from "../../lib/staticData";
 import Button from "../common/Button";
 import { signupAPI } from "../../lib/api/auth";

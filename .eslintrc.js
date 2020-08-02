@@ -38,8 +38,10 @@ module.exports = {
     "react/jsx-props-no-spreading": "off", //props를 스프래드 할 수 있다.
     "jsx-a11y/anchor-is-valid": "off", // next js에서는 a에 href없이 사용
     "global-require": "off", //함수 내에서 require 사용가능
+    "jsx-a11y/label-has-associated-control": "off", //label htmlFor을 사용하지 않아도 된다.
     "import/prefer-default-export": "off", //export default 를 사용하라.
     "no-param-reassign": "off",
+    "react/jsx-curly-newline": "off", // jsx안에 }를 새로운 라인에 사용할 수 있다.
     "react/jsx-filename-extension": [
       1,
       { extensions: [".js", ".jsx", ".tsx"] }, //jsx사용가능한 확장자 설정
