@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import pallete from "../../../styles/pallete";
+import { useSelector } from "../../../store";
 
-const Container = styled.div`
+const Container = styled.div<{ error: boolean; validateMode: boolean }>`
   width: 320px;
 
   label {
@@ -27,6 +29,22 @@ const Container = styled.div`
     background-image: url("/static/svg/selector/register_selector_down_arrow.svg");
     background-position: right 11px center;
     background-repeat: no-repeat;
+
+    ${({ validateMode, error }) => {
+      if (validateMode) {
+        if (error) {
+          return css`
+            border-color: ${pallete.tawny};
+            background-color: ${pallete.snow};
+          `;
+        }
+        return css`
+          border-color: ${pallete.dark_cyan};
+        `;
+      }
+      return undefined;
+    }}
+
     &:disabled {
       background-image: url("/static/svg/selector/disabled_register_selector_down_arrow.svg");
       background-color: ${pallete.gray_f7};
@@ -41,19 +59,31 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   options?: string[];
   value: string;
+  error?: boolean;
+  errorMessage?: string;
 }
 
-const RegisterSelector: React.FC<IProps> = ({ label, options, ...props }) => {
+const RegisterSelector: React.FC<IProps> = ({
+  label,
+  options,
+  error,
+  errorMessage = "옵션을 선택하세요.",
+  ...props
+}) => {
+  const validateMode = useSelector((state) => state.common.validateMode);
+
   return (
-    <Container>
+    <Container error={!!error} validateMode={validateMode}>
       <label>
         {label && <span>{label}</span>}
         <select {...props}>
           {options?.map((option, index) => (
             <option key={index}>{option}</option>
           ))}
+          <option>{""}</option>
         </select>
       </label>
+      {validateMode && error && <p>{errorMessage}</p>}
     </Container>
   );
 };

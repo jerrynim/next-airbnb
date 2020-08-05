@@ -79,8 +79,8 @@ const RadioGroup: React.FC<IProps> = ({
     <Container>
       <p className="radio-label">{label}</p>
       <div className="radio-list-wrapper">
-        {options?.map((option) => (
-          <label>
+        {options?.map((option, index) => (
+          <label key={index}>
             <input
               type="radio"
               checked={value === option.value}

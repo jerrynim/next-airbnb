@@ -5,6 +5,7 @@ export type UserState = UserType & {
 };
 
 export type RegisterRoomState = {
+  largeBuildingType: string | null;
   buildingType: string | null;
   roomType: string | null;
   isSetUpForGuest: null;
@@ -28,4 +29,8 @@ export type RegisterRoomState = {
   price: "";
   crreatedAt: null;
   updatedAt: null;
+};
+
+export type CommonState = {
+  validateMode: boolean;
 };

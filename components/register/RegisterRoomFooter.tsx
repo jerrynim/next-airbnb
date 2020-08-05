@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/Button";
 import pallete from "../../styles/pallete";
+import { commonActions } from "../../store/common";
 
 const Container = styled.footer`
   position: fixed;
@@ -32,11 +34,15 @@ const Container = styled.footer`
 
 interface IProps {
   nextHref: string;
+  isAllValueFilled: boolean;
 }
 
-const RegisterRoomFooter: React.FC<IProps> = ({ nextHref }) => {
+const RegisterRoomFooter: React.FC<IProps> = ({
+  nextHref,
+  isAllValueFilled,
+}) => {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   return (
     <Container>
       <div
@@ -49,7 +55,16 @@ const RegisterRoomFooter: React.FC<IProps> = ({ nextHref }) => {
       </div>
       <Link href={nextHref}>
         <a>
-          <Button color="dark_cyan" width="55px">
+          <Button
+            color="dark_cyan"
+            width="55px"
+            onClick={(e) => {
+              if (!isAllValueFilled) {
+                e.preventDefault();
+                dispatch(commonActions.setValidateMode(true));
+              }
+            }}
+          >
             계속
           </Button>
         </a>

@@ -3,6 +3,8 @@ import { RegisterRoomState } from "../types/reduxState";
 
 //* 초기 상태
 const initialState: RegisterRoomState = {
+  //* 건물유형 큰 범주
+  largeBuildingType: null,
   //* 건물유형
   buildingType: null,
   //* 숙소유형
@@ -52,8 +54,19 @@ const registerRoom = createSlice({
   name: "registerRoom",
   initialState,
   reducers: {
+    //* 큰 건물 유형 변경하기
+    setLargeBuildingType(state, action: PayloadAction<string>) {
+      if (action.payload === "") {
+        state.largeBuildingType = null;
+      }
+      state.largeBuildingType = action.payload;
+      return state;
+    },
     //* 건물 유형 변경하기
     setBuildingType(state, action: PayloadAction<string>) {
+      if (action.payload === "") {
+        state.largeBuildingType = null;
+      }
       state.buildingType = action.payload;
       return state;
     },

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import pallete from "../../styles/pallete";
@@ -30,6 +30,9 @@ const Container = styled.div`
 `;
 
 const RegisterRoomBuilding: React.FC = () => {
+  const largeBuildingType = useSelector(
+    (state) => state.registerRoom.largeBuildingType
+  );
   const buildingType = useSelector((state) => state.registerRoom.buildingType);
   const roomType = useSelector((state) => state.registerRoom.roomType);
   const dispatch = useDispatch();
@@ -37,8 +40,6 @@ const RegisterRoomBuilding: React.FC = () => {
   //* 건물유형 변경하기 Dispatch
   const setBuildingTypeDispatch = (selected: string) =>
     dispatch(registerRoomActions.setBuildingType(selected));
-
-  const [largeBuildingType, setLargeBuildingType] = useState("");
 
   //* 건물 유형 options
   const detailBuildingOptions = useMemo(() => {
@@ -85,14 +86,25 @@ const RegisterRoomBuilding: React.FC = () => {
     }
   }, [largeBuildingType]);
 
+  //* 건물유형, 숙소 유형 값이 있는지 확인하기
+  const isAllValueFilled = useMemo(() => {
+    if (!largeBuildingType || !buildingType || !roomType) {
+      return false;
+    }
+    return true;
+  }, [largeBuildingType, buildingType, roomType]);
+
   return (
     <Container>
       <h2>등록하실 숙소 종류는 무엇인가요?</h2>
       <h3>1단계</h3>
       <div className="register-room-building-selector-wrapper">
         <RegisterSelector
-          value={largeBuildingType}
-          onChange={(e) => setLargeBuildingType(e.target.value)}
+          value={largeBuildingType || ""}
+          onChange={(e) =>
+            dispatch(registerRoomActions.setLargeBuildingType(e.target.value))
+          }
+          error={!largeBuildingType}
           label="우선 범위를 좁혀볼까요?"
           options={[
             "아파트",
@@ -107,10 +119,11 @@ const RegisterRoomBuilding: React.FC = () => {
       <div className="register-room-building-selector-wrapper">
         <RegisterSelector
           value={buildingType || ""}
-          disabled={largeBuildingType === ""}
+          disabled={!largeBuildingType}
           onChange={(e) =>
             dispatch(registerRoomActions.setBuildingType(e.target.value))
           }
+          error={!buildingType}
           label="건물 유형을 선택하세요."
           options={detailBuildingOptions}
         />
@@ -150,7 +163,10 @@ const RegisterRoomBuilding: React.FC = () => {
           />
         </div>
       )}
-      <RegisterRoomFooter nextHref="/room/register/bedrooms" />
+      <RegisterRoomFooter
+        isAllValueFilled={isAllValueFilled}
+        nextHref="/room/register/bedrooms"
+      />
     </Container>
   );
 };
