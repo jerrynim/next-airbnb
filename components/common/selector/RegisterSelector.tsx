@@ -1,8 +1,10 @@
+/* eslint-disable indent */
 /* eslint-disable react/jsx-curly-brace-presence */
 import React from "react";
 import styled, { css } from "styled-components";
 import pallete from "../../../styles/pallete";
 import { useSelector } from "../../../store";
+import WarningIcon from "../../../public/static/svg/selector/warning.svg";
 
 const Container = styled.div<{ error: boolean; validateMode: boolean }>`
   width: 320px;
@@ -53,6 +55,19 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
       cursor: not-allowed;
     }
   }
+  .selector-warning {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 4px;
+    }
+    p {
+      font-size: 12px;
+      color: ${pallete.davidson_orange};
+    }
+  }
 `;
 
 interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
@@ -83,7 +98,12 @@ const RegisterSelector: React.FC<IProps> = ({
           <option>{""}</option>
         </select>
       </label>
-      {validateMode && error && <p>{errorMessage}</p>}
+      {validateMode && error && (
+        <div className="selector-warning">
+          <WarningIcon />
+          <p>{errorMessage}</p>
+        </div>
+      )}
     </Container>
   );
 };

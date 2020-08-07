@@ -8,7 +8,7 @@ export type RegisterRoomState = {
   largeBuildingType: string | null;
   buildingType: string | null;
   roomType: string | null;
-  isSetUpForGuest: null;
+  isSetUpForGuest: boolean | null;
   maximumGuestCount: 1;
   bedroomCount: 0;
   bedCount: 1;
