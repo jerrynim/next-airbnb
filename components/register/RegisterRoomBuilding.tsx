@@ -94,7 +94,7 @@ const RegisterRoomBuilding: React.FC = () => {
     }
   }, [largeBuildingType]);
 
-  //* 건물유형, 숙소 유형 값이 있는지 확인하기
+  //* 모든 값이 있는지 확인하기
   const isAllValueFilled = useMemo(() => {
     if (!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest) {
       return false;

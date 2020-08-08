@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import pallete from "../../styles/pallete";
+import pallete from "../../../styles/pallete";
 
 const getColor = (color: string) => {
   switch (color) {
@@ -20,7 +20,12 @@ type ButtonProps = {
   color: string | undefined;
 };
 
-const Container = styled.button<ButtonProps>`
+interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  width?: string;
+}
+
+const Container = styled.button<IProps>`
   width: ${(props) => props.width || "100%"};
   height: 48px;
   border: 0;
@@ -32,11 +37,6 @@ const Container = styled.button<ButtonProps>`
   cursor: pointer;
   ${(props) => getColor(props.color || "")}
 `;
-
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-  width?: string;
-}
 
 const Button: React.FC<IProps> = ({ children, width, ...props }) => {
   return (

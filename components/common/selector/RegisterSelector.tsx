@@ -73,7 +73,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
 interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   options?: string[];
-  value: string;
+  value?: string;
   error?: boolean;
   errorMessage?: string;
 }
@@ -95,7 +95,6 @@ const RegisterSelector: React.FC<IProps> = ({
           {options?.map((option, index) => (
             <option key={index}>{option}</option>
           ))}
-          <option>{""}</option>
         </select>
       </label>
       {validateMode && error && (

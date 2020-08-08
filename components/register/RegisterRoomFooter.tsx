@@ -4,7 +4,7 @@ import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import pallete from "../../styles/pallete";
 import { commonActions } from "../../store/common";
 

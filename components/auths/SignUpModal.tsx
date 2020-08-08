@@ -11,7 +11,7 @@ import Input from "../common/Input";
 import pallete from "../../styles/pallete";
 import Selector from "../common/Selector/Selector";
 import { monthsList, daysList, yearsList } from "../../lib/staticData";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import { signupAPI } from "../../lib/api/auth";
 import PasswordWarning from "./PasswordWarning";
 import { authActions } from "../../store/auth";

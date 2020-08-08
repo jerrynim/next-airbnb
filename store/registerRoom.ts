@@ -14,11 +14,11 @@ const initialState: RegisterRoomState = {
   //* 최대 숙박 인원
   maximumGuestCount: 1,
   //* 침실 개수
-  bedroomCount: 0,
+  bedroomCount: 1,
   //* 침대 개수
   bedCount: 1,
   //* 침대 유형
-  bedsForEachRoom: [],
+  bedList: [],
   //* 욕실 개수
   bathroomCount: 1,
   //* 욕실 유형
@@ -79,6 +79,38 @@ const registerRoom = createSlice({
     //* 숙소 유형 변경하기
     setIsSetUpForGuest(state, action: PayloadAction<boolean>) {
       state.isSetUpForGuest = action.payload;
+      return state;
+    },
+
+    //* 최대 숙박 인원 변경하기
+    setMaximumGuestCount(state, action: PayloadAction<number>) {
+      state.maximumGuestCount = action.payload;
+      return state;
+    },
+
+    //* 최대 침실 갯수 변경하기
+    setBedroomCount(state, action: PayloadAction<number>) {
+      const bedroomCount = action.payload;
+      let { bedList } = state;
+      state.bedroomCount = bedroomCount;
+
+      if (bedroomCount < bedList.length) {
+        //* 침대 리스트의 갯수가 더 많으면 초과부분 잘라내기
+        bedList = state.bedList.slice(0, bedroomCount);
+      }
+
+      //* 침대 리스트의 갯수를 침실 갯수만큼 채우기
+      for (let i = bedList.length; i < bedroomCount; i += 1) {
+        bedList.push({ id: i, beds: [] });
+      }
+      state.bedList = bedList;
+
+      return state;
+    },
+
+    //* 최대 침대 갯수 변경하기
+    setBedCount(state, action: PayloadAction<number>) {
+      state.bedCount = action.payload;
       return state;
     },
   },

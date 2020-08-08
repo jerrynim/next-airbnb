@@ -7,7 +7,7 @@ import MailIcon from "../../public/static/svg/input/mail.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
 import pallete from "../../styles/pallete";
-import Button from "../common/Button";
+import Button from "../common/button/Button";
 import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import SelfInput from "../common/SelfInput";

@@ -4,19 +4,34 @@ export type UserState = UserType & {
   isLogged: boolean;
 };
 
+//* 침대 유형
+export type BedType =
+  | "소파"
+  | "에어 매트릭스"
+  | "요와 이불"
+  | "싱글"
+  | "더블"
+  | "퀸"
+  | "이층 침대"
+  | "바닥용 에어매트릭스"
+  | "유아 침대"
+  | "유아용 침대"
+  | "해먹"
+  | "물침대";
+
 export type RegisterRoomState = {
   largeBuildingType: string | null;
   buildingType: string | null;
   roomType: string | null;
   isSetUpForGuest: boolean | null;
-  maximumGuestCount: 1;
-  bedroomCount: 0;
-  bedCount: 1;
-  bedsForEachRoom: [];
-  bathroomCount: 1;
+  maximumGuestCount: number;
+  bedroomCount: number;
+  bedCount: number;
+  bedList: { id: number; beds: BedType[] }[];
+  bathroomCount: number;
   bathroomType: "private";
-  latitude: 0;
-  longitude: 0;
+  latitude: number;
+  longitude: number;
   country: "";
   city: "";
   district: "";

@@ -11,6 +11,7 @@ const globalStyle = css`
 
   body {
     font-family: Airbnb Cereal, sans-serif;
+    line-height: 1.2;
   }
 
   a {
