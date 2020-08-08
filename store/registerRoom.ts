@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RegisterRoomState } from "../types/reduxState";
+import { RegisterRoomState, BedType } from "../types/reduxState";
 
 //* 초기 상태
 const initialState: RegisterRoomState = {
@@ -100,7 +100,7 @@ const registerRoom = createSlice({
       }
 
       //* 침대 리스트의 갯수를 침실 갯수만큼 채우기
-      for (let i = bedList.length; i < bedroomCount; i += 1) {
+      for (let i = bedList.length + 1; i < bedroomCount + 1; i += 1) {
         bedList.push({ id: i, beds: [] });
       }
       state.bedList = bedList;
@@ -111,6 +111,28 @@ const registerRoom = createSlice({
     //* 최대 침대 갯수 변경하기
     setBedCount(state, action: PayloadAction<number>) {
       state.bedCount = action.payload;
+      return state;
+    },
+
+    //* 최대 유형 갯수 변경하기
+    setBedTypeCount(
+      state,
+      action: PayloadAction<{ bedroomId: number; type: BedType; count: number }>
+    ) {
+      const { bedroomId, type, count } = action.payload;
+      const bedroom = state.bedList[bedroomId - 1];
+      if (!bedroom) {
+        //*
+      }
+      const prevBeds = state.bedList[bedroomId - 1].beds || [];
+      const index = prevBeds.findIndex((bed) => bed.type === type);
+      if (index === -1) {
+        //* 타입이 없다면
+        state.bedList[bedroomId - 1].beds = [...prevBeds, { type, count }];
+        return state;
+      }
+      //* 타입이 존재한다면
+      state.bedList[bedroomId - 1].beds[index].count = count;
       return state;
     },
   },

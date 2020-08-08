@@ -1,11 +1,14 @@
 import React, { useMemo, useState } from "react";
 import isEmpty from "lodash/isEmpty";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import RegisterButton from "../common/button/RegisterButton";
 import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedTypes } from "../../lib/staticData";
 import Counter from "../common/Counter";
 import pallete from "../../styles/pallete";
+import { BedType } from "../../types/reduxState";
+import { registerRoomActions } from "../../store/registerRoom";
 
 const Container = styled.li`
   width: 100%;
@@ -31,11 +34,13 @@ const Container = styled.li`
 `;
 
 interface IProps {
-  bedroom: { id: number; beds: { type: string; count: number }[] };
+  bedroom: { id: number; beds: { type: BedType; count: number }[] };
 }
 
 const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
   const [opened, setOpened] = useState(false);
+
+  const dispatch = useDispatch();
 
   const totalBedsCount = useMemo(() => {
     let total = 0;
@@ -52,7 +57,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
     }, [bedroom]);
 
   //* 선택된 침대 옵션들
-  const [activedBedOptions, setActivedBedOptions] = useState<string[]>([]);
+  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>([]);
 
   //* 남은 침대 옵션들
   const lastBedOptions = useMemo(() => {
@@ -77,19 +82,32 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
       </div>
       {opened && (
         <div>
-          {bedroom.beds.map((bed) => (
-            <>
-              {activedBedOptions.map((bedOption) => (
-                <Counter label={bedOption} value={1} key={bedOption} />
-              ))}
-              <RegisterSelector
-                options={lastBedOptions}
-                onChange={(e) =>
-                  setActivedBedOptions([...activedBedOptions, e.target.value])
-                }
-              />
-            </>
+          {activedBedOptions.map((type) => (
+            <Counter
+              label={type}
+              value={1}
+              key={type}
+              onChange={(value) =>
+                dispatch(
+                  registerRoomActions.setBedTypeCount({
+                    bedroomId: bedroom.id,
+                    type,
+                    count: value,
+                  })
+                )
+              }
+            />
           ))}
+
+          <RegisterSelector
+            options={lastBedOptions}
+            onChange={(e) =>
+              setActivedBedOptions([
+                ...activedBedOptions,
+                e.target.value as BedType,
+              ])
+            }
+          />
         </div>
       )}
     </Container>

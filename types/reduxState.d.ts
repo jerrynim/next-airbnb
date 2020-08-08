@@ -27,7 +27,7 @@ export type RegisterRoomState = {
   maximumGuestCount: number;
   bedroomCount: number;
   bedCount: number;
-  bedList: { id: number; beds: BedType[] }[];
+  bedList: { id: number; beds: { type: BedType; count: number }[] }[];
   bathroomCount: number;
   bathroomType: "private";
   latitude: number;

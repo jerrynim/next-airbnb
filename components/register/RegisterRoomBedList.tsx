@@ -5,14 +5,12 @@ import RegisterButton from "../common/button/RegisterButton";
 import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 
 const RegisterRoomBedList: React.FC = () => {
-  const bedroomCount = useSelector((state) => state.registerRoom.bedroomCount);
-  //   const bedList = useSelector((state) => state.registerRoom.bedList);
-  const bedList = [{ id: 1, beds: [{ type: "king", count: 1 }] }];
+  const bedList = useSelector((state) => state.registerRoom.bedList);
 
   return (
     <ul className="register-room-bed-type-list">
       {bedList.map((bedroom) => (
-        <RegisterRoomBedTypes bedroom={bedroom} />
+        <RegisterRoomBedTypes key={bedroom.id} bedroom={bedroom} />
       ))}
       <li className="register-room-bed-type-wrapper">
         <div>
