@@ -33,8 +33,8 @@ const Container = styled.footer`
 `;
 
 interface IProps {
-  nextHref: string;
-  isAllValueFilled: boolean;
+  nextHref?: string;
+  isAllValueFilled?: boolean;
 }
 
 const RegisterRoomFooter: React.FC<IProps> = ({
@@ -73,4 +73,4 @@ const RegisterRoomFooter: React.FC<IProps> = ({
   );
 };
 
-export default RegisterRoomFooter;
+export default React.memo(RegisterRoomFooter);

@@ -10,6 +10,7 @@ import { bedroomCountList } from "../../lib/staticData";
 import { getNumber } from "../../lib/utils";
 import RegisterButton from "../common/button/RegisterButton";
 import RegisterRoomBedList from "./RegisterRoomBedList";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -100,8 +101,9 @@ const RegisterRoomBedrooms: React.FC = () => {
         확인하세요.
       </p>
       <RegisterRoomBedList />
+      <RegisterRoomFooter nextHref="/bathroom" isAllValueFilled={false} />
     </Container>
   );
 };
 
-export default RegisterRoomBedrooms;
+export default React.memo(RegisterRoomBedrooms);

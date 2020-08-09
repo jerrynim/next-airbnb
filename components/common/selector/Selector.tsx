@@ -41,4 +41,4 @@ const Selector: React.FC<IProps> = ({ options, ...props }) => {
   );
 };
 
-export default Selector;
+export default React.memo(Selector);

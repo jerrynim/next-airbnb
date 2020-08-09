@@ -84,4 +84,4 @@ const Counter: React.FC<IProps> = ({
   );
 };
 
-export default Counter;
+export default React.memo(Counter);

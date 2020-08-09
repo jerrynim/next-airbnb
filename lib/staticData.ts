@@ -121,6 +121,7 @@ export const bedroomCountList = Array.from(Array(16), (_, i) => `침실 ${i}개`
 
 //* 침대 유형
 export const bedTypes: BedType[] = [
+  "다른 침대 추가",
   "소파",
   "에어 매트릭스",
   "요와 이불",

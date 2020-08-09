@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { useSelector } from "../../store";
-import RegisterButton from "../common/button/RegisterButton";
 import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
+import RegisterRoomPublicBedTypes from "./RegisterRoomPublicBedTypes";
 
 const RegisterRoomBedList: React.FC = () => {
   const bedList = useSelector((state) => state.registerRoom.bedList);
@@ -12,15 +11,9 @@ const RegisterRoomBedList: React.FC = () => {
       {bedList.map((bedroom) => (
         <RegisterRoomBedTypes key={bedroom.id} bedroom={bedroom} />
       ))}
-      <li className="register-room-bed-type-wrapper">
-        <div>
-          <p className="register-room-bed-type-bedroom">공용공간</p>
-          <p className="register-room-bed-type-bedroom-counts">침대 0개</p>
-        </div>
-        <RegisterButton>침대 추가하기</RegisterButton>
-      </li>
+      <RegisterRoomPublicBedTypes />
     </ul>
   );
 };
 
-export default RegisterRoomBedList;
+export default React.memo(RegisterRoomBedList);

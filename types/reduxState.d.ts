@@ -6,6 +6,7 @@ export type UserState = UserType & {
 
 //* 침대 유형
 export type BedType =
+  | "다른 침대 추가"
   | "소파"
   | "에어 매트릭스"
   | "요와 이불"
@@ -28,6 +29,7 @@ export type RegisterRoomState = {
   bedroomCount: number;
   bedCount: number;
   bedList: { id: number; beds: { type: BedType; count: number }[] }[];
+  publicBedList: { type: BedType; count: number }[];
   bathroomCount: number;
   bathroomType: "private";
   latitude: number;

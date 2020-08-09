@@ -203,4 +203,4 @@ const RegisterRoomBuilding: React.FC = () => {
   );
 };
 
-export default RegisterRoomBuilding;
+export default React.memo(RegisterRoomBuilding);

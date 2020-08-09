@@ -76,6 +76,7 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   value?: string;
   error?: boolean;
   errorMessage?: string;
+  disabledOptions?: string[];
 }
 
 const RegisterSelector: React.FC<IProps> = ({
@@ -83,6 +84,7 @@ const RegisterSelector: React.FC<IProps> = ({
   options,
   error,
   errorMessage = "옵션을 선택하세요.",
+  disabledOptions = [],
   ...props
 }) => {
   const validateMode = useSelector((state) => state.common.validateMode);
@@ -93,7 +95,9 @@ const RegisterSelector: React.FC<IProps> = ({
         {label && <span>{label}</span>}
         <select {...props}>
           {options?.map((option, index) => (
-            <option key={index}>{option}</option>
+            <option key={index} disabled={disabledOptions.includes(option)}>
+              {option}
+            </option>
           ))}
         </select>
       </label>
@@ -107,4 +111,4 @@ const RegisterSelector: React.FC<IProps> = ({
   );
 };
 
-export default RegisterSelector;
+export default React.memo(RegisterSelector);

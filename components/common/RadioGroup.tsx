@@ -145,4 +145,4 @@ const RadioGroup: React.FC<IProps> = ({
   );
 };
 
-export default RadioGroup;
+export default React.memo(RadioGroup);
