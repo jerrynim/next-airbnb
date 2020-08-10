@@ -7,7 +7,7 @@ import { useSelector } from "../../../store";
 import WarningIcon from "../../../public/static/svg/selector/warning.svg";
 
 const Container = styled.div<{ error: boolean; validateMode: boolean }>`
-  width: 320px;
+  width: 100%;
 
   label {
     position: relative;

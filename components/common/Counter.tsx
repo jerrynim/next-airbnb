@@ -44,6 +44,7 @@ interface IProps {
   label?: string;
   value?: number;
   minValue?: number;
+  increaseNum?: number;
   onChange?: (value: number) => void;
 }
 
@@ -51,6 +52,7 @@ const Counter: React.FC<IProps> = ({
   label = "텍스트",
   value = 1,
   minValue = 0,
+  increaseNum = 1,
   onChange,
 }) => {
   return (
@@ -62,7 +64,7 @@ const Counter: React.FC<IProps> = ({
           disabled={value === minValue}
           onClick={() => {
             if (onChange) {
-              onChange(value - 1);
+              onChange(value - increaseNum);
             }
           }}
         >
@@ -73,7 +75,7 @@ const Counter: React.FC<IProps> = ({
           type="button"
           onClick={() => {
             if (onChange) {
-              onChange(value + 1);
+              onChange(value + increaseNum);
             }
           }}
         >

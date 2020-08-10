@@ -13,20 +13,25 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     margin-bottom: 32px;
   }
   .radio-list-wrapper {
-    display: flex;
-    flex-direction: column;
+    &:after {
+      display: block;
+      content: "";
+      clear: both;
+    }
   }
   label {
-    display: flex;
-    align-items: flex-start;
+    float: left;
     margin-bottom: 24px;
     font-size: 16px;
     line-height: 1.2;
     cursor: pointer;
+    clear: both;
+
     &:last-child {
       margin-bottom: 0;
     }
   }
+
   input[type="radio"] {
     width: 16px;
     height: 16px;

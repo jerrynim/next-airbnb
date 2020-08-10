@@ -155,6 +155,36 @@ const registerRoom = createSlice({
       state.publicBedList[index].count = count;
       return state;
     },
+
+    //* 공용 공간 침대 유형 갯수 변경하기
+    setBathroomCount(state, action: PayloadAction<number>) {
+      state.bathroomCount = action.payload;
+    },
+
+    //* 공용 공간 침대 유형 갯수 변경하기
+    setBathroomType(state, action: PayloadAction<"private" | "public">) {
+      state.bathroomType = action.payload;
+    },
+
+    setCountry(state, action: PayloadAction<string>) {
+      state.country = action.payload;
+    },
+
+    setCity(state, action: PayloadAction<string>) {
+      state.city = action.payload;
+    },
+    setDistrict(state, action: PayloadAction<string>) {
+      state.district = action.payload;
+    },
+    setStreetAddress(state, action: PayloadAction<string>) {
+      state.district = action.payload;
+    },
+    setDetailAddress(state, action: PayloadAction<string>) {
+      state.detailAddress = action.payload;
+    },
+    setPostcode(state, action: PayloadAction<string>) {
+      state.detailAddress = action.payload;
+    },
   },
 });
 

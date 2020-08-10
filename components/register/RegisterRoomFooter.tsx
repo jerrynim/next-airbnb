@@ -53,7 +53,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
         <BackArrowIcon />
         뒤로
       </div>
-      <Link href={nextHref}>
+      <Link href={nextHref || ""}>
         <a>
           <Button
             color="dark_cyan"

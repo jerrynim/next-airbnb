@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import pallete from "../../styles/pallete";
@@ -8,7 +8,6 @@ import { registerRoomActions } from "../../store/registerRoom";
 import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedroomCountList } from "../../lib/staticData";
 import { getNumber } from "../../lib/utils";
-import RegisterButton from "../common/button/RegisterButton";
 import RegisterRoomBedList from "./RegisterRoomBedList";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
@@ -101,7 +100,7 @@ const RegisterRoomBedrooms: React.FC = () => {
         확인하세요.
       </p>
       <RegisterRoomBedList />
-      <RegisterRoomFooter nextHref="/bathroom" isAllValueFilled={false} />
+      <RegisterRoomFooter nextHref="/room/register/bathroom" isAllValueFilled />
     </Container>
   );
 };
