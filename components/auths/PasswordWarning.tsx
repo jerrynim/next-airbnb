@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import RedXIcon from "../../public/static/svg/input/red_x_icon.svg";
 import GreenCheckIcon from "../../public/static/svg/input/green_check_icon.svg";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 
 const Container = styled.p<{ error: boolean }>`
-  color: ${({ error }) => (error ? pallete.davidson_orange : pallete.green)};
+  color: ${({ error }) => (error ? palette.davidson_orange : palette.green)};
   display: flex;
   align-items: center;
   line-height: 1.5;

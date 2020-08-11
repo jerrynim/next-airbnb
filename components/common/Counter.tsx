@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import CounterMinusIcon from "../../public/static/svg/common/counter/counter_minus.svg";
 import CounterPlusIcon from "../../public/static/svg/common/counter/counter_plus.svg";
 
@@ -10,7 +10,7 @@ const Container = styled.div`
   justify-content: space-between;
   .counter-label {
     font-size: 16px;
-    color: ${pallete.gray_48};
+    color: ${palette.gray_48};
     font-weight: 600;
   }
   .counter-contents {
@@ -26,8 +26,8 @@ const Container = styled.div`
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      border: 1px solid ${pallete.dark_cyan};
-      color: ${pallete.dark_cyan};
+      border: 1px solid ${palette.dark_cyan};
+      color: ${palette.dark_cyan};
       background-color: white;
       outline: none;
       cursor: pointer;

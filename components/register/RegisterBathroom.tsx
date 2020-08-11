@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import Counter from "../common/Counter";
 import { useSelector } from "../../store";
 import RegisterRoomFooter from "./RegisterRoomFooter";
@@ -17,7 +17,7 @@ const Container = styled.div`
   }
   h3 {
     font-weight: bold;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
     margin-bottom: 6px;
   }
   .register-room-step-info {

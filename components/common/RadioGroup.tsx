@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from "react";
 import styled, { css } from "styled-components";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import { useSelector } from "../../store";
 import WarningIcon from "../../public/static/svg/selector/warning.svg";
 
@@ -9,7 +9,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
   .radio-label {
     font-size: 16px;
     font-weight: 600;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
     margin-bottom: 32px;
   }
   .radio-list-wrapper {
@@ -42,7 +42,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     flex-shrink: 0;
     font-size: 16px;
     -webkit-appearance: none;
-    border: 1px solid ${pallete.gray_b0};
+    border: 1px solid ${palette.gray_b0};
     border-radius: 50%;
     outline: none;
 
@@ -50,12 +50,12 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
       if (validateMode) {
         if (error) {
           return css`
-            border-color: ${pallete.tawny};
-            background-color: ${pallete.snow};
+            border-color: ${palette.tawny};
+            background-color: ${palette.snow};
           `;
         }
         return css`
-          border-color: ${pallete.dark_cyan};
+          border-color: ${palette.dark_cyan};
         `;
       }
       return undefined;
@@ -63,7 +63,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
   }
 
   input[type="radio"]:checked {
-    background-color: ${pallete.dark_cyan};
+    background-color: ${palette.dark_cyan};
     border: 0;
   }
   input[type="radio"]:checked:after {
@@ -96,7 +96,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     }
     p {
       font-size: 12px;
-      color: ${pallete.davidson_orange};
+      color: ${palette.davidson_orange};
     }
   }
 `;

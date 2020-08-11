@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import pallete from "../../../styles/pallete";
+import palette from "../../../styles/palette";
 
 const Container = styled.div`
   width: 100%;
@@ -10,7 +10,7 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     background-color: white;
-    border: 1px solid ${pallete.gray_eb};
+    border: 1px solid ${palette.gray_eb};
     padding: 0 11px;
     border-radius: 4px;
     outline: none;
@@ -20,7 +20,7 @@ const Container = styled.div`
     background-repeat: no-repeat;
     font-size: 16px;
     &:focus {
-      border-color: ${pallete.dark_cyan};
+      border-color: ${palette.dark_cyan};
     }
   }
 `;

@@ -8,7 +8,7 @@ import PersonIcon from "../../public/static/svg/input/person.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
 import Input from "../common/Input";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import Selector from "../common/Selector/Selector";
 import { monthsList, daysList, yearsList } from "../../lib/staticData";
 import Button from "../common/button/Button";
@@ -37,7 +37,7 @@ const Container = styled.div`
 
   .sign-up-modal-birthday-info {
     margin-bottom: 16px;
-    color: ${pallete.charcoal};
+    color: ${palette.charcoal};
   }
 
   .sign-up-modal-birthday-selectors {
@@ -59,10 +59,10 @@ const Container = styled.div`
   .sign-up-modal-submit-button-wrapper {
     margin-bottom: 16px;
     padding-bottom: 16px;
-    border-bottom: 1px solid ${pallete.gray_eb};
+    border-bottom: 1px solid ${palette.gray_eb};
   }
   .sign-up-modal-set-login {
-    color: ${pallete.dark_cyan};
+    color: ${palette.dark_cyan};
     margin-left: 8px;
     cursor: pointer;
   }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 
 type InputContainerProps = {
   iconExist: boolean;
@@ -14,15 +14,15 @@ const Container = styled.div<InputContainerProps>`
     width: 100%;
     height: 46px;
     padding: ${({ iconExist }) => (iconExist ? "0 44px 0 11px " : "0 11px")};
-    border: 1px solid ${pallete.gray_eb};
+    border: 1px solid ${palette.gray_eb};
     border-radius: 4px;
     font-size: 16px;
     outline: none;
     & ::placeholder {
-      color: ${pallete.gray_76};
+      color: ${palette.gray_76};
     }
     & :focus {
-      border-color: ${pallete.dark_cyan};
+      border-color: ${palette.dark_cyan};
     }
   }
   svg {
@@ -34,17 +34,17 @@ const Container = styled.div<InputContainerProps>`
     margin-top: 8px;
     font-weight: 600;
     font-size: 14px;
-    color: ${pallete.tawny};
+    color: ${palette.tawny};
   }
   ${({ validation, error }) =>
     validation &&
     error &&
     css`
       input {
-        background-color: ${pallete.snow};
-        border-color: ${pallete.orange};
+        background-color: ${palette.snow};
+        border-color: ${palette.orange};
         & :focus {
-          border-color: ${pallete.orange};
+          border-color: ${palette.orange};
         }
       }
     `}
@@ -53,7 +53,7 @@ const Container = styled.div<InputContainerProps>`
     !error &&
     css`
       input {
-        border-color: ${pallete.dark_cyan};
+        border-color: ${palette.dark_cyan};
       }
     `}
 `;

@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 import React from "react";
 import styled, { css } from "styled-components";
-import pallete from "../../../styles/pallete";
+import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import WarningIcon from "../../../public/static/svg/selector/warning.svg";
 
@@ -15,7 +15,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
   span {
     display: block;
     font-size: 16px;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
     font-weight: 600;
     margin-bottom: 8px;
   }
@@ -23,7 +23,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     width: 100%;
     height: 56px;
     border-radius: 8px;
-    border: 1px solid ${pallete.gray_b0};
+    border: 1px solid ${palette.gray_b0};
     padding: 0 14px 0 12px;
     appearance: none;
     outline: none;
@@ -36,12 +36,12 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
       if (validateMode) {
         if (error) {
           return css`
-            border-color: ${pallete.tawny};
-            background-color: ${pallete.snow};
+            border-color: ${palette.tawny};
+            background-color: ${palette.snow};
           `;
         }
         return css`
-          border-color: ${pallete.dark_cyan};
+          border-color: ${palette.dark_cyan};
         `;
       }
       return undefined;
@@ -49,9 +49,9 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
 
     &:disabled {
       background-image: url("/static/svg/selector/disabled_register_selector_down_arrow.svg");
-      background-color: ${pallete.gray_f7};
-      border-color: ${pallete.gray_e5};
-      color: ${pallete.gray_e5};
+      background-color: ${palette.gray_f7};
+      border-color: ${palette.gray_e5};
+      color: ${palette.gray_e5};
       cursor: not-allowed;
     }
   }
@@ -65,7 +65,7 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     }
     p {
       font-size: 12px;
-      color: ${pallete.davidson_orange};
+      color: ${palette.davidson_orange};
     }
   }
 `;

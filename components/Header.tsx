@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
-import pallete from "../styles/pallete";
+import palette from "../styles/palette";
 
 import AirbnbLogoIcon from "../public/static/svg/logo/airbnb_logo.svg";
 import AirbnbLogoText from "../public/static/svg/logo/airbnb_logo_text.svg";
@@ -32,7 +32,7 @@ const Container = styled.div`
     h1 {
       font-size: 21px;
       font-weight: bold;
-      color: ${pallete.main_pink};
+      color: ${palette.main_pink};
     }
   }
   /** 헤더 로그인 회원가입 버튼 */
@@ -47,7 +47,7 @@ const Container = styled.div`
       cursor: pointer;
       outline: none;
       &:hover {
-        background-color: ${pallete.gray_f7};
+        background-color: ${palette.gray_f7};
       }
     }
     .header-login-button {
@@ -108,14 +108,14 @@ const Container = styled.div`
       padding: 0 16px;
       cursor: pointer;
       &:hover {
-        background-color: ${pallete.gray_f7};
+        background-color: ${palette.gray_f7};
       }
     }
     .header-usermenu-divider {
       width: 100%;
       height: 1px;
       margin: 8px 0;
-      background-color: ${pallete.gray_dd};
+      background-color: ${palette.gray_dd};
     }
   }
 `;

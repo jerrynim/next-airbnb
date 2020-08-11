@@ -6,7 +6,7 @@ import RegisterButton from "../common/button/RegisterButton";
 import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedTypes } from "../../lib/staticData";
 import Counter from "../common/Counter";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import { BedType } from "../../types/reduxState";
 import { registerRoomActions } from "../../store/registerRoom";
 import { useSelector } from "../../store";
@@ -14,9 +14,9 @@ import { useSelector } from "../../store";
 const Container = styled.li`
   width: 100%;
   padding: 28px 0;
-  border-top: 1px solid ${pallete.gray_dd};
+  border-top: 1px solid ${palette.gray_dd};
   &:last-child {
-    border-bottom: 1px solid ${pallete.gray_dd};
+    border-bottom: 1px solid ${palette.gray_dd};
   }
 
   .register-room-bed-type-top {
@@ -26,14 +26,14 @@ const Container = styled.li`
   }
   .register-room-bed-type-bedroom {
     font-size: 19px;
-    color: ${pallete.gray_48};
+    color: ${palette.gray_48};
   }
   .register-room-public-bed-type-counters {
     margin-top: 28px;
   }
   .register-room-bed-type-bedroom-counts {
     font-size: 19px;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
   }
   .register-room-bed-type-counter {
     width: 290px;

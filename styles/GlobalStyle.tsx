@@ -1,12 +1,12 @@
 import reset from "styled-reset";
 import { createGlobalStyle, css } from "styled-components";
-import pallete from "./pallete";
+import palette from "./palette";
 
 const globalStyle = css`
   ${reset};
   * {
     box-sizing: border-box;
-    color: ${pallete.black};
+    color: ${palette.black};
   }
 
   body {

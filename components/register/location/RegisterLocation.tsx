@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import pallete from "../../../styles/pallete";
+import { useDispatch } from "react-redux";
+import palette from "../../../styles/palette";
 import Button from "../../common/button/Button";
 import NavigationIcon from "../../../public/static/svg/register/navigation.svg";
 import Input from "../../common/Input";
 import { countryList } from "../../../lib/staticData";
 import RegisterSelector from "../../common/selector/RegisterSelector";
-import { useDispatch } from "react-redux";
 import { registerRoomActions } from "../../../store/registerRoom";
+import { useSelector } from "../../../store";
+import RegisterRoomFooter from "../RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -19,7 +21,7 @@ const Container = styled.div`
   }
   h3 {
     font-weight: bold;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
     margin-bottom: 6px;
   }
   .register-room-step-info {
@@ -56,9 +58,71 @@ const Container = styled.div`
 
 const RegisterLocation: React.FC = () => {
   const [loading, setLoading] = useState<boolean>();
-  const reverseGeoCode = async (lat: number, lng: number) => {};
+
+  const country = useSelector((state) => state.registerRoom.country);
+  const city = useSelector((state) => state.registerRoom.city);
+  const district = useSelector((state) => state.registerRoom.district);
+  const streetAddress = useSelector(
+    (state) => state.registerRoom.streetAddress
+  );
+  const detailAddress = useSelector(
+    (state) => state.registerRoom.detailAddress
+  );
+  const postcode = useSelector((state) => state.registerRoom.postcode);
 
   const dispatch = useDispatch();
+
+  const changeCountryDispatch = useCallback((string) => {
+    dispatch(registerRoomActions.setCountry(string));
+  }, []);
+
+  const onChangeCountry = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      changeCountryDispatch(e.target.value);
+    },
+    []
+  );
+
+  const onChangeCity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(registerRoomActions.setCity(e.target.value));
+  }, []);
+
+  const onChangeDistrict = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(registerRoomActions.setDistrict(e.target.value));
+    },
+    []
+  );
+
+  const onChangeStreetAdress = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(registerRoomActions.setStreetAddress(e.target.value));
+    },
+    []
+  );
+
+  const onChangeDetailAddress = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(registerRoomActions.setDetailAddress(e.target.value));
+    },
+    []
+  );
+
+  const onChangePostcode = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(registerRoomActions.setPostcode(e.target.value));
+    },
+    []
+  );
+
+  const isAllValueFilled = useMemo(() => {
+    if (!country || !city || !district || !streetAddress || !postcode) {
+      return false;
+    }
+    return true;
+  }, [country, city, district, streetAddress, postcode]);
+
+  //* 현재 위치 사용하기
   const onClickGetCurrentLocation = () => {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(
@@ -112,22 +176,36 @@ const RegisterLocation: React.FC = () => {
       <div className="register-room-location-country-selector-wrapper">
         <RegisterSelector
           options={countryList}
+          onChange={onChangeCountry}
           disabledOptions={["국가/지역 선택"]}
+          value={country}
         />
       </div>
       <div className="register-room-location-city-district">
-        <Input label="시/도" />
-        <Input label="시/군/구" />
+        <Input label="시/도" value={city} onChange={onChangeCity} />
+        <Input label="시/군/구" value={district} onChange={onChangeDistrict} />
       </div>
       <div className="register-room-location-street-address">
-        <Input label="도로명주소" />
+        <Input
+          label="도로명주소"
+          value={streetAddress}
+          onChange={onChangeStreetAdress}
+        />
       </div>
       <div className="register-room-location-detail-address">
-        <Input label="동호수(선택 사항)" />
+        <Input
+          label="동호수(선택 사항)"
+          value={detailAddress}
+          onChange={onChangeDetailAddress}
+        />
       </div>
       <div className="register-room-location-postcode">
-        <Input label="우편번호" />
+        <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
       </div>
+      <RegisterRoomFooter
+        nextHref="/room/register/amenities"
+        isAllValueFilled={isAllValueFilled}
+      />
     </Container>
   );
 };

@@ -169,7 +169,6 @@ const registerRoom = createSlice({
     setCountry(state, action: PayloadAction<string>) {
       state.country = action.payload;
     },
-
     setCity(state, action: PayloadAction<string>) {
       state.city = action.payload;
     },
@@ -177,13 +176,21 @@ const registerRoom = createSlice({
       state.district = action.payload;
     },
     setStreetAddress(state, action: PayloadAction<string>) {
-      state.district = action.payload;
+      state.streetAddress = action.payload;
     },
     setDetailAddress(state, action: PayloadAction<string>) {
       state.detailAddress = action.payload;
     },
     setPostcode(state, action: PayloadAction<string>) {
-      state.detailAddress = action.payload;
+      state.postcode = action.payload;
+    },
+
+    setAmentities(state, action: PayloadAction<string[]>) {
+      state.amenities = action.payload;
+    },
+
+    setConveniences(state, action: PayloadAction<string[]>) {
+      state.conveniences = action.payload;
     },
   },
 });

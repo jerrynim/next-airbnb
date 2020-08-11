@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/button/Button";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import { commonActions } from "../../store/common";
 
 const Container = styled.footer`
@@ -19,12 +19,12 @@ const Container = styled.footer`
   padding: 14px 30px 20px;
   background-color: white;
   z-index: 10;
-  border-top: 1px solid ${pallete.gray_dd};
+  border-top: 1px solid ${palette.gray_dd};
 
   .register-room-footer-back {
     display: flex;
     align-items: center;
-    color: ${pallete.dark_cyan};
+    color: ${palette.dark_cyan};
     cursor: pointer;
     svg {
       margin-right: 8px;

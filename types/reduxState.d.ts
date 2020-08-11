@@ -40,8 +40,8 @@ export type RegisterRoomState = {
   streetAddress: string;
   detailAddress: string;
   postcode: string;
-  amenities: [];
-  conveniences: [];
+  amenities: string[];
+  conveniences: string[];
   photos: [];
   price: "";
   crreatedAt: null;

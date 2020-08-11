@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import RegisterSelector from "../common/selector/RegisterSelector";
 import { useSelector } from "../../store";
 import { registerRoomActions } from "../../store/registerRoom";
@@ -17,11 +17,12 @@ const Container = styled.div`
   }
   h3 {
     font-weight: bold;
-    color: ${pallete.gray_76};
+    color: ${palette.gray_76};
     margin-bottom: 6px;
   }
 
   .register-room-building-selector-wrapper {
+    width: 320px;
     margin-bottom: 32px;
   }
   .register-room-room-type-radio {

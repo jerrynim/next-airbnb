@@ -6,7 +6,7 @@ import Input from "../common/Input";
 import MailIcon from "../../public/static/svg/input/mail.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
-import pallete from "../../styles/pallete";
+import palette from "../../styles/palette";
 import Button from "../common/button/Button";
 import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
@@ -28,10 +28,10 @@ const Container = styled.div`
   .login-modal-submit-button-wrapper {
     margin-bottom: 16px;
     padding-bottom: 16px;
-    border-bottom: 1px solid ${pallete.gray_eb};
+    border-bottom: 1px solid ${palette.gray_eb};
   }
   .login-modal-set-login {
-    color: ${pallete.dark_cyan};
+    color: ${palette.dark_cyan};
     margin-left: 8px;
     cursor: pointer;
   }

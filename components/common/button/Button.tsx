@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import pallete from "../../../styles/pallete";
+import palette from "../../../styles/palette";
 
 const getColor = (color: string, colorReverse: boolean) => {
   if (colorReverse) {
@@ -8,25 +8,25 @@ const getColor = (color: string, colorReverse: boolean) => {
       case "dark_cyan":
         return css`
           background-color: white;
-          color: ${pallete.dark_cyan};
-          border: 2px solid ${pallete.dark_cyan};
+          color: ${palette.dark_cyan};
+          border: 2px solid ${palette.dark_cyan};
         `;
       default:
         return css`
           background-color: white;
-          border: 2px solid ${pallete.bittersweet};
-          color: ${pallete.bittersweet};
+          border: 2px solid ${palette.bittersweet};
+          color: ${palette.bittersweet};
         `;
     }
   }
   switch (color) {
     case "dark_cyan":
       return css`
-        background-color: ${pallete.dark_cyan};
+        background-color: ${palette.dark_cyan};
       `;
     default:
       return css`
-        background-color: ${pallete.bittersweet};
+        background-color: ${palette.bittersweet};
       `;
   }
 };
