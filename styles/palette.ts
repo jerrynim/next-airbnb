@@ -13,6 +13,7 @@ export default {
   gray_80: "#808080",
   gray_85: "#858585",
   gray_aa: "#aaa",
+  gray_bb: "#bbb",
   gray_b0: "#b0b0b0",
   gray_c4: "#c4c4c4",
   gray_dd: "#ddd",

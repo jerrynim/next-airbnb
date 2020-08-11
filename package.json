@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
+    "@types/formidable": "^1.0.31",
     "@types/lodash": "^4.14.159",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
@@ -19,6 +20,7 @@
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-styled-components": "^1.10.7",
     "bcryptjs": "^2.4.3",
+    "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "next": "^9.4.4",

@@ -52,7 +52,10 @@ const RegisterRoomAmentities: React.FC = () => {
           options={amentityList}
         />
       </div>
-      <RegisterRoomFooter nextHref="/room/register/conveniences" />
+      <RegisterRoomFooter
+        nextHref="/room/register/conveniences"
+        isAllValueFilled
+      />
     </Container>
   );
 };
