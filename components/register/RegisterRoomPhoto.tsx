@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { isEmpty } from "lodash";
 import palette from "../../styles/palette";
-import CheckboxGroup from "../common/CheckboxGroup";
-import { registerRoomActions } from "../../store/registerRoom";
+
 import { useSelector } from "../../store";
 import RegisterRoomFooter from "./RegisterRoomFooter";
-import { convinienceList } from "../../lib/staticData";
 import Button from "../common/button/Button";
 import UploadIcon from "../../public/static/svg/button/upload.svg";
 import { uploadFileAPI } from "../../lib/api/file";
+import { registerRoomActions } from "../../store/registerRoom";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -43,13 +43,16 @@ const Container = styled.div`
       opacity: 0;
       cursor: pointer;
     }
+    img {
+      max-height: 100%;
+    }
   }
 `;
 
 const RegisterRoomPhoto: React.FC = () => {
   const dispatch = useDispatch();
 
-  const conveniences = useSelector((state) => state.registerRoom.conveniences);
+  const photos = useSelector((state) => state.registerRoom.photos);
 
   const uploadImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -59,7 +62,9 @@ const RegisterRoomPhoto: React.FC = () => {
       formdata.append("file", file);
       try {
         const { data } = await uploadFileAPI(formdata);
-        console.log(data);
+        if (data) {
+          dispatch(registerRoomActions.setPhotos([...photos, data]));
+        }
       } catch (e) {
         console.log(e);
       }
@@ -75,12 +80,25 @@ const RegisterRoomPhoto: React.FC = () => {
         우선 사진 1장을 업로드하고 숙소를 등록한 후에 추가할 수 있습니다.
       </p>
       <div className="register-room-upload-photo-wrapper">
-        <input type="file" accept="image/*" multiple onChange={uploadImages} />
-        <Button icon={<UploadIcon />} width="167px">
-          사진 업로드
-        </Button>
+        {isEmpty(photos) && (
+          <>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={uploadImages}
+            />
+            <Button icon={<UploadIcon />} width="167px">
+              사진 업로드
+            </Button>
+          </>
+        )}
+        {!isEmpty(photos) && <img src={photos[0]} alt="" />}
       </div>
-      <RegisterRoomFooter nextHref="/room/register/photo" isAllValueFilled />
+      <RegisterRoomFooter
+        nextHref="/room/register/description"
+        isAllValueFilled
+      />
     </Container>
   );
 };

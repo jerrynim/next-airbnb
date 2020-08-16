@@ -2,6 +2,21 @@ import React from "react";
 import styled, { css } from "styled-components";
 import palette from "../../../styles/palette";
 
+const getSize = (size: "small" | "medium") => {
+  switch (size) {
+    case "medium":
+      return css`
+        height: 46px;
+      `;
+    case "small":
+      return css`
+        height: 36px;
+      `;
+    default:
+      return undefined;
+  }
+};
+
 const getColor = (color: string, colorReverse: boolean) => {
   if (colorReverse) {
     switch (color) {
@@ -34,6 +49,7 @@ const getColor = (color: string, colorReverse: boolean) => {
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   width?: string;
+  size?: "small" | "medium";
   colorReverse?: boolean;
   icon?: JSX.Element;
 }
@@ -43,7 +59,6 @@ const Container = styled.button<IProps>`
   justify-content: center;
   align-items: center;
   width: ${(props) => props.width || "100%"};
-  height: 48px;
   border: 0;
   border-radius: 4px;
   color: white;
@@ -52,7 +67,7 @@ const Container = styled.button<IProps>`
   outline: none;
   cursor: pointer;
   ${(props) => getColor(props.color || "", !!props.colorReverse)}
-
+  ${(props) => getSize(props.size || "medium")}
   svg {
     margin-right: 12px;
   }
@@ -61,12 +76,13 @@ const Container = styled.button<IProps>`
 const Button: React.FC<IProps> = ({
   children,
   width,
+  size = "medium",
   colorReverse,
   icon,
   ...props
 }) => {
   return (
-    <Container width={width} colorReverse={colorReverse} {...props}>
+    <Container width={width} size={size} colorReverse={colorReverse} {...props}>
       {icon}
       {children}
     </Container>

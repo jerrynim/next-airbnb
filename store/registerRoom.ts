@@ -46,6 +46,10 @@ const initialState: RegisterRoomState = {
   conveniences: [],
   //* 숙소 사진
   photos: [],
+  //* 숙소 설명
+  description: "",
+  //* 숙소 제목
+  title: "",
   //* 숙소 요금
   price: "",
   crreatedAt: null,
@@ -191,6 +195,18 @@ const registerRoom = createSlice({
 
     setConveniences(state, action: PayloadAction<string[]>) {
       state.conveniences = action.payload;
+    },
+
+    setPhotos(state, action: PayloadAction<string[]>) {
+      state.photos = action.payload;
+    },
+
+    setPrice(state, action: PayloadAction<string>) {
+      state.price = action.payload;
+    },
+
+    setDescription(state, action: PayloadAction<string>) {
+      state.description = action.payload;
     },
   },
 });

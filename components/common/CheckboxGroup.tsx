@@ -88,7 +88,7 @@ const CheckboxGroup: React.FC<IProps> = ({
   return (
     <Container>
       {options.map((option) => (
-        <label className="checkbox-label">
+        <label className="checkbox-label" key={option}>
           <input
             type="checkbox"
             checked={value?.includes(option)}
