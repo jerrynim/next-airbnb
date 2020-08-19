@@ -2,15 +2,15 @@ import React, { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import palette from "../../../styles/palette";
-import Button from "../../common/button/Button";
-import NavigationIcon from "../../../public/static/svg/register/navigation.svg";
-import Input from "../../common/Input";
-import { countryList } from "../../../lib/staticData";
-import RegisterSelector from "../../common/selector/RegisterSelector";
-import { registerRoomActions } from "../../../store/registerRoom";
-import { useSelector } from "../../../store";
-import RegisterRoomFooter from "../RegisterRoomFooter";
+import palette from "../../styles/palette";
+import Button from "../common/button/Button";
+import NavigationIcon from "../../public/static/svg/register/navigation.svg";
+import Input from "../common/Input";
+import { countryList } from "../../lib/staticData";
+import RegisterSelector from "../common/selector/RegisterSelector";
+import { registerRoomActions } from "../../store/registerRoom";
+import { useSelector } from "../../store";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -130,7 +130,9 @@ const RegisterLocation: React.FC = () => {
         try {
           const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
           const { data } = await axios.get(URL);
+          console.log(data);
           const addressComponent = data.results[0].address_components;
+          const { lat, lng } = data.results[0].geometry.location;
           dispatch(
             registerRoomActions.setCountry(addressComponent[4].long_name)
           );
@@ -146,6 +148,9 @@ const RegisterLocation: React.FC = () => {
           dispatch(
             registerRoomActions.setPostcode(addressComponent[5].long_name)
           );
+          dispatch(registerRoomActions.setLatitude(lat));
+          dispatch(registerRoomActions.setLongitude(lng));
+
           setLoading(false);
         } catch (e) {
           console.log(e.message);
@@ -167,7 +172,6 @@ const RegisterLocation: React.FC = () => {
           color="dark_cyan"
           colorReverse
           icon={<NavigationIcon />}
-          width="165px"
           onClick={onClickGetCurrentLocation}
         >
           현재 위치 사용
@@ -203,7 +207,7 @@ const RegisterLocation: React.FC = () => {
         <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
       </div>
       <RegisterRoomFooter
-        nextHref="/room/register/amenities"
+        nextHref="/room/register/amentities"
         isAllValueFilled={isAllValueFilled}
       />
     </Container>

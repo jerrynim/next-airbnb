@@ -88,9 +88,7 @@ const RegisterRoomPhoto: React.FC = () => {
               multiple
               onChange={uploadImages}
             />
-            <Button icon={<UploadIcon />} width="167px">
-              사진 업로드
-            </Button>
+            <Button icon={<UploadIcon />}>사진 업로드</Button>
           </>
         )}
         {!isEmpty(photos) && <img src={photos[0]} alt="" />}

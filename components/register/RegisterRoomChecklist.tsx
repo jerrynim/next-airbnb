@@ -3,21 +3,18 @@ import styled from "styled-components";
 import isEmpty from "lodash/isEmpty";
 import { useSelector } from "../../store";
 import RegisterRoomCheckStep from "./RegisterRoomCheckStep";
+import RegisterRoomFooter from "./RegisterRoomFooter";
+import RegisterRoomSubmitFooter from "./RegisterRoomSubmitFooter";
 
 const Container = styled.div`
   padding: 62px 30px;
-
+  min-height: 100vh;
   .register-room-checklist-info {
     margin-bottom: 39px;
   }
   ul {
-    li {
-      a {
-        svg {
-          margin-right: 12px;
-        }
-      }
-    }
+    display: inline-flex;
+    flex-direction: column;
   }
 `;
 
@@ -91,7 +88,7 @@ const RegisterRoomChecklist: React.FC = () => {
   }, []);
 
   //* 편의시설이 활성화 됬는지
-  const isAmenitiesActived = useMemo(() => {
+  const isAmentitiesActived = useMemo(() => {
     if (!isLocationActived) {
       return false;
     }
@@ -100,7 +97,7 @@ const RegisterRoomChecklist: React.FC = () => {
 
   //* 공용 공간이 활성화 됬는지
   const isConviniencesActived = useMemo(() => {
-    if (!isAmenitiesActived) {
+    if (!isAmentitiesActived) {
       return false;
     }
     return true;
@@ -115,19 +112,10 @@ const RegisterRoomChecklist: React.FC = () => {
     return true;
   }, []);
 
-  //* 사진 항목이 다 채워져 있는지
-  const isPriceActived = useMemo(() => {
-    const { price } = registerRoom;
-    if (!isPhotoActived || !price) {
-      return false;
-    }
-    return true;
-  }, []);
-
   //* 숙소 설명이 다 채워져 있는지
   const isDescriptionActived = useMemo(() => {
     const { description } = registerRoom;
-    if (!isPriceActived || !description) {
+    if (!isPhotoActived || !description) {
       return false;
     }
     return true;
@@ -137,6 +125,15 @@ const RegisterRoomChecklist: React.FC = () => {
   const isTitleActived = useMemo(() => {
     const { title } = registerRoom;
     if (!isDescriptionActived || !title) {
+      return false;
+    }
+    return true;
+  }, []);
+
+  //* 숙소 금액이 채워져 있는지
+  const isPriceActived = useMemo(() => {
+    const { price } = registerRoom;
+    if (!isTitleActived || !price) {
       return false;
     }
     return true;
@@ -156,7 +153,7 @@ const RegisterRoomChecklist: React.FC = () => {
     if (!isLocationActived) {
       return "location";
     }
-    if (!isAmenitiesActived) {
+    if (!isAmentitiesActived) {
       return "amentities";
     }
     if (!isConviniencesActived) {
@@ -176,8 +173,6 @@ const RegisterRoomChecklist: React.FC = () => {
     }
     return "";
   }, []);
-
-  console.log(stepInProgress);
 
   return (
     <Container>
@@ -205,48 +200,49 @@ const RegisterRoomChecklist: React.FC = () => {
         />
         <RegisterRoomCheckStep
           step="위치"
-          href="/room/register/building"
+          href="/room/register/location"
           disabled={!isLocationActived}
           inProgress={stepInProgress === "location"}
         />
         <RegisterRoomCheckStep
           step="편의 시설"
-          href="/room/register/building"
-          disabled={!isAmenitiesActived}
+          href="/room/register/amentities"
+          disabled={!isAmentitiesActived}
           inProgress={stepInProgress === "amentities"}
         />
         <RegisterRoomCheckStep
           step="공용 공간"
-          href="/room/register/building"
+          href="/room/register/conviniences"
           disabled={!isConviniencesActived}
           inProgress={stepInProgress === "conviniences"}
         />
         <RegisterRoomCheckStep
           step="사진"
-          href="/room/register/building"
+          href="/room/register/photo"
           disabled={!isPhotoActived}
           inProgress={stepInProgress === "photo"}
         />
         <RegisterRoomCheckStep
-          step="요금"
-          href="/room/register/building"
-          disabled={!isPriceActived}
-          inProgress={stepInProgress === "price"}
-        />
-
-        <RegisterRoomCheckStep
           step="설명"
-          href="/room/register/building"
+          href="/room/register/description"
           disabled={!isDescriptionActived}
           inProgress={stepInProgress === "description"}
         />
         <RegisterRoomCheckStep
           step="제목"
-          href="/room/register/building"
+          href="/room/register/title"
           disabled={!isTitleActived}
           inProgress={stepInProgress === "title"}
         />
+        <RegisterRoomCheckStep
+          step="요금"
+          href="/room/register/price"
+          disabled={!isPriceActived}
+          inProgress={stepInProgress === "price"}
+        />
       </ul>
+
+      {isPriceActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
     </Container>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
+import { NextPage } from "next";
 import RegisterRoomAmentities from "../../../components/register/RegisterRoomAmentities";
 
-const amenities: React.FC = () => {
+const amentities: NextPage = () => {
   return <RegisterRoomAmentities />;
 };
 
-export default amenities;
+export default amentities;

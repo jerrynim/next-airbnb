@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import RegisterRoomPrice from "../../../components/register/RegisterRoomPrice";
 
 const price: React.FC = () => {
-  return <RegisterPrice />;
+  return <RegisterRoomPrice />;
 };
 
 export default price;

@@ -58,7 +58,8 @@ const Container = styled.button<IProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => props.width || "100%"};
+  width: ${(props) => props.width || ""};
+  padding: 0 15px;
   border: 0;
   border-radius: 4px;
   color: white;

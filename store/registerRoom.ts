@@ -41,7 +41,7 @@ const initialState: RegisterRoomState = {
   //* 우편번호
   postcode: "",
   //* 편의시설
-  amenities: [],
+  amentities: [],
   //* 편의공간
   conveniences: [],
   //* 숙소 사진
@@ -188,9 +188,15 @@ const registerRoom = createSlice({
     setPostcode(state, action: PayloadAction<string>) {
       state.postcode = action.payload;
     },
+    setLatitude(state, action: PayloadAction<number>) {
+      state.latitude = action.payload;
+    },
+    setLongitude(state, action: PayloadAction<number>) {
+      state.longitude = action.payload;
+    },
 
     setAmentities(state, action: PayloadAction<string[]>) {
-      state.amenities = action.payload;
+      state.amentities = action.payload;
     },
 
     setConveniences(state, action: PayloadAction<string[]>) {
@@ -207,6 +213,10 @@ const registerRoom = createSlice({
 
     setDescription(state, action: PayloadAction<string>) {
       state.description = action.payload;
+    },
+
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload;
     },
   },
 });

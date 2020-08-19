@@ -37,12 +37,7 @@ interface IProps {
   isAllValueFilled?: boolean;
 }
 
-const RegisterRoomFooter: React.FC<IProps> = ({
-  prevHref,
-  nextHref,
-  isAllValueFilled,
-}) => {
-  const dispatch = useDispatch();
+const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
   return (
     <Container>
       <Link href={prevHref || ""}>
@@ -53,21 +48,11 @@ const RegisterRoomFooter: React.FC<IProps> = ({
       </Link>
       <Link href={nextHref || ""}>
         <a>
-          <Button
-            color="dark_cyan"
-            onClick={(e) => {
-              if (!isAllValueFilled) {
-                e.preventDefault();
-                dispatch(commonActions.setValidateMode(true));
-              }
-            }}
-          >
-            계속
-          </Button>
+          <Button onClick={(e) => {}}>등록하기</Button>
         </a>
       </Link>
     </Container>
   );
 };
 
-export default React.memo(RegisterRoomFooter);
+export default React.memo(RegisterRoomSubmitFooter);

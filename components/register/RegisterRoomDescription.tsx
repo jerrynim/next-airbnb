@@ -25,7 +25,7 @@ const Container = styled.div`
     margin-bottom: 32px;
   }
   .register-room-description-wrapper {
-    width: 429px;
+    width: 430px;
     font-size: 14px;
     margin-bottom: 16px;
   }

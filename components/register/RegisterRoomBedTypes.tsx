@@ -27,6 +27,7 @@ const Container = styled.li`
     color: ${palette.gray_48};
   }
   .register-room-public-bed-type-counters {
+    width: 320px;
     margin-top: 28px;
   }
   .register-room-bed-type-bedroom-counts {

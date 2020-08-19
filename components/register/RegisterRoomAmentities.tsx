@@ -31,7 +31,7 @@ const Container = styled.div`
 const RegisterRoomAmentities: React.FC = () => {
   const dispatch = useDispatch();
 
-  const amentities = useSelector((state) => state.registerRoom.amenities);
+  const amentities = useSelector((state) => state.registerRoom.amentities);
 
   const onChangeAmentities = (selected: string[]) => {
     dispatch(registerRoomActions.setAmentities(selected));
