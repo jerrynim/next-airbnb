@@ -1,20 +1,5 @@
 import fs from "fs";
 
-/*
-
-module.exports = {
-  webpack: (config, { isServer }) => {
-    // Fixes npm packages that depend on `fs` module
-    if (!isServer) {
-      config.node = {
-        fs: "empty",
-      };
-    }
-
-    return config;
-  },
-};
-*/
 import { StoredUserType } from "../../types/user";
 
 //* 저장된 유저 리스트 불러오기

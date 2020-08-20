@@ -242,7 +242,7 @@ const RegisterRoomChecklist: React.FC = () => {
         />
       </ul>
 
-      {isPriceActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
+      {!isPriceActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
     </Container>
   );
 };

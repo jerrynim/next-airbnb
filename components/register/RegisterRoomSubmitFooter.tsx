@@ -6,6 +6,9 @@ import BackArrowIcon from "../../public/static/svg/register/register_room_footer
 import Button from "../common/button/Button";
 import palette from "../../styles/palette";
 import { commonActions } from "../../store/common";
+import { registerRoomAPI } from "../../lib/api/room";
+import { useSelector } from "../../store";
+import { RegisterRoomState } from "../../types/reduxState";
 
 const Container = styled.footer`
   position: fixed;
@@ -38,6 +41,40 @@ interface IProps {
 }
 
 const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
+  const registerRoom: RegisterRoomState = {
+    amentities: ["헤어 드라이어"],
+    bathroomCount: 1,
+    bathroomType: "private",
+    bedCount: 1,
+    bedList: [],
+    bedroomCount: 0,
+    buildingType: "게스트 스위트",
+    city: "서울특별시",
+    conveniences: ["자쿠지"],
+    country: "대한민국",
+    description: "ddd",
+    detailAddress: "",
+    district: "마포구",
+    isSetUpForGuest: true,
+    largeBuildingType: "별채",
+    latitude: 37.568811,
+    longitude: 126.9033934,
+    maximumGuestCount: 1,
+    photos: ["/file/upload_280865c6661ad2aa27081f1602734820.jpg"],
+    postcode: "121-250",
+    price: "123",
+    publicBedList: [],
+    roomType: "entire",
+    streetAddress: "성산동 ４５０",
+    title: "dd",
+  };
+  const onClickregisterRoom = async () => {
+    try {
+      const { data } = await registerRoomAPI(registerRoom);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Container>
       <Link href={prevHref || ""}>
@@ -48,7 +85,7 @@ const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
       </Link>
       <Link href={nextHref || ""}>
         <a>
-          <Button onClick={(e) => {}}>등록하기</Button>
+          <Button onClick={onClickregisterRoom}>등록하기</Button>
         </a>
       </Link>
     </Container>

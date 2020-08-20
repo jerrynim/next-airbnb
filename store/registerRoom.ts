@@ -52,8 +52,6 @@ const initialState: RegisterRoomState = {
   title: "",
   //* 숙소 요금
   price: "",
-  crreatedAt: null,
-  updatedAt: null,
 };
 
 const registerRoom = createSlice({
