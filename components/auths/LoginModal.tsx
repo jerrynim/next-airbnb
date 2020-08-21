@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
-import Input from "../common/Input";
 import MailIcon from "../../public/static/svg/input/mail.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
@@ -70,7 +69,6 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
         loginBody[name] = inputValue;
       }
     });
-    console.log(loginBody);
     try {
       const { data } = await loginAPI(loginBody);
       dispatch(userActions.setUser(data));
@@ -117,7 +115,9 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
           />
         </div>
         <div className="login-modal-submit-button-wrapper">
-          <Button type="submit">로그인</Button>
+          <Button type="submit" width="100%">
+            로그인
+          </Button>
         </div>
       </form>
       <p>

@@ -1,25 +1,11 @@
 import { UserType } from "./user";
+import { BedType, RoomType } from "./room";
 
 export type UserState = UserType & {
   isLogged: boolean;
 };
 
-//* 침대 유형
-export type BedType =
-  | "다른 침대 추가"
-  | "소파"
-  | "에어 매트릭스"
-  | "요와 이불"
-  | "싱글"
-  | "더블"
-  | "퀸"
-  | "이층 침대"
-  | "바닥용 에어매트릭스"
-  | "유아 침대"
-  | "유아용 침대"
-  | "해먹"
-  | "물침대";
-
+//* 숙소 등록 redux state
 export type RegisterRoomState = {
   largeBuildingType: string | null;
   buildingType: string | null;
@@ -48,6 +34,12 @@ export type RegisterRoomState = {
   price: string;
 };
 
+//* 공통 redux state
 export type CommonState = {
   validateMode: boolean;
+};
+
+//* 숙소 redux state
+export type RoomState = {
+  rooms: RoomType[];
 };

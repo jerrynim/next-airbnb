@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import isEmpty from "lodash/isEmpty";
-import { StoredRoomType } from "../../types/room";
-import Data from "../../lib/data";
+import { RoomType } from "../../../types/room";
+import Data from "../../../lib/data";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const rooms = await Data.room.getList();
 
       if (isEmpty(rooms)) {
-        const newRoom: StoredRoomType = {
+        const newRoom: RoomType = {
           id: 1,
           ...req.body,
           createdAt: new Date(),
@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.end();
       }
 
-      const newRoom: StoredRoomType = {
+      const newRoom: RoomType = {
         id: rooms[rooms.length - 1].id + 1,
         ...req.body,
         createdAt: new Date(),
@@ -31,7 +31,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.statusCode = 201;
       return res.send({});
     } catch (e) {
-      return res.status(500).send(e.message);
+      res.statusCode = 500;
+      return res.send(e.message);
+    }
+  }
+  if (req.method === "GET") {
+    try {
+      const rooms = await Data.room.getList();
+      res.statusCode = 200;
+      return res.send(rooms);
+    } catch (e) {
+      console.log(e);
     }
   }
   res.statusCode = 405;

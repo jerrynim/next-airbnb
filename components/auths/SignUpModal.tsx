@@ -1,15 +1,13 @@
 import React, { useState, useMemo } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user";
 import MailIcon from "../../public/static/svg/input/mail.svg";
 import PersonIcon from "../../public/static/svg/input/person.svg";
 import OpenedEyeIcon from "../../public/static/svg/input/opened-eye.svg";
 import ClosedEyeIcon from "../../public/static/svg/input/closed_eye.svg";
-import Input from "../common/Input";
 import palette from "../../styles/palette";
-import Selector from "../common/Selector/Selector";
+import Selector from "../common/selector/Selector";
 import { monthsList, daysList, yearsList } from "../../lib/staticData";
 import Button from "../common/button/Button";
 import { signupAPI } from "../../lib/api/auth";
@@ -281,7 +279,9 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
           </div>
         </div>
         <div className="sign-up-modal-submit-button-wrapper">
-          <Button type="submit">가입 하기</Button>
+          <Button type="submit" width="100%">
+            가입 하기
+          </Button>
         </div>
         <p>
           이미 에어비앤비 계정이 있나요?
