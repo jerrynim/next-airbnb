@@ -6,6 +6,7 @@ import { cookieStringToObject } from "../lib/utils";
 import { getUser } from "../lib/api/user";
 import { wrapper } from "../store";
 import { userActions } from "../store/user";
+import "react-datepicker/dist/react-datepicker.css";
 
 const app = ({ Component, pageProps }: AppProps) => {
   return (

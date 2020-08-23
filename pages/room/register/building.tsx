@@ -1,7 +1,8 @@
 import React from "react";
+import { NextPage } from "next";
 import RegisterRoomBuilding from "../../../components/register/RegisterRoomBuilding";
 
-const building: React.FC = () => {
+const building: NextPage = () => {
   return <RegisterRoomBuilding />;
 };
 

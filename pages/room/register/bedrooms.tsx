@@ -1,7 +1,8 @@
 import React from "react";
+import { NextPage } from "next";
 import RegisterRoomBedrooms from "../../../components/register/RegisterRoomBedrooms";
 
-const bedrooms: React.FC = () => {
+const bedrooms: NextPage = () => {
   return <RegisterRoomBedrooms />;
 };
 

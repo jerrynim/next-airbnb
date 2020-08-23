@@ -43,6 +43,8 @@ export type RoomType = {
   description: string;
   title: string;
   price: string;
+  startDate: Date;
+  endDate: Date;
   createdAt: Date;
   updatedAt: Date;
 };

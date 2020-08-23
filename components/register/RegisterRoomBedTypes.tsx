@@ -6,7 +6,7 @@ import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedTypes } from "../../lib/staticData";
 import Counter from "../common/Counter";
 import palette from "../../styles/palette";
-import { BedType } from "../../types/reduxState";
+import { BedType } from "../../types/room";
 import { registerRoomActions } from "../../store/registerRoom";
 
 const Container = styled.li`

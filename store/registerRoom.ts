@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RegisterRoomState, BedType } from "../types/reduxState";
+import { RegisterRoomState } from "../types/reduxState";
+import { BedType } from "../types/room";
 
 //* 초기 상태
 const initialState: RegisterRoomState = {
@@ -52,6 +53,10 @@ const initialState: RegisterRoomState = {
   title: "",
   //* 숙소 요금
   price: "",
+  //* 예약 가능 시작 날짜
+  startDate: null,
+  //* 예약 가능 마감 날짜
+  endDate: null,
 };
 
 const registerRoom = createSlice({
@@ -215,6 +220,14 @@ const registerRoom = createSlice({
 
     setTitle(state, action: PayloadAction<string>) {
       state.title = action.payload;
+    },
+
+    setStartDate(state, action: PayloadAction<string | null>) {
+      state.startDate = action.payload;
+    },
+
+    setEndDate(state, action: PayloadAction<string | null>) {
+      state.endDate = action.payload;
     },
   },
 });
