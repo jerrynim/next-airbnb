@@ -21,3 +21,20 @@ export const getNumber = (string: string) => {
   }
   return null;
 };
+
+//* query string 만들기
+export const makeQueryString = (baseUrl: string, queriesObject: Object) => {
+  const keys = Object.keys(queriesObject);
+  const values = Object.values(queriesObject);
+  if (keys.length === 0) {
+    return baseUrl;
+  }
+  let queryString = `${baseUrl}?`;
+  let i = 0;
+  while (i < keys.length) {
+    queryString += `${keys[i]}=${values[i]}&`;
+    i += 1;
+  }
+  //* 마지막 '&' 제거하기
+  return queryString.slice(0, -1);
+};

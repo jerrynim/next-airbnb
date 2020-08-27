@@ -30,12 +30,45 @@ const Container = styled.div`
     font-size: 14px;
     margin-bottom: 16px;
   }
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  input {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 46px;
+    padding: 0 11px;
+    border: 1px solid ${palette.gray_eb};
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    & ::placeholder {
+      color: ${palette.gray_76};
+    }
+    & :focus {
+      border-color: ${palette.dark_cyan};
+    }
+  }
+
+  .register-room-date-wrapper {
+    display: flex;
+    align-items: center;
+    .register-room-start-date {
+      margin-right: 20px;
+    }
+
+    .register-room-end-date {
+      margin-left: 20px;
+    }
+  }
 `;
 
 const RegisterRoomDate: React.FC = () => {
   const dispatch = useDispatch();
   const startDateSelector = (state: RootState) => state.registerRoom.startDate;
-  const endDateSelector = (state: RootState) => state.registerRoom.startDate;
+  const endDateSelector = (state: RootState) => state.registerRoom.endDate;
 
   const dateSelector = createSelector(
     [startDateSelector, endDateSelector],
@@ -47,40 +80,56 @@ const RegisterRoomDate: React.FC = () => {
 
   const { startDate, endDate } = useSelector(dateSelector);
 
-  console.log(startDate, endDate);
   return (
     <Container>
-      <h2>게스트에게 숙소에 대해 설명해주세요.</h2>
-      <h3>8단계</h3>
-      <p className="register-room-description-wrapper">
-        숙소의 장점, 특별한 편의시설(예: 빠른 와이파이 또는 주차 시설)과 주변
-        지역의 매력을 소개해주세요.
-      </p>
-      <DatePicker
-        onChange={(date) =>
-          dispatch(
-            registerRoomActions.setStartDate(
-              date ? (date as Date).toISOString() : null
-            )
-          )
-        }
-        selectsStart
-        startDate={startDate as Date}
-        disabledKeyboardNavigation
-        minDate={new Date()}
-      />
-      <DatePicker
-        onChange={(date) =>
-          dispatch(
-            registerRoomActions.setEndDate(
-              date ? (date as Date).toISOString() : null
-            )
-          )
-        }
-        selectsEnd
-        endDate={new Date(endDate as Date)}
-        disabledKeyboardNavigation
-        minDate={new Date(startDate as Date)}
+      <h2>예약 가능 여부 설정하기</h2>
+      <h3>11단계</h3>
+
+      <div className="register-room-date-wrapper">
+        <div className="register-room-start-date">
+          <label>예약 시작일</label>
+          <DatePicker
+            selected={startDate}
+            monthsShown={2}
+            onChange={(date) =>
+              dispatch(
+                registerRoomActions.setStartDate(
+                  date ? (date as Date).toISOString() : null
+                )
+              )
+            }
+            selectsStart
+            startDate={startDate as Date}
+            endDate={new Date(endDate as Date)}
+            disabledKeyboardNavigation
+            minDate={new Date()}
+          />
+        </div>
+
+        <div className="register-room-end-date">
+          <label>예약 마감일</label>
+          <DatePicker
+            selected={endDate}
+            monthsShown={2}
+            onChange={(date) =>
+              dispatch(
+                registerRoomActions.setEndDate(
+                  date ? (date as Date).toISOString() : null
+                )
+              )
+            }
+            selectsEnd
+            startDate={startDate as Date}
+            endDate={new Date(endDate as Date)}
+            disabledKeyboardNavigation
+            minDate={new Date(startDate as Date)}
+          />
+        </div>
+      </div>
+
+      <RegisterRoomFooter
+        nextHref="/room/register/checklist"
+        isAllValueFilled={!startDate || !endDate || !(startDate > endDate)}
       />
     </Container>
   );

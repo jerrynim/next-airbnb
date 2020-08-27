@@ -13,6 +13,11 @@ const Container = styled.div`
     color: ${palette.gray_48};
     font-weight: 600;
   }
+  .counter-description {
+    display: block;
+    font-size: 14px;
+    color: ${palette.gray_71};
+  }
   .counter-contents {
     display: flex;
     justify-content: space-between;
@@ -42,6 +47,7 @@ const Container = styled.div`
 
 interface IProps {
   label?: string;
+  description?: string;
   value?: number;
   minValue?: number;
   increaseNum?: number;
@@ -54,10 +60,16 @@ const Counter: React.FC<IProps> = ({
   minValue = 0,
   increaseNum = 1,
   onChange,
+  description,
 }) => {
   return (
     <Container>
-      <label>{label}</label>
+      <label>
+        {label}
+        {description && (
+          <span className="counter-description">{description}</span>
+        )}
+      </label>
       <div className="counter-contents">
         <button
           type="button"

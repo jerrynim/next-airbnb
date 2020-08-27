@@ -36,10 +36,7 @@ const RegisterRoomPrice: React.FC = () => {
         value={price}
         onChange={(e) => dispatch(registerRoomActions.setPrice(e.target.value))}
       />
-      <RegisterRoomFooter
-        nextHref="/room/register/checklist"
-        isAllValueFilled
-      />
+      <RegisterRoomFooter nextHref="/room/register/date" isAllValueFilled />
     </Container>
   );
 };

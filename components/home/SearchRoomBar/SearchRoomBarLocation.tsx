@@ -6,20 +6,20 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  .room-search-bar-location-texts {
+  .search-room-bar-location-texts {
     position: absolute;
     top: 22px;
     left: 16px;
-    .room-search-bar-location-label {
+    .search-room-bar-location-label {
       font-size: 10px;
       font-weight: 800;
       margin-bottom: 4px;
     }
-    .room-search-bar-location-placeholder {
+    .search-room-bar-location-placeholder {
       font-size: 14px;
       opacity: 0.7;
     }
-    .room-search-bar-location-value {
+    .search-room-bar-location-value {
       font-size: 14px;
       font-weight: 600;
     }
@@ -42,17 +42,17 @@ interface IProps {
   setLocation: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const RoomSearchBarLocation: React.FC<IProps> = ({ location, setLocation }) => {
+const SearchRoomBarLocation: React.FC<IProps> = ({ location, setLocation }) => {
   return (
     <Container>
-      <div className="room-search-bar-location-texts">
-        <p className="room-search-bar-location-label">인원</p>
+      <div className="search-room-bar-location-texts">
+        <p className="search-room-bar-location-label">인원</p>
         {!location ? (
-          <p className="room-search-bar-location-placeholder">
+          <p className="search-room-bar-location-placeholder">
             어디로 여행가세요?
           </p>
         ) : (
-          <p className="room-search-bar-location-value">{location}</p>
+          <p className="search-room-bar-location-value">{location}</p>
         )}
       </div>
       <select value={location} onChange={(e) => setLocation(e.target.value)}>
@@ -65,4 +65,4 @@ const RoomSearchBarLocation: React.FC<IProps> = ({ location, setLocation }) => {
   );
 };
 
-export default RoomSearchBarLocation;
+export default SearchRoomBarLocation;

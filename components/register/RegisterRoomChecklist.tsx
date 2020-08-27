@@ -139,6 +139,15 @@ const RegisterRoomChecklist: React.FC = () => {
     return true;
   }, []);
 
+  //* 예약 날짜가 채워져 있는지
+  const isDateActived = useMemo(() => {
+    const { startDate, endDate } = registerRoom;
+    if (!isPriceActived || !startDate || !endDate) {
+      return false;
+    }
+    return true;
+  }, []);
+
   //* 진행중인 단계
   const stepInProgress = useMemo(() => {
     if (!isBuildingTypeActived) {
@@ -170,6 +179,9 @@ const RegisterRoomChecklist: React.FC = () => {
     }
     if (!isTitleActived) {
       return "title";
+    }
+    if (!isDateActived) {
+      return "date";
     }
     return "";
   }, []);
@@ -240,9 +252,15 @@ const RegisterRoomChecklist: React.FC = () => {
           disabled={!isPriceActived}
           inProgress={stepInProgress === "price"}
         />
+        <RegisterRoomCheckStep
+          step="예약 날짜"
+          href="/room/register/date"
+          disabled={!isDateActived}
+          inProgress={stepInProgress === "date"}
+        />
       </ul>
 
-      {!isPriceActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
+      {isDateActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
     </Container>
   );
 };

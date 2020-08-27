@@ -5,6 +5,8 @@ import ko from "date-fns/locale/ko";
 import palette from "../../styles/palette";
 
 const Container = styled.div`
+  width: 100%;
+  height: 100%;
   .react-datepicker {
     padding: 16px 32px;
     background-color: white;
@@ -23,14 +25,14 @@ const Container = styled.div`
   }
   .react-datepicker__navigation--previous {
     top: 40px;
-    left: 60px;
+    left: 56px;
     border: 0;
     background-image: url("/static/svg/datePicker/datepicker_left_arrow.svg");
     background-repeat: no-repeat;
   }
   .react-datepicker__navigation--next {
     top: 40px;
-    right: 60px;
+    right: 56px;
     border: 0;
     background-image: url("/static/svg/datePicker/datepciker_right_arrow.svg");
     background-repeat: no-repeat;
@@ -99,7 +101,7 @@ const Container = styled.div`
 const DatePicker: React.FC<ReactDatePickerProps> = ({ ...props }) => {
   return (
     <Container>
-      <ReactDatePicker {...props} locale={ko} />
+      <ReactDatePicker {...props} locale={ko} dateFormat="MM월 dd일" />
     </Container>
   );
 };

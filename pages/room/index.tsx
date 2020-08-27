@@ -7,7 +7,8 @@ const index: NextPage = () => {
   return <div>hello world</div>;
 };
 
-index.getInitialProps = async ({ store }) => {
+index.getInitialProps = async ({ store, query }) => {
+  console.log(query);
   try {
     const { data } = await getRoomListAPI();
     store.dispatch(roomActions.setRooms(data));
