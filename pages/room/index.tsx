@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { getRoomListAPI } from "../../lib/api/room";
 import { roomActions } from "../../store/room";
+import RoomListPage from "../../components/room/RoomListPage";
 
 const index: NextPage = () => {
-  return <div>hello world</div>;
+  return <RoomListPage />;
 };
 
 index.getInitialProps = async ({ store, query }) => {
-  console.log(query);
   try {
-    const { data } = await getRoomListAPI();
+    const { data } = await getRoomListAPI(query);
     store.dispatch(roomActions.setRooms(data));
   } catch (e) {
     console.log(e.message);

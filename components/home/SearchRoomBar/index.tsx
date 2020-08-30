@@ -45,6 +45,9 @@ const SearchRoomBar: React.FC = () => {
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantsCount, setInfantsCount] = useState(0);
 
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
   const router = useRouter();
 
   //* 검색 버튼 클릭시
@@ -57,6 +60,8 @@ const SearchRoomBar: React.FC = () => {
         adultCount,
         childrenCount,
         infantsCount,
+        latitude,
+        longitude,
       })
     );
   };
@@ -68,6 +73,8 @@ const SearchRoomBar: React.FC = () => {
           <SearchRoomBarLocation
             location={location}
             setLocation={setLocation}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
           />
         </div>
         <div className="search-room-bar-input-wrapper">

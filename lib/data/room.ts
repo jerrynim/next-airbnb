@@ -1,11 +1,10 @@
 import fs from "fs";
-
-import { StoredRoomType } from "../../types/room";
+import { RoomType } from "../../types/room";
 
 //* 저장된 유저 리스트 불러오기
 const getList = async () => {
   try {
-    const rooms = await new Promise<StoredRoomType[]>((resolve, reject) => {
+    const rooms = await new Promise<RoomType[]>((resolve, reject) => {
       fs.exists("data/rooms.json", (exists) => {
         if (!exists) {
           reject(new Error("rooms.json 파일이 없습니다."));
@@ -18,7 +17,7 @@ const getList = async () => {
           if (roomsString === "") {
             return resolve([]);
           }
-          const storeRooms: StoredRoomType[] = JSON.parse(data.toString());
+          const storeRooms: RoomType[] = JSON.parse(data.toString());
           return resolve(storeRooms);
         });
       });
@@ -30,7 +29,8 @@ const getList = async () => {
   }
 };
 
-const write = async (rooms: StoredRoomType[]) => {
+//* 숙소 저장하기
+const write = async (rooms: RoomType[]) => {
   fs.writeFile("data/rooms.json", JSON.stringify(rooms), (err) => {
     if (err) {
       console.log(err.message);
@@ -39,4 +39,16 @@ const write = async (rooms: StoredRoomType[]) => {
   });
 };
 
-export default { getList, write };
+//* 숙소 검색하기
+const find = async (roomId: number) => {
+  try {
+    const rooms = await getList();
+    const user = rooms.find((room) => room.id === roomId);
+    return user;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
+export default { getList, write, find };
