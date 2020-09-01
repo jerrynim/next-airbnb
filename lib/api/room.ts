@@ -4,8 +4,8 @@ import { RoomType } from "../../types/room";
 import { makeQueryString } from "../utils";
 
 //* 숙소 등록하기
-export const registerRoomAPI = (body: RegisterRoomState) =>
-  axios.post("/api/room", body);
+export const registerRoomAPI = (body: RegisterRoomState & { hostId: number }) =>
+  axios.post("/api/rooms/register", body);
 
 //* 숙소 리스트 불러오기 query
 type GetRoomListAPIQueries = {

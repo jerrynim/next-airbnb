@@ -1,4 +1,5 @@
 import { BedType } from "./reduxState";
+import { UserType } from "./user";
 
 //* 침대 유형
 export type BedType =
@@ -47,4 +48,39 @@ export type RoomType = {
   endDate: Date;
   createdAt: Date;
   updatedAt: Date;
+  host: UserType;
+};
+
+export type StoredRoomType = {
+  id: number;
+  largeBuildingType: string | null;
+  buildingType: string | null;
+  roomType: string | null;
+  isSetUpForGuest: boolean | null;
+  maximumGuestCount: number;
+  bedroomCount: number;
+  bedCount: number;
+  bedList: { id: number; beds: { type: BedType; count: number }[] }[];
+  publicBedList: { type: BedType; count: number }[];
+  bathroomCount: number;
+  bathroomType: "private" | "public";
+  latitude: number;
+  longitude: number;
+  country: string;
+  city: string;
+  district: string;
+  streetAddress: string;
+  detailAddress: string;
+  postcode: string;
+  amentities: string[];
+  conveniences: string[];
+  photos: string[];
+  description: string;
+  title: string;
+  price: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  hostId: number;
 };

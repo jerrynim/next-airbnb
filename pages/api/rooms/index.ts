@@ -4,37 +4,6 @@ import { RoomType } from "../../../types/room";
 import Data from "../../../lib/data";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === "POST") {
-    //? 숙소 등록 하기
-    try {
-      const rooms = await Data.room.getList();
-
-      if (isEmpty(rooms)) {
-        const newRoom: RoomType = {
-          id: 1,
-          ...req.body,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        Data.room.write([newRoom]);
-        res.statusCode = 201;
-        return res.end();
-      }
-
-      const newRoom: RoomType = {
-        id: rooms[rooms.length - 1].id + 1,
-        ...req.body,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      Data.room.write([...rooms, newRoom]);
-      res.statusCode = 201;
-      return res.send({});
-    } catch (e) {
-      res.statusCode = 500;
-      return res.send(e.message);
-    }
-  }
   if (req.method === "GET") {
     const {
       location,
@@ -81,8 +50,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return true;
       });
 
+      //* host 정보 넣기
+      const roomsWithHost = rooms.map((room) => {
+        const host = Data.user.find({ id: room.hostId });
+        return { ...room, host };
+      });
       res.statusCode = 200;
-      return res.send(rooms);
+      return res.send(roomsWithHost);
     } catch (e) {
       console.log(e);
     }

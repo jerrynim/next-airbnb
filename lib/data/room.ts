@@ -1,10 +1,10 @@
 import fs from "fs";
-import { RoomType } from "../../types/room";
+import { RoomType, StoredRoomType } from "../../types/room";
 
 //* 저장된 유저 리스트 불러오기
 const getList = async () => {
   try {
-    const rooms = await new Promise<RoomType[]>((resolve, reject) => {
+    const rooms = await new Promise<StoredRoomType[]>((resolve, reject) => {
       fs.exists("data/rooms.json", (exists) => {
         if (!exists) {
           reject(new Error("rooms.json 파일이 없습니다."));
@@ -17,7 +17,7 @@ const getList = async () => {
           if (roomsString === "") {
             return resolve([]);
           }
-          const storeRooms: RoomType[] = JSON.parse(data.toString());
+          const storeRooms: StoredRoomType[] = JSON.parse(data.toString());
           return resolve(storeRooms);
         });
       });
@@ -30,7 +30,7 @@ const getList = async () => {
 };
 
 //* 숙소 저장하기
-const write = async (rooms: RoomType[]) => {
+const write = async (rooms: StoredRoomType[]) => {
   fs.writeFile("data/rooms.json", JSON.stringify(rooms), (err) => {
     if (err) {
       console.log(err.message);

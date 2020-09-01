@@ -41,36 +41,15 @@ interface IProps {
 }
 
 const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
-  const registerRoom: RegisterRoomState = {
-    amentities: ["헤어 드라이어"],
-    bathroomCount: 1,
-    bathroomType: "private",
-    bedCount: 1,
-    bedList: [],
-    bedroomCount: 0,
-    buildingType: "게스트 스위트",
-    city: "서울특별시",
-    conveniences: ["자쿠지"],
-    country: "대한민국",
-    description: "ddd",
-    detailAddress: "",
-    district: "마포구",
-    isSetUpForGuest: true,
-    largeBuildingType: "별채",
-    latitude: 37.568811,
-    longitude: 126.9033934,
-    maximumGuestCount: 1,
-    photos: ["/file/upload_280865c6661ad2aa27081f1602734820.jpg"],
-    postcode: "121-250",
-    price: "123",
-    publicBedList: [],
-    roomType: "entire",
-    streetAddress: "성산동 ４５０",
-    title: "dd",
+  const userId = useSelector((state) => state.user.id);
+  const registerRoom = useSelector((state) => state.registerRoom);
+  const registerRoomBody = {
+    ...registerRoom,
+    hostId: userId,
   };
   const onClickregisterRoom = async () => {
     try {
-      const { data } = await registerRoomAPI(registerRoom);
+      await registerRoomAPI(registerRoomBody);
     } catch (e) {
       console.log(e);
     }

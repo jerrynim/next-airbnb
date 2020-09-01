@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     //? 숙소 등록 하기
     try {
       const rooms = await Data.room.getList();
-
+      console.log(rooms);
       if (isEmpty(rooms)) {
         const newRoom: RoomType = {
           id: 1,
