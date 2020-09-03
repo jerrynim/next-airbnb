@@ -26,6 +26,7 @@ const getColor = (color: string, colorReverse: boolean) => {
           color: ${palette.dark_cyan};
           border: 2px solid ${palette.dark_cyan};
         `;
+
       default:
         return css`
           background-color: white;
@@ -38,6 +39,10 @@ const getColor = (color: string, colorReverse: boolean) => {
     case "dark_cyan":
       return css`
         background-color: ${palette.dark_cyan};
+      `;
+    case "amaranth":
+      return css`
+        background-color: ${palette.amaranth};
       `;
     default:
       return css`

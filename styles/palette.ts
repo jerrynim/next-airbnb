@@ -2,6 +2,7 @@ export default {
   cardinal: "#a41850",
   davidson_orange: "#c13515",
   tawny: "#d93900",
+  amaranth: "#E51E53",
   orange: "#fc642d",
   main_pink: "#FF385C",
   bittersweet: "#ff5a5f",
