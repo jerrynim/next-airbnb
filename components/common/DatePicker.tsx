@@ -12,6 +12,7 @@ const Container = styled.div`
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
     border-radius: 32px;
+    cursor: default;
   }
   .react-datepicker__month-container {
     padding: 0 27px;

@@ -1,47 +1,37 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import isEmpty from "lodash/isEmpty";
-import { RoomType } from "../../../types/room";
 import Data from "../../../lib/data";
+import { StoredReservation } from "../../../types/reservation";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     //? 숙소 등록 하기
     try {
-      const rooms = await Data.room.getList();
-      console.log(rooms);
-      if (isEmpty(rooms)) {
-        const newRoom: RoomType = {
+      const reservations = await Data.reservation.getList();
+      if (isEmpty(reservations)) {
+        const reservation: StoredReservation = {
           id: 1,
           ...req.body,
           createdAt: new Date(),
           updatedAt: new Date(),
         };
-        Data.room.write([newRoom]);
+        Data.reservation.write([reservation]);
         res.statusCode = 201;
         return res.end();
       }
 
-      const newRoom: RoomType = {
-        id: rooms[rooms.length - 1].id + 1,
+      const reservation = {
+        id: reservations[reservations.length - 1].id + 1,
         ...req.body,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      Data.room.write([...rooms, newRoom]);
+      Data.reservation.write([...reservations, reservation]);
       res.statusCode = 201;
       return res.send({});
     } catch (e) {
       res.statusCode = 500;
       return res.send(e.message);
-    }
-  }
-  if (req.method === "GET") {
-    try {
-      const rooms = await Data.room.getList();
-      res.statusCode = 200;
-      return res.send(rooms);
-    } catch (e) {
-      console.log(e);
     }
   }
   res.statusCode = 405;

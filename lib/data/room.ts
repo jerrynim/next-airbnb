@@ -1,5 +1,5 @@
 import fs from "fs";
-import { RoomType, StoredRoomType } from "../../types/room";
+import { StoredRoomType } from "../../types/room";
 
 //* 저장된 유저 리스트 불러오기
 const getList = async () => {
