@@ -117,7 +117,9 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   );
 
   //* 인풋값 발리데이션 체크 하기
-  const validateSignUpForm = () => {
+  const validateSignUpForm = (signUpBody) => {
+    const { email, password, lastname, firstname } = signUpBody;
+    console.log(signUpBody);
     if (!email) {
       return false;
     }
@@ -160,7 +162,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
         signUpBody[name] = inputValue;
       }
     });
-    if (validateSignUpForm()) {
+    if (validateSignUpForm(signUpBody)) {
       try {
         const { data } = await signupAPI(signUpBody);
         dispatch(userActions.setUser(data));

@@ -70,10 +70,11 @@ const SelfInput: React.FC<IProps> = ({
   error = false,
   validation = false,
   errorMessage,
+  value: initialValue,
   ...props
 }) => {
-  const [value, setValue] = useState("");
-
+  const [value, setValue] = useState(initialValue);
+  console.log(error);
   return (
     <Container iconExist={!!icon} error={error} validation={validation}>
       <input
