@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import palette from "../../styles/palette";
 
 type InputContainerProps = {
-  error: boolean;
+  isValid: boolean;
   validation: boolean;
 };
 
@@ -40,9 +40,9 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    error &&
+    !isValid &&
     css`
       textarea {
         background-color: ${palette.snow};
@@ -52,9 +52,9 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    !error &&
+    isValid &&
     css`
       textarea {
         border-color: ${palette.dark_cyan};
@@ -65,7 +65,7 @@ const Container = styled.div<InputContainerProps>`
 interface IProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   icon?: JSX.Element;
   label?: string;
-  error?: boolean;
+  isValid?: boolean;
   validation?: boolean;
   errorMessage?: string;
 }
@@ -73,17 +73,17 @@ interface IProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 const Textarea: React.FC<IProps> = ({
   icon,
   label,
-  error = false,
+  isValid = false,
   validation = true,
   errorMessage,
   ...props
 }) => {
   return (
-    <Container error={error} validation={validation}>
+    <Container isValid={isValid} validation={validation}>
       {label && <label>{label}</label>}
       <textarea {...props} />
       {icon}
-      {validation && error && errorMessage && (
+      {validation && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>

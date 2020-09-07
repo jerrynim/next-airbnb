@@ -6,7 +6,7 @@ import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import WarningIcon from "../../../public/static/svg/selector/warning.svg";
 
-const Container = styled.div<{ error: boolean; validateMode: boolean }>`
+const Container = styled.div<{ isValid: boolean; validateMode: boolean }>`
   width: 100%;
 
   label {
@@ -32,9 +32,9 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     background-position: right 11px center;
     background-repeat: no-repeat;
 
-    ${({ validateMode, error }) => {
+    ${({ validateMode, isValid }) => {
       if (validateMode) {
-        if (error) {
+        if (!isValid) {
           return css`
             border-color: ${palette.tawny};
             background-color: ${palette.snow};
@@ -74,7 +74,7 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   options?: string[];
   value?: string;
-  error?: boolean;
+  isValid?: boolean;
   errorMessage?: string;
   disabledOptions?: string[];
 }
@@ -82,7 +82,7 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 const RegisterSelector: React.FC<IProps> = ({
   label,
   options,
-  error,
+  isValid,
   errorMessage = "옵션을 선택하세요.",
   disabledOptions = [],
   ...props
@@ -90,7 +90,7 @@ const RegisterSelector: React.FC<IProps> = ({
   const validateMode = useSelector((state) => state.common.validateMode);
 
   return (
-    <Container error={!!error} validateMode={validateMode}>
+    <Container isValid={!!isValid} validateMode={validateMode}>
       <label>
         {label && <span>{label}</span>}
         <select {...props}>
@@ -101,7 +101,7 @@ const RegisterSelector: React.FC<IProps> = ({
           ))}
         </select>
       </label>
-      {validateMode && error && (
+      {validateMode && !isValid && (
         <div className="selector-warning">
           <WarningIcon />
           <p>{errorMessage}</p>

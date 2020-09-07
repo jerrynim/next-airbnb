@@ -42,9 +42,10 @@ interface IProps {
 
 const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("tt@ttt.com");
 
-  const [password, setPassword] = useState("1231222222");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [validateMode, setValidateMode] = useState(false);
   const [isPasswordHided, setIsPasswordHided] = useState(true);
 
@@ -58,7 +59,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
     event.preventDefault();
     setValidateMode(true);
     const form: any = event.target;
-    const loginBody: LoginAPIBody & { [key: string]: any } = {
+    const loginBody: LoginAPIBody & { [key: string]: string } = {
       email: "",
       password: "",
     };
@@ -88,7 +89,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
             type="email"
             icon={<MailIcon />}
             value={email}
-            error={email === ""}
+            isValid={email !== ""}
             validation={validateMode}
             onChange={(e) => setEmail(e.target.value)}
             errorMessage="이메일이 필요합니다."
@@ -108,7 +109,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
               )
             }
             value={password}
-            error={password === ""}
+            isValid={password !== ""}
             validation={validateMode}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage="비밀번호를 입력하세요."

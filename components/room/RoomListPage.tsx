@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
-import Button from "../common/button/Button";
+import dynamic from "next/dynamic";
 import MapIcon from "../../public/static/svg/room/map.svg";
 import palette from "../../styles/palette";
 import { useSelector } from "../../store";
 import RoomList from "./RoomList";
+
+const RoomListMap = dynamic(() => import("./RoomListMap"), { ssr: false });
 
 const Container = styled.div`
   padding: 50px 80px;
@@ -78,7 +80,9 @@ const RoomListPage: React.FC = () => {
           <MapIcon /> 지도 표시하기
         </button>
       </div>
+
       <RoomList />
+      <RoomListMap />
     </Container>
   );
 };

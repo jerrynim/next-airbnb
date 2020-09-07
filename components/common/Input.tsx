@@ -4,7 +4,7 @@ import palette from "../../styles/palette";
 
 type InputContainerProps = {
   iconExist: boolean;
-  error: boolean;
+  isValid: boolean;
   validation: boolean;
 };
 
@@ -40,9 +40,9 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    error &&
+    !isValid &&
     css`
       input {
         background-color: ${palette.snow};
@@ -52,9 +52,9 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    !error &&
+    isValid &&
     css`
       input {
         border-color: ${palette.dark_cyan};
@@ -65,7 +65,7 @@ const Container = styled.div<InputContainerProps>`
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
   label?: string;
-  error?: boolean;
+  isValid?: boolean;
   validation?: boolean;
   errorMessage?: string;
 }
@@ -73,17 +73,17 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<IProps> = ({
   icon,
   label,
-  error = false,
+  isValid = false,
   validation = false,
   errorMessage,
   ...props
 }) => {
   return (
-    <Container iconExist={!!icon} error={error} validation={validation}>
+    <Container iconExist={!!icon} isValid={isValid} validation={validation}>
       {label && <label>{label}</label>}
       <input {...props} />
       {icon}
-      {validation && error && errorMessage && (
+      {validation && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>

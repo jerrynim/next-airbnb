@@ -5,7 +5,7 @@ import palette from "../../styles/palette";
 import { useSelector } from "../../store";
 import WarningIcon from "../../public/static/svg/selector/warning.svg";
 
-const Container = styled.div<{ error: boolean; validateMode: boolean }>`
+const Container = styled.div<{ isValid: boolean; validateMode: boolean }>`
   .radio-label {
     font-size: 16px;
     font-weight: 600;
@@ -46,9 +46,9 @@ const Container = styled.div<{ error: boolean; validateMode: boolean }>`
     border-radius: 50%;
     outline: none;
 
-    ${({ validateMode, error }) => {
+    ${({ validateMode, isValid }) => {
       if (validateMode) {
-        if (error) {
+        if (!isValid) {
           return css`
             border-color: ${palette.tawny};
             background-color: ${palette.snow};
@@ -106,7 +106,7 @@ interface IProps {
   value?: any;
   onChange?: (value: any) => void;
   options?: { label: string; value: any; description?: string }[];
-  error?: boolean;
+  isValid?: boolean;
   errorMessage?: string;
 }
 
@@ -115,14 +115,14 @@ const RadioGroup: React.FC<IProps> = ({
   value,
   options,
   onChange,
-  error,
+  isValid,
   errorMessage = "옵션을 선택하세요",
   ...props
 }) => {
   const validateMode = useSelector((state) => state.common.validateMode);
 
   return (
-    <Container error={!!error} validateMode={validateMode}>
+    <Container isValid={!!isValid} validateMode={validateMode}>
       <p className="radio-label">{label}</p>
       <div className="radio-list-wrapper">
         {options?.map((option, index) => (
@@ -140,7 +140,7 @@ const RadioGroup: React.FC<IProps> = ({
           </label>
         ))}
       </div>
-      {validateMode && error && (
+      {validateMode && !isValid && (
         <div className="radio-group-warning">
           <WarningIcon />
           <p>{errorMessage}</p>

@@ -47,7 +47,7 @@ const RegisterRoomDescription: React.FC = () => {
       <div className="register-room-description-wrapper">
         <Textarea
           value={description}
-          error={!description}
+          isValid={!!description}
           errorMessage="입력해 주세요."
           onChange={(e) =>
             dispatch(registerRoomActions.setDescription(e.target.value))

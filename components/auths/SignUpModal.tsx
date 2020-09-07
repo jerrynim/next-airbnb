@@ -13,8 +13,8 @@ import Button from "../common/button/Button";
 import { signupAPI } from "../../lib/api/auth";
 import PasswordWarning from "./PasswordWarning";
 import { authActions } from "../../store/auth";
-import SelfInput from "../common/SelfInput";
 import { SingUpAPIBody } from "../../types/api/auth";
+import Input from "../common/Input";
 
 const Container = styled.div`
   .sign-up-input-wrapper {
@@ -117,9 +117,8 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   );
 
   //* 인풋값 발리데이션 체크 하기
-  const validateSignUpForm = (signUpBody) => {
+  const validateSignUpForm = (signUpBody: SingUpAPIBody) => {
     const { email, password, lastname, firstname } = signUpBody;
-    console.log(signUpBody);
     if (!email) {
       return false;
     }
@@ -173,49 +172,48 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     }
   };
 
-  /** */
   return (
     <Container>
       <form onSubmit={onSubmitSignUp}>
         <div className="sign-up-input-wrapper">
-          <SelfInput
+          <Input
             name="email"
             placeholder="이메일 주소"
             type="email"
             icon={<MailIcon />}
             value={email}
-            error={email === ""}
+            isValid={!!email}
             validation={validateMode}
             onChange={(e) => setEmail(e.target.value)}
             errorMessage="이메일이 필요합니다."
           />
         </div>
         <div className="sign-up-input-wrapper">
-          <SelfInput
+          <Input
             name="lastname"
             placeholder="이름(예:길동)"
             icon={<PersonIcon />}
             value={lastname}
-            error={lastname === ""}
+            isValid={!!lastname}
             validation={validateMode}
             onChange={(e) => setLastname(e.target.value)}
             errorMessage="이름을 입력하세요."
           />
         </div>
         <div className="sign-up-input-wrapper">
-          <SelfInput
+          <Input
             name="firstname"
             placeholder="성(예: 홍)"
             icon={<PersonIcon />}
             value={firstname}
-            error={firstname === ""}
+            isValid={!!firstname}
             validation={validateMode}
             onChange={(e) => setFirstname(e.target.value)}
             errorMessage="성을 입력하세요."
           />
         </div>
         <div className="sign-up-input-wrapper sign-up-password-input-wrapper">
-          <SelfInput
+          <Input
             name="password"
             placeholder="비밀번호 설정하기"
             type={isPasswordHided ? "password" : "text"}
@@ -228,7 +226,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             }
             onFocus={() => setPasswordFocused(true)}
             value={password}
-            error={password === ""}
+            isValid={!!password}
             validation={validateMode}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage="비밀번호를 입력하세요."
@@ -238,15 +236,15 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
         {passwordFocused && (
           <>
             <PasswordWarning
-              error={isPasswordHasNameOrEmail}
+              isValid={!isPasswordHasNameOrEmail}
               errorMessage="비밀번호에 본인 이름이나 이메일 주소를 포함할 수 없습니다."
             />
             <PasswordWarning
-              error={!isPasswordOverMinLength}
+              isValid={isPasswordOverMinLength}
               errorMessage="최소 8자"
             />
             <PasswordWarning
-              error={!isPasswordHasNumberOrSymbol}
+              isValid={isPasswordHasNumberOrSymbol}
               errorMessage="숫자나 기호를 포함하세요."
             />
           </>

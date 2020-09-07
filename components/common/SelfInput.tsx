@@ -4,7 +4,7 @@ import palette from "../../styles/palette";
 
 type InputContainerProps = {
   iconExist: boolean;
-  error: boolean;
+  isValid: boolean;
   validation: boolean;
 };
 
@@ -36,9 +36,9 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    error &&
+    !isValid &&
     css`
       input {
         background-color: ${palette.snow};
@@ -48,9 +48,9 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ validation, error }) =>
+  ${({ validation, isValid }) =>
     validation &&
-    !error &&
+    isValid &&
     css`
       input {
         border-color: ${palette.dark_cyan};
@@ -60,30 +60,31 @@ const Container = styled.div<InputContainerProps>`
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
-  error?: boolean;
+  isValid?: (value: string) => boolean;
   validation?: boolean;
   errorMessage?: string;
+  value: string;
 }
 
 const SelfInput: React.FC<IProps> = ({
   icon,
-  error = false,
+  isValid,
   validation = false,
   errorMessage,
   value: initialValue,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
-  console.log(error);
+  const isSelfValid = !!isValid && isValid(value);
   return (
-    <Container iconExist={!!icon} error={error} validation={validation}>
+    <Container iconExist={!!icon} isValid={isSelfValid} validation={validation}>
       <input
         {...props}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       {icon}
-      {validation && error && errorMessage && (
+      {validation && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>

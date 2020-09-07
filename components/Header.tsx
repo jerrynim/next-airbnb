@@ -100,6 +100,7 @@ const Container = styled.div`
     padding: 8px 0;
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
+    background-color: white;
     li {
       display: flex;
       align-items: center;

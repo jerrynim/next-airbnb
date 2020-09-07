@@ -4,8 +4,9 @@ import RedXIcon from "../../public/static/svg/input/red_x_icon.svg";
 import GreenCheckIcon from "../../public/static/svg/input/green_check_icon.svg";
 import palette from "../../styles/palette";
 
-const Container = styled.p<{ error: boolean }>`
-  color: ${({ error }) => (error ? palette.davidson_orange : palette.green)};
+const Container = styled.p<{ isValid: boolean }>`
+  color: ${({ isValid }) =>
+    isValid ? palette.green : palette.davidson_orange};
   display: flex;
   align-items: center;
   line-height: 1.5;
@@ -15,14 +16,14 @@ const Container = styled.p<{ error: boolean }>`
 `;
 
 interface IProps {
-  error: boolean;
+  isValid: boolean;
   errorMessage: string;
 }
 
-const PasswordWarning: React.FC<IProps> = ({ error, errorMessage }) => {
+const PasswordWarning: React.FC<IProps> = ({ isValid, errorMessage }) => {
   return (
-    <Container error={error}>
-      {error ? <RedXIcon /> : <GreenCheckIcon />}
+    <Container isValid={isValid}>
+      {isValid ? <GreenCheckIcon /> : <RedXIcon />}
       {errorMessage}
     </Container>
   );
