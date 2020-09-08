@@ -63,6 +63,7 @@ const SearchRoomStartDate: React.FC<IProps> = ({
           monthsShown={2}
           onChange={(date) => setEndDate(date as Date)}
           selectsEnd
+          popperPlacement="bottom-end"
           startDate={startDate as Date}
           endDate={new Date(endDate as Date)}
           disabledKeyboardNavigation

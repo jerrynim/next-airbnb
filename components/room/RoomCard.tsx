@@ -1,10 +1,10 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 import { RoomType } from "../../types/room";
 import palette from "../../styles/palette";
 
-const Container = styled.li`
+const Container = styled.li<{ showMap: boolean }>`
   width: calc((100% - 48px) / 4);
   &:nth-child(4n) {
     margin-right: 0;
@@ -59,28 +59,104 @@ const Container = styled.li`
     font-size: 14px;
     color: ${palette.gray_71};
   }
+  .room-bed-bath-room-info {
+    display: none;
+  }
+
+  ${({ showMap }) =>
+    showMap &&
+    css`
+      width: 100% !important;
+      margin: 0;
+      padding: 24px 0;
+      border-bottom: 1px solid ${palette.gray_eb};
+      &:first-child {
+        padding-top: 0;
+      }
+      a {
+        width: 100%;
+        display: flex;
+        .room-card-info-texts {
+          position: relative;
+          flex-grow: 1;
+          height: 200px;
+        }
+        .room-card-photo-wrapper {
+          width: 300px;
+          height: 200px;
+          margin-right: 16px;
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .room-card-room-info {
+          font-size: 14px;
+          margin-bottom: 13px;
+        }
+        .room-card-title {
+          font-size: 18px;
+          margin-bottom: 11px;
+        }
+        .room-card-text-divider {
+          width: 32px;
+          height: 1px;
+          margin-bottom: 10px;
+          background-color: ${palette.gray_dd};
+        }
+        .room-bed-bath-room-info {
+          display: block;
+          font-size: 14px;
+          color: ${palette.gray_71};
+        }
+        .room-card-price {
+          position: absolute;
+          margin: 0;
+          right: 0;
+          bottom: 17px;
+        }
+        .room-card-total-price {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          text-decoration: underline;
+        }
+      }
+    `}
 `;
 
 interface IProps {
   room: RoomType;
+  showMap: boolean;
 }
 
-const RoomCard: React.FC<IProps> = ({ room }) => {
+const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
   return (
-    <Container>
+    <Container showMap={showMap}>
       <Link href="/room/[id]" as={`/room/${room.id}`}>
         <a>
           <div className="room-card-photo-wrapper">
             <img src={room.photos[0]} alt="" />
           </div>
-          <p className="room-card-room-info">
-            {room.buildingType} {room.roomType} {room.district} {room.city}
-          </p>
-          <p className="room-card-title">{room.title}</p>
-          <p className="room-card-price">
-            <b>₩{room.price} </b>/1박
-          </p>
-          <p className="room-card-total-price">총 요금: ₩1,455,327</p>
+          <div className="room-card-info-texts">
+            <p className="room-card-room-info">
+              {room.buildingType} {room.roomType} {room.district} {room.city}
+            </p>
+            <p className="room-card-title">{room.title}</p>
+            <div className="room-card-text-divider" />
+            {showMap && (
+              <p className="room-bed-bath-room-info">
+                인원 {room.maximumGuestCount}명 · 침실 {room.bathroomCount}개 ·
+                침대 {room.bedCount}개 ·
+                {room.bathroomType === "private" ? "단독" : "공용"} 사용 욕실
+                {room.bathroomCount}개
+              </p>
+            )}
+            <p className="room-card-price">
+              <b>₩{room.price} </b>/1박
+            </p>
+            <p className="room-card-total-price">총 요금: ₩1,455,327</p>
+          </div>
         </a>
       </Link>
     </Container>

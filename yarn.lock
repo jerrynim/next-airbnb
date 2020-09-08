@@ -1103,6 +1103,11 @@
     "@types/events" "*"
     "@types/node" "*"
 
+"@types/googlemaps@^3.39.13":
+  version "3.39.13"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.39.13.tgz#a2649ac618cb15bd04ad8700c41693c8c1f90e21"
+  integrity sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg==
+
 "@types/hoist-non-react-statics@*", "@types/hoist-non-react-statics@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"

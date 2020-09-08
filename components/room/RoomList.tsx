@@ -1,20 +1,31 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useSelector } from "../../store";
 import RoomCard from "./RoomCard";
 
-const Container = styled.ul`
+const Container = styled.ul<{ showMap: boolean }>`
   display: flex;
   flex-wrap: wrap;
   padding-top: 50px;
+
+  ${({ showMap }) =>
+    showMap &&
+    css`
+      flex-direction: column;
+      width: 100%;
+    `}
 `;
 
-const RoomList: React.FC = () => {
+interface IProps {
+  showMap: boolean;
+}
+
+const RoomList: React.FC<IProps> = ({ showMap }) => {
   const rooms = useSelector((state) => state.room.rooms);
   return (
-    <Container>
+    <Container showMap={showMap}>
       {rooms.map((room) => (
-        <RoomCard room={room} key={room.id} />
+        <RoomCard room={room} key={room.id} showMap={showMap} />
       ))}
     </Container>
   );
