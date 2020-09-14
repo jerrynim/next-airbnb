@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import useSearchRoom from "../../../hooks/useSearchRoom";
 import DatePicker from "../../common/DatePicker";
 
 const Container = styled.div`
@@ -43,31 +44,26 @@ const Container = styled.div`
   }
 `;
 
-interface IProps {
-  startDate: Date | null;
-  endDate: Date | null;
-  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
-}
-
-const SearchRoomStartDate: React.FC<IProps> = ({
-  startDate,
-  endDate,
-  setEndDate,
-}) => {
+const SearchRoomStartDate: React.FC = () => {
+  const {
+    checkInDate,
+    checkOutDate,
+    setCheckOutDateDispatch,
+  } = useSearchRoom();
   return (
     <Container>
       <div>
         <p className="search-room-bar-date-label">체크인</p>
         <DatePicker
-          selected={endDate}
+          selected={checkOutDate}
           monthsShown={2}
-          onChange={(date) => setEndDate(date as Date)}
+          onChange={(date) => setCheckOutDateDispatch(date as Date)}
           selectsEnd
           popperPlacement="bottom-end"
-          startDate={startDate as Date}
-          endDate={new Date(endDate as Date)}
+          startDate={checkInDate}
+          endDate={checkOutDate}
           disabledKeyboardNavigation
-          minDate={new Date(startDate as Date)}
+          minDate={checkInDate}
           placeholderText="날짜 추가"
         />
       </div>

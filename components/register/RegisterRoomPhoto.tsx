@@ -44,6 +44,7 @@ const Container = styled.div`
       cursor: pointer;
     }
     img {
+      width: 100%;
       max-height: 100%;
     }
   }
@@ -94,6 +95,7 @@ const RegisterRoomPhoto: React.FC = () => {
         {!isEmpty(photos) && <img src={photos[0]} alt="" />}
       </div>
       <RegisterRoomFooter
+        prevHref="/room/register/conveniences"
         nextHref="/room/register/description"
         isAllValueFilled
       />

@@ -75,6 +75,7 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options?: string[];
   value?: string;
   isValid?: boolean;
+  useValidation?: boolean;
   errorMessage?: string;
   disabledOptions?: string[];
 }
@@ -83,6 +84,7 @@ const RegisterSelector: React.FC<IProps> = ({
   label,
   options,
   isValid,
+  useValidation = false,
   errorMessage = "옵션을 선택하세요.",
   disabledOptions = [],
   ...props
@@ -90,7 +92,7 @@ const RegisterSelector: React.FC<IProps> = ({
   const validateMode = useSelector((state) => state.common.validateMode);
 
   return (
-    <Container isValid={!!isValid} validateMode={validateMode}>
+    <Container isValid={!!isValid} validateMode={useValidation && validateMode}>
       <label>
         {label && <span>{label}</span>}
         <select {...props}>
@@ -101,7 +103,7 @@ const RegisterSelector: React.FC<IProps> = ({
           ))}
         </select>
       </label>
-      {validateMode && !isValid && (
+      {useValidation && validateMode && !isValid && (
         <div className="selector-warning">
           <WarningIcon />
           <p>{errorMessage}</p>

@@ -1,17 +1,15 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import isEmpty from "lodash/isEmpty";
-import { RoomType } from "../../../types/room";
+import { StoredRoomType } from "../../../types/room";
 import Data from "../../../lib/data";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const {
-      location,
-      startDate,
+      checkInDate,
       endDate,
       adultCount,
       childrenCount,
-      infantsCount,
       latitude,
       longitude,
     } = req.query;
@@ -30,8 +28,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           ) {
             return false;
           }
-          if (startDate) {
-            if (new Date(startDate as string) < new Date(room.startDate)) {
+          if (checkInDate) {
+            if (new Date(checkInDate as string) < new Date(room.startDate)) {
               return false;
             }
           }
@@ -67,7 +65,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const rooms = await Data.room.getList();
       if (isEmpty(rooms)) {
-        const newRoom: RoomType = {
+        const newRoom: StoredRoomType = {
           id: 1,
           ...req.body,
           createdAt: new Date(),
@@ -78,7 +76,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.end();
       }
 
-      const newRoom: RoomType = {
+      const newRoom: StoredRoomType = {
         id: rooms[rooms.length - 1].id + 1,
         ...req.body,
         createdAt: new Date(),

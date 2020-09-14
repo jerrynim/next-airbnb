@@ -127,7 +127,7 @@ const Container = styled.div`
 `;
 
 const Header: React.FC = () => {
-  const { openModalPortal, closeModalPortal, ModalPortal } = usePortal([]);
+  const { openModalPortal, closeModalPortal, ModalPortal } = usePortal();
 
   //* 유저메뉴 열고,닫힘 여부
   const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);

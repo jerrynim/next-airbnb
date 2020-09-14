@@ -49,7 +49,11 @@ const RegisterConveniences: React.FC = () => {
           options={convinienceList}
         />
       </div>
-      <RegisterRoomFooter nextHref="/room/register/photo" isAllValueFilled />
+      <RegisterRoomFooter
+        prevHref="/room/register/amentities"
+        nextHref="/room/register/photo"
+        isAllValueFilled
+      />
     </Container>
   );
 };

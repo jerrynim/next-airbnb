@@ -11,6 +11,7 @@ import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import SelfInput from "../common/SelfInput";
 import { LoginAPIBody } from "../../types/api/auth";
+import Input from "../common/Input";
 
 const Container = styled.div`
   .login-input-wrapper {
@@ -83,7 +84,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
     <Container>
       <form onSubmit={onSubmitLogin}>
         <div className="login-input-wrapper">
-          <SelfInput
+          <Input
             placeholder="이메일 주소"
             name="email"
             type="email"
@@ -97,7 +98,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
         </div>
 
         <div className="login-input-wrapper sign-up-password-input-wrapper">
-          <SelfInput
+          <Input
             placeholder="비밀번호 설정하기"
             name="password"
             type={isPasswordHided ? "password" : "text"}

@@ -47,7 +47,11 @@ const RegisterRoomTitle: React.FC = () => {
           }
         />
       </div>
-      <RegisterRoomFooter nextHref="/room/register/price" isAllValueFilled />
+      <RegisterRoomFooter
+        prevHref="/room/register/photo"
+        nextHref="/room/register/price"
+        isAllValueFilled
+      />
     </Container>
   );
 };

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
 import Button from "../../common/button/Button";
 import SearchIcon from "../../../public/static/svg/button/white_search.svg";
 import palette from "../../../styles/palette";
 import SearchRoomBarLocation from "./SearchRoomBarLocation";
-import SearchRoomStartDate from "./SearchRoomStartDate";
+import SearchRoomCheckInDate from "./SearchRoomCheckInDate";
 import SearchRoomEndDate from "./SearchRoomEndDate";
 import SearchRoomGuests from "./SearchRoomGuests";
 import { makeQueryString } from "../../../lib/utils";
+import useSearchRoom from "../../../hooks/useSearchRoom";
 
 const Container = styled.div`
   width: 100%;
@@ -37,26 +38,26 @@ const Container = styled.div`
 `;
 
 const SearchRoomBar: React.FC = () => {
-  const [location, setLocation] = useState("");
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-
-  const [adultCount, setAdultCount] = useState(1);
-  const [childrenCount, setChildrenCount] = useState(0);
-  const [infantsCount, setInfantsCount] = useState(0);
-
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-
   const router = useRouter();
+
+  const {
+    location,
+    checkInDate,
+    checkOutDate,
+    adultCount,
+    childrenCount,
+    infantsCount,
+    latitude,
+    longitude,
+  } = useSearchRoom();
 
   //* 검색 버튼 클릭시
   const onClickSearchButton = () => {
     router.push(
       makeQueryString("/room", {
         location,
-        startDate: startDate?.toISOString() || "",
-        endDate: endDate?.toISOString() || "",
+        checkInDate,
+        checkOutDate,
         adultCount,
         childrenCount,
         infantsCount,
@@ -70,36 +71,16 @@ const SearchRoomBar: React.FC = () => {
     <Container>
       <div className="search-room-bar-inputs">
         <div className="search-room-bar-input-wrapper">
-          <SearchRoomBarLocation
-            location={location}
-            setLocation={setLocation}
-            setLatitude={setLatitude}
-            setLongitude={setLongitude}
-          />
+          <SearchRoomBarLocation />
         </div>
         <div className="search-room-bar-input-wrapper">
-          <SearchRoomStartDate
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-          />
+          <SearchRoomCheckInDate />
         </div>
         <div className="search-room-bar-input-wrapper">
-          <SearchRoomEndDate
-            startDate={startDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-          />
+          <SearchRoomEndDate />
         </div>
         <div className="search-room-bar-input-wrapper">
-          <SearchRoomGuests
-            adultCount={adultCount}
-            setAdultCount={setAdultCount}
-            childrenCount={childrenCount}
-            setChildrenCount={setChildrenCount}
-            infantsCount={infantsCount}
-            setInfantsCount={setInfantsCount}
-          />
+          <SearchRoomGuests />
         </div>
         <div className="search-room-bar-button-wrapper">
           <Button onClick={onClickSearchButton} icon={<SearchIcon />}>

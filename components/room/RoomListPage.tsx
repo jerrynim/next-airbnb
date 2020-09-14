@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { useRouter } from "next/dist/client/router";
 import dynamic from "next/dynamic";
+import { format } from "date-fns";
 import MapIcon from "../../public/static/svg/room/map.svg";
 import palette from "../../styles/palette";
 import { useSelector } from "../../store";
@@ -74,14 +74,25 @@ const Container = styled.div<{ showMap: boolean }>`
 `;
 
 const RoomListPage: React.FC = () => {
-  const { query } = useRouter();
   const rooms = useSelector((state) => state.room.rooms);
+  const checkInDate = useSelector((state) => state.searchRoom.checkInDate);
+  const checkOutDate = useSelector((state) => state.searchRoom.checkOutDate);
 
   const [showMap, setShowMap] = useState(false);
 
+  const getRoomListInfo = `${rooms.length}개의 숙소 ${
+    checkInDate
+      ? `${checkInDate ? format(new Date(checkInDate), "MM월 dd일") : ""}`
+      : ""
+  } ${
+    checkInDate
+      ? `${checkOutDate ? format(new Date(checkOutDate), "- MM월 dd일") : ""}`
+      : ""
+  }`;
+
   return (
     <Container showMap={showMap}>
-      <p className="room-list-info">300개 이상의 숙소 · 6월 25일 - 7월 7일</p>
+      <p className="room-list-info">{getRoomListInfo}</p>
       <h1 className="room-list-title">숙소</h1>
       <div className="room-list-buttons">
         <div className="room-list-buttons-left-side">

@@ -109,9 +109,9 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
               />
             </div>
           ))}
-
           <RegisterSelector
             options={lastBedOptions}
+            value="다른 침대 추가"
             disabledOptions={["다른 침대 추가"]}
             onChange={(e) =>
               setActivedBedOptions([

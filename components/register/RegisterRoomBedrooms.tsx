@@ -101,7 +101,11 @@ const RegisterRoomBedrooms: React.FC = () => {
         확인하세요.
       </p>
       <RegisterRoomBedList />
-      <RegisterRoomFooter nextHref="/room/register/bathroom" isAllValueFilled />
+      <RegisterRoomFooter
+        prevHref="/room/register/building"
+        nextHref="/room/register/bathroom"
+        isAllValueFilled
+      />
     </Container>
   );
 };

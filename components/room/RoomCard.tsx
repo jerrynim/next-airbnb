@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 import { RoomType } from "../../types/room";
 import palette from "../../styles/palette";
+import { useSelector } from "../../store";
+import { makeMoneyString } from "../../lib/utils";
 
 const Container = styled.li<{ showMap: boolean }>`
   width: calc((100% - 48px) / 4);
@@ -131,6 +133,14 @@ interface IProps {
 }
 
 const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
+  const checkInDate = useSelector((state) => state.searchRoom.checkInDate);
+  const checkOutDate = useSelector((state) => state.searchRoom.checkOutDate);
+
+  const remainDays =
+    checkOutDate &&
+    checkInDate &&
+    new Date(checkOutDate).getDate() - new Date(checkInDate).getDate();
+
   return (
     <Container showMap={showMap}>
       <Link href="/room/[id]" as={`/room/${room.id}`}>
@@ -155,7 +165,12 @@ const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
             <p className="room-card-price">
               <b>₩{room.price} </b>/1박
             </p>
-            <p className="room-card-total-price">총 요금: ₩1,455,327</p>
+            {!!remainDays && (
+              <p className="room-card-total-price">
+                총 요금: ₩
+                {makeMoneyString(`${Number(room.price) * remainDays}`)}
+              </p>
+            )}
           </div>
         </a>
       </Link>

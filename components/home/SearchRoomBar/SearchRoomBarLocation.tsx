@@ -5,6 +5,7 @@ import { isEmpty } from "lodash";
 import { searchPlacesAPI, getPlaceAPI } from "../../../lib/api/map";
 import useDebounce from "../../../hooks/useDebounce";
 import palette from "../../../styles/palette";
+import useSearchRoom from "../../../hooks/useSearchRoom";
 
 const Container = styled.div`
   position: relative;
@@ -12,6 +13,7 @@ const Container = styled.div`
   height: 100%;
   .search-room-bar-location-texts {
     position: absolute;
+    width: calc(100% - 32px);
     top: 22px;
     left: 16px;
     .search-room-bar-location-label {
@@ -25,6 +27,9 @@ const Container = styled.div`
       font-size: 14px;
       font-weight: 600;
       outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       &::placeholder {
         font-size: 14px;
         opacity: 0.7;
@@ -55,25 +60,22 @@ const Container = styled.div`
   }
 `;
 
-interface IProps {
-  location: string;
-  setLocation: React.Dispatch<React.SetStateAction<string>>;
-  setLatitude: React.Dispatch<React.SetStateAction<number>>;
-  setLongitude: React.Dispatch<React.SetStateAction<number>>;
-}
+const SearchRoomBarLocation: React.FC = () => {
+  const {
+    location,
+    setLocationDispatch,
+    setLatitudeDispatch,
+    setLongitudeDispatch,
+  } = useSearchRoom();
 
-const SearchRoomBarLocation: React.FC<IProps> = ({
-  location,
-  setLocation,
-  setLatitude,
-  setLongitude,
-}) => {
+  //* 검색 결과
   const [results, setResults] = useState<
     {
       description: string;
       placeId: string;
     }[]
   >([]);
+
   const [popupOpened, setPopupOpened] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -98,9 +100,9 @@ const SearchRoomBarLocation: React.FC<IProps> = ({
   const onClickNearPlaces = () => {
     setPopupOpened(false);
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setLocation("근처 추천 장소");
-      setLatitude(coords.latitude);
-      setLongitude(coords.longitude);
+      setLocationDispatch("근처 추천 장소");
+      setLatitudeDispatch(coords.latitude);
+      setLongitudeDispatch(coords.longitude);
     });
   };
 
@@ -108,9 +110,12 @@ const SearchRoomBarLocation: React.FC<IProps> = ({
   const onClickResult = async (placeId: string) => {
     try {
       const { data } = await getPlaceAPI(placeId);
+      console.log(data);
+      const location = data.results[0].formatted_address;
       const { lat, lng } = data.results[0].geometry.location;
-      setLatitude(lat);
-      setLongitude(lng);
+      setLocationDispatch(location);
+      setLatitudeDispatch(lat);
+      setLongitudeDispatch(lng);
       setPopupOpened(false);
     } catch (e) {
       console.log(e);
@@ -134,7 +139,7 @@ const SearchRoomBarLocation: React.FC<IProps> = ({
           <p className="search-room-bar-location-label">인원</p>
           <input
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) => setLocationDispatch(e.target.value)}
             placeholder="어디로 여행가세요?"
             ref={inputRef}
           />
@@ -156,6 +161,7 @@ const SearchRoomBarLocation: React.FC<IProps> = ({
                   {result.description}
                 </li>
               ))}
+            {isEmpty(results) && <li>검색 결과가 없습니다.</li>}
           </ul>
         )}
       </OutsideClickHandler>

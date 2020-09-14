@@ -24,8 +24,6 @@ const Container = styled.div`
     margin-top: 6px;
     margin-bottom: 32px;
   }
-  .register-room-amentities-checkbox-group-wrapper {
-  }
 `;
 
 const RegisterRoomAmentities: React.FC = () => {
@@ -53,6 +51,7 @@ const RegisterRoomAmentities: React.FC = () => {
         />
       </div>
       <RegisterRoomFooter
+        prevHref="/room/register/location"
         nextHref="/room/register/conveniences"
         isAllValueFilled
       />

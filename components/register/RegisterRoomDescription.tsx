@@ -55,6 +55,7 @@ const RegisterRoomDescription: React.FC = () => {
         />
       </div>
       <RegisterRoomFooter
+        prevHref="/room/register/photo"
         nextHref="/room/register/title"
         isAllValueFilled={!!description}
       />

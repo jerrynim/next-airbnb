@@ -9,6 +9,7 @@ import auth from "./auth";
 import common from "./common";
 import registerRoom from "./registerRoom";
 import room from "./room";
+import searchRoom from "./searchRoom";
 
 const rootReducer = combineReducers({
   common: common.reducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   auth: auth.reducer,
   registerRoom: registerRoom.reducer,
   room: room.reducer,
+  searchRoom: searchRoom.reducer,
 });
 
 //* 스토어의 타입

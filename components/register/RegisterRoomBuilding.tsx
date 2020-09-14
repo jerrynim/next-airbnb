@@ -113,7 +113,7 @@ const RegisterRoomBuilding: React.FC = () => {
           onChange={(e) =>
             dispatch(registerRoomActions.setLargeBuildingType(e.target.value))
           }
-          isValid={largeBuildingType}
+          isValid={!!largeBuildingType}
           label="우선 범위를 좁혀볼까요?"
           options={[
             "아파트",
@@ -132,7 +132,7 @@ const RegisterRoomBuilding: React.FC = () => {
           onChange={(e) =>
             dispatch(registerRoomActions.setBuildingType(e.target.value))
           }
-          isValid={buildingType}
+          isValid={!!buildingType}
           label="건물 유형을 선택하세요."
           options={detailBuildingOptions}
         />
@@ -143,7 +143,7 @@ const RegisterRoomBuilding: React.FC = () => {
             <RadioGroup
               label="게스트가 묵게 될 숙소 유형을 골라주세요."
               value={roomType}
-              isValid={roomType}
+              isValid={!!roomType}
               onChange={(selected) =>
                 dispatch(
                   registerRoomActions.setRoomType(
@@ -198,6 +198,7 @@ const RegisterRoomBuilding: React.FC = () => {
 
       <RegisterRoomFooter
         isAllValueFilled={isAllValueFilled}
+        prevHref="/"
         nextHref="/room/register/bedrooms"
       />
     </Container>

@@ -1,4 +1,4 @@
-import { BedType } from "../types/reduxState";
+import { BedType } from "../types/room";
 
 export const monthsList = [
   "1월",

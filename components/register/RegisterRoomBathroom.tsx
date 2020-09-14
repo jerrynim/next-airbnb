@@ -37,6 +37,7 @@ const RegisterBathroom: React.FC = () => {
   const bathroomType = useSelector((state) => state.registerRoom.bathroomType);
 
   const dispatch = useDispatch();
+
   return (
     <Container>
       <h2>욕실 수</h2>
@@ -57,6 +58,7 @@ const RegisterBathroom: React.FC = () => {
       <RadioGroup
         label="게스트가 단독으로 사용하는 욕실인가요?"
         value={bathroomType}
+        isValid={!!bathroomType}
         onChange={(value) =>
           dispatch(registerRoomActions.setBathroomType(value))
         }
@@ -66,6 +68,7 @@ const RegisterBathroom: React.FC = () => {
         ]}
       />
       <RegisterRoomFooter
+        prevHref="/room/register/bedrooms"
         nextHref="/room/register/location"
         isAllValueFilled={bathroomCount > 0}
       />
