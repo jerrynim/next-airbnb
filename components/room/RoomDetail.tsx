@@ -161,8 +161,8 @@ const RoomDetail: React.FC = () => {
             <>
               <p className="room-detatil-conveniences-label">편의시설</p>
               <ul className="room-detatil-conveniences-list">
-                {room.amentities.map((amentity) => (
-                  <li>
+                {room.amentities.map((amentity, index) => (
+                  <li key={index}>
                     <RoomAmentityIcon amentity={amentity} />
                     {amentity}
                   </li>

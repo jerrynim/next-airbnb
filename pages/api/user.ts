@@ -6,7 +6,7 @@ import { StoredUserType } from "../../types/user";
 //*fs로 유저 데이터 받아오기
 export const getUsers = () =>
   new Promise<StoredUserType[]>((resolve, reject) => {
-    fs.readFile("data/users.json", (err, data) => {
+    fs.readFile("/public/data/users.json", (err, data) => {
       if (err) reject(err);
       const users: StoredUserType[] = JSON.parse(data.toString());
       resolve(users);

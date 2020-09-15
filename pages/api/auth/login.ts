@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       if (user) {
-        const samePassword = bcrypt.compareSync(password, user.password);
+        const samePassword = bcrypt.compareSync(password, user.password!);
         if (!samePassword) {
           res.status(401).send("비밀번호가 일치하지 않습니다.");
           return;

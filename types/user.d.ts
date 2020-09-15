@@ -10,7 +10,7 @@ export type UserType = {
 export type StoredUserType = {
   id: number;
   email: string;
-  password: string;
+  password?: string;
   firstname: string;
   lastname: string;
   birthday: Date;
