@@ -5,23 +5,18 @@ import { StoredReservation } from "../../types/reservation";
 const getList = async () => {
   try {
     const rooms = await new Promise<StoredReservation[]>((resolve, reject) => {
-      fs.exists("/public/data/reservations.json", (exists) => {
-        if (!exists) {
-          reject(new Error("rooms.json 파일이 없습니다."));
+      fs.readFile("/public/data/reservations.json", (err, data) => {
+        if (err) {
+          return reject(err.message);
         }
-        fs.readFile("/public/data/reservations.json", (err, data) => {
-          if (err) {
-            return reject(err.message);
-          }
-          const reservationsString = data.toString();
-          if (reservationsString === "") {
-            return resolve([]);
-          }
-          const reservationsRooms: StoredReservation[] = JSON.parse(
-            data.toString()
-          );
-          return resolve(reservationsRooms);
-        });
+        const reservationsString = data.toString();
+        if (reservationsString === "") {
+          return resolve([]);
+        }
+        const reservationsRooms: StoredReservation[] = JSON.parse(
+          data.toString()
+        );
+        return resolve(reservationsRooms);
       });
     });
     return rooms;

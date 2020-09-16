@@ -14,6 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
       const filtered = files.file.path.replace("public", "");
+      // fs.renameSync(files.file.path, `public/file/${files.file.name}`);
+
       res.status(201).send(filtered);
     });
   }

@@ -1,13 +1,10 @@
 import fs from "fs";
-import path from "path";
 import { StoredUserType } from "../../types/user";
 
 const userDataPath = `${process.cwd()}/data/rooms.json`;
 
 //* 저장된 유저 리스트 불러오기
 const getList = async () => {
-  path.resolve("../data/users.json");
-
   try {
     const users = await new Promise<StoredUserType[]>((resolve, reject) => {
       fs.readFile(userDataPath, (err, data) => {
