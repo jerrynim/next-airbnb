@@ -161,7 +161,7 @@ const SearchRoomBarLocation: React.FC = () => {
                   {result.description}
                 </li>
               ))}
-            {isEmpty(results) && <li>검색 결과가 없습니다.</li>}
+            {location && isEmpty(results) && <li>검색 결과가 없습니다.</li>}
           </ul>
         )}
       </OutsideClickHandler>

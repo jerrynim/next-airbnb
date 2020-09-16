@@ -59,7 +59,6 @@ const SearchRoomStartDate: React.FC = () => {
           startDate={checkInDate}
           endDate={checkOutDate}
           disabledKeyboardNavigation
-          minDate={checkOutDate}
           placeholderText="날짜 추가"
         />
       </div>

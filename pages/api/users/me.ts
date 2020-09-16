@@ -18,6 +18,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.statusCode = 404;
         return res.send("해당 유저 데이터가 없습니다.");
       }
+      res.statusCode = 400;
+      return res.end();
     } catch (e) {
       console.log(e);
       return res.send(e.message);

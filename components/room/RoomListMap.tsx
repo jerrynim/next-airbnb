@@ -78,7 +78,7 @@ interface IProps {
   setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RoomListMap: React.FC<IProps> = ({ showMap, setShowMap }) => {
+const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
   const rooms = useSelector((state) => state.room.rooms);
   const mapRef = useRef<HTMLDivElement>(null);
   const [currentLatitude, setCurrentLatitude] = useState(-25.344);
@@ -107,9 +107,9 @@ const RoomListMap: React.FC<IProps> = ({ showMap, setShowMap }) => {
   useEffect(() => {
     loadMap();
   }, []);
-
+  console.log(currentLatitude, currentLongitude);
   useEffect(() => {
-    const geolocation = navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setCurrentLatitude(coords.latitude);
         setCurrentLongitude(coords.longitude);

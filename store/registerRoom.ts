@@ -52,7 +52,7 @@ const initialState: RegisterRoomState = {
   //* 숙소 제목
   title: "",
   //* 숙소 요금
-  price: "",
+  price: 0,
   //* 예약 가능 시작 날짜
   startDate: null,
   //* 예약 가능 마감 날짜

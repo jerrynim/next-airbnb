@@ -12,12 +12,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const form = new formidable.IncomingForm();
     form.uploadDir = "./public/file";
     form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {
-      const filtered = files.file.path.replace("public", "");
-
-      res.statusCode = 201;
-      return res.send(filtered);
+    let filepath;
+    await new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        const filtered = files.file.path.replace("public", "");
+        filepath = filtered;
+        resolve(filtered);
+      });
     });
+    res.statusCode = 201;
+    return res.send(filepath);
   }
   res.statusCode = 405;
 
