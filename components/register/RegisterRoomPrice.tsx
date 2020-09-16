@@ -6,6 +6,7 @@ import { registerRoomActions } from "../../store/registerRoom";
 import { useSelector } from "../../store";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 import Input from "../common/Input";
+import { makeMoneyString } from "../../lib/utils";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -33,8 +34,13 @@ const RegisterRoomPrice: React.FC = () => {
       <h3>10단계</h3>
       <Input
         label="기본요금"
-        value={price}
-        onChange={(e) => dispatch(registerRoomActions.setPrice(e.target.value))}
+        value={makeMoneyString(String(price))}
+        onChange={(e) => {
+          const numberPrice = Number(e.target.value.replace(/,/g, ""));
+          if (numberPrice) {
+            dispatch(registerRoomActions.setPrice(numberPrice));
+          }
+        }}
       />
       <RegisterRoomFooter nextHref="/room/register/date" isAllValueFilled />
     </Container>

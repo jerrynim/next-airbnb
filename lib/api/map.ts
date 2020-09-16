@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from ".";
 
 //* 구글 장소 검색 api
 export const searchPlacesAPI = (keyword: string) =>

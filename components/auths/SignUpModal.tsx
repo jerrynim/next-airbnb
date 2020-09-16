@@ -73,10 +73,10 @@ interface IProps {
 }
 
 const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
-  const [email, setEmail] = useState("tt@ttt.com");
-  const [lastname, setLastname] = useState("길동");
-  const [firstname, setFirstname] = useState("홍");
-  const [password, setPassword] = useState("1231222222");
+  const [email, setEmail] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [password, setPassword] = useState("");
   const [isPasswordHided, setIsPasswordHided] = useState(true);
   const [birthYear, setBirthYear] = useState("2020");
   const [birthDay, setBirthDay] = useState("1");
@@ -117,8 +117,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   );
 
   //* 인풋값 발리데이션 체크 하기
-  const validateSignUpForm = (signUpBody: SingUpAPIBody) => {
-    const { email, password, lastname, firstname } = signUpBody;
+  const validateSignUpForm = () => {
     if (!email) {
       return false;
     }
@@ -144,24 +143,17 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     event.preventDefault();
     setValidateMode(true);
 
-    const form: any = event.target;
-    const signUpBody: SingUpAPIBody & { [key: string]: any } = {
-      email: "",
-      lastname: "",
-      firstname: "",
-      password: "",
+    const signUpBody = {
+      email,
+      lastname,
+      firstname,
+      password,
       birthday: new Date(
         `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
       ),
     };
 
-    Object.keys(signUpBody).forEach((name) => {
-      if (form.elements[name]) {
-        const inputValue = form.elements[name].value;
-        signUpBody[name] = inputValue;
-      }
-    });
-    if (validateSignUpForm(signUpBody)) {
+    if (validateSignUpForm()) {
       try {
         const { data } = await signupAPI(signUpBody);
         dispatch(userActions.setUser(data));

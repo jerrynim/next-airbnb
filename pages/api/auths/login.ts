@@ -18,15 +18,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const user = await data.user.find({ email });
       if (!user) {
-        res.status(404).end("가입되지 않은 이메일 입니다.");
-        return;
+        res.statusCode = 404;
+        return res.send("가입되지 않은 이메일 입니다.");
       }
 
       if (user) {
         const samePassword = bcrypt.compareSync(password, user.password!);
         if (!samePassword) {
-          res.status(401).send("비밀번호가 일치하지 않습니다.");
-          return;
+          res.statusCode = 401;
+          return res.send("비밀번호가 일치하지 않습니다.");
         }
 
         const token = jwt.sign(String(user.id), "my_private_secret");
@@ -37,12 +37,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           )}; httponly`
         );
         delete user.password;
-        res.status(200).send(user);
-        return;
+        res.statusCode = 200;
+        return res.send(user);
       }
     } catch (e) {
       console.log(e);
-      res.status(500).end(e.message);
+      return res.end();
     }
   }
+  res.statusCode = 405;
+
+  return res.end();
 };

@@ -58,14 +58,16 @@ const RegisterRoomPublicBedTypes: React.FC = () => {
     return total;
   }, [publicBedList]);
 
-  const bedsText = () =>
-    useMemo(() => {
-      const texts = publicBedList.map((bed) => `${bed.type} ${bed.count}개`);
-      return texts.join(",");
-    }, [publicBedList]);
+  const bedsText = useMemo(() => {
+    const texts = publicBedList.map((bed) => `${bed.type} ${bed.count}개`);
+    return texts.join(",");
+  }, [publicBedList]);
 
+  const initialBedOptions = () => publicBedList.map((bed) => bed.type);
   //* 선택된 침대 옵션들
-  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>([]);
+  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>(
+    initialBedOptions
+  );
 
   //* 남은 침대 옵션들
   const lastBedOptions = useMemo(() => {
@@ -91,7 +93,7 @@ const RegisterRoomPublicBedTypes: React.FC = () => {
       {opened && (
         <div className="register-room-public-bed-type-counters">
           {activedBedOptions.map((type) => (
-            <div className="register-room-bed-type-counter">
+            <div className="register-room-bed-type-counter" key={type}>
               <Counter
                 label={type}
                 value={

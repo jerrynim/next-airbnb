@@ -210,7 +210,7 @@ const registerRoom = createSlice({
       state.photos = action.payload;
     },
 
-    setPrice(state, action: PayloadAction<string>) {
+    setPrice(state, action: PayloadAction<number>) {
       state.price = action.payload;
     },
 

@@ -25,39 +25,35 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const users = await Data.user.getList();
     const hashedPassword = bcrypt.hashSync(password, 8);
-
+    let newUser: StoredUserType;
     if (!isEmpty(users)) {
-      const newUser: StoredUserType = {
+      newUser = {
         ...req.body,
         id: 1,
         password: hashedPassword,
         profileImage: "/static/image/default_user_profile_image.jpg",
       };
-
       Data.user.write([newUser]);
-      const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
-      res.statusCode = 200;
-      return res.send(token);
+    } else {
+      const userExists = await Data.user.exist({ email });
+      if (userExists) {
+        res.statusCode = 409;
+        return res.send("이미 가입한 이메일 입니다.");
+      }
+      //* 유저가 비어있다면 Id는 1 아니라면 마지막 유저 id +1
+      const newTodoId = users.length === 0 ? 1 : users[users.length - 1].id + 1;
+
+      //* 유저의 password bcrypt 암호화
+      newUser = {
+        ...req.body,
+        id: newTodoId,
+        password: hashedPassword,
+        profileImage: "/static/image/default_user_profile_image.jpg",
+      };
+      users.push(newUser);
+      Data.user.write(users);
     }
 
-    //* 파일이 존재한다면
-    const userExists = await Data.user.exist({ email });
-    if (userExists) {
-      res.statusCode = 409;
-      return res.send("이미 가입한 이메일 입니다.");
-    }
-    //* 유저가 비어있다면 Id는 1 아니라면 마지막 유저 id +1
-    const newTodoId = users.length === 0 ? 1 : users[users.length - 1].id + 1;
-
-    //* 유저의 password bcrypt 암호화
-    const newUser = {
-      ...req.body,
-      id: newTodoId,
-      password: hashedPassword,
-      profileImage: "/static/image/default_user_profile_image.jpg",
-    };
-    users.push(newUser);
-    Data.user.write(users);
     const token = jwt.sign(String(newUser.id), "my_private_secret");
     res.setHeader(
       "Set-Cookie",
@@ -65,7 +61,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         Date.now() + 60 * 60 * 24 * 1000 * 3 //3일
       )}; httponly`
     );
-    delete newUser.password;
+
+    const newUserWithoutPassword: Partial<Pick<
+      StoredUserType,
+      "password"
+    >> = newUser;
+
+    delete newUserWithoutPassword.password;
     res.statusCode = 200;
     return res.send(newUser);
   }

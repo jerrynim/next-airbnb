@@ -31,7 +31,7 @@ export type RegisterRoomState = {
   photos: string[];
   description: string;
   title: string;
-  price: string;
+  price: number;
   startDate: Date | string | null;
   endDate: Date | string | null;
 };

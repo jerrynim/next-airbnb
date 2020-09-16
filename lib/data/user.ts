@@ -1,7 +1,7 @@
 import fs from "fs";
 import { StoredUserType } from "../../types/user";
 
-const userDataPath = `${process.cwd()}/data/rooms.json`;
+const userDataPath = `${process.cwd()}/data/users.json`;
 
 //* 저장된 유저 리스트 불러오기
 const getList = async () => {

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/button/Button";
@@ -47,9 +48,11 @@ const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
     ...registerRoom,
     hostId: userId,
   };
+  const router = useRouter();
   const onClickregisterRoom = async () => {
     try {
       await registerRoomAPI(registerRoomBody);
+      router.push("/");
     } catch (e) {
       console.log(e);
     }

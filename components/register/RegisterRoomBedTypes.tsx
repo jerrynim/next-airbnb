@@ -26,7 +26,7 @@ const Container = styled.li`
     font-size: 19px;
     color: ${palette.gray_48};
   }
-  .register-room-public-bed-type-counters {
+  .register-room-bed-type-counters {
     width: 320px;
     margin-top: 28px;
   }
@@ -57,14 +57,17 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
     return total;
   }, [bedroom]);
 
-  const bedsText = () =>
-    useMemo(() => {
-      const texts = bedroom.beds.map((bed) => `${bed.type} ${bed.count}개`);
-      return texts.join(",");
-    }, [bedroom]);
+  const bedsText = useMemo(() => {
+    const texts = bedroom.beds.map((bed) => `${bed.type} ${bed.count}개`);
+    return texts.join(",");
+  }, [bedroom]);
+
+  const initialBedOptions = bedroom.beds.map((bed) => bed.type);
 
   //* 선택된 침대 옵션들
-  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>([]);
+  const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>(
+    initialBedOptions
+  );
 
   //* 남은 침대 옵션들
   const lastBedOptions = useMemo(() => {
@@ -88,9 +91,9 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
         </RegisterButton>
       </div>
       {opened && (
-        <div className="register-room-public-bed-type-counters">
+        <div className="register-room-bed-type-counters">
           {activedBedOptions.map((type) => (
-            <div className="register-room-bed-type-counter">
+            <div className="register-room-bed-type-counter" key={type}>
               <Counter
                 label={type}
                 value={

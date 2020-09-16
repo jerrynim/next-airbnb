@@ -68,6 +68,7 @@ const Container = styled.div`
     font-weight: 600;
     font-family: -apple-system, sans-serif;
     color: ${palette.black};
+    outline: none;
     &:hover {
       border: 1px solid ${palette.black};
       border-radius: 50%;
