@@ -10,6 +10,7 @@ import Button from "../common/button/Button";
 import UploadIcon from "../../public/static/svg/button/upload.svg";
 import { uploadFileAPI } from "../../lib/api/file";
 import { registerRoomActions } from "../../store/registerRoom";
+import RegisterRoomPhotoCardList from "./RegisterRoomPhotoCardList";
 
 const Container = styled.div`
   padding: 62px 30px;
@@ -28,8 +29,6 @@ const Container = styled.div`
     margin-bottom: 32px;
   }
   .register-room-upload-photo-wrapper {
-    width: 858px;
-    height: 433px;
     position: relative;
     display: flex;
     justify-content: center;
@@ -80,8 +79,8 @@ const RegisterRoomPhoto: React.FC = () => {
         게스트가 사진을 보고 숙소의 느낌을 생생히 떠올려볼 수 있도록 해주세요.
         우선 사진 1장을 업로드하고 숙소를 등록한 후에 추가할 수 있습니다.
       </p>
-      <div className="register-room-upload-photo-wrapper">
-        {isEmpty(photos) && (
+      {isEmpty(photos) && (
+        <div className="register-room-upload-photo-wrapper">
           <>
             <input
               type="file"
@@ -91,9 +90,9 @@ const RegisterRoomPhoto: React.FC = () => {
             />
             <Button icon={<UploadIcon />}>사진 업로드</Button>
           </>
-        )}
-        {!isEmpty(photos) && <img src={photos[0]} alt="" />}
-      </div>
+        </div>
+      )}
+      {!isEmpty(photos) && <RegisterRoomPhotoCardList photos={photos} />}
       <RegisterRoomFooter
         prevHref="/room/register/conveniences"
         nextHref="/room/register/description"

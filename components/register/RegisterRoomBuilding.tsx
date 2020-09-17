@@ -109,13 +109,15 @@ const RegisterRoomBuilding: React.FC = () => {
       <h3>1단계</h3>
       <div className="register-room-building-selector-wrapper">
         <RegisterSelector
-          value={largeBuildingType || ""}
+          value={largeBuildingType || "하나를 선택해주세요."}
           onChange={(e) =>
             dispatch(registerRoomActions.setLargeBuildingType(e.target.value))
           }
           isValid={!!largeBuildingType}
           label="우선 범위를 좁혀볼까요?"
+          disabledOptions={["하나를 선택해주세요."]}
           options={[
+            "하나를 선택해주세요.",
             "아파트",
             "주택",
             "별채",
