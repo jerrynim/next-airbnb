@@ -9,7 +9,7 @@ import RegisterRoomFooter from "./RegisterRoomFooter";
 import { convinienceList } from "../../lib/staticData";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -52,7 +52,7 @@ const RegisterConveniences: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/amentities"
         nextHref="/room/register/photo"
-        isAllValueFilled
+        isValid
       />
     </Container>
   );

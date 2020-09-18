@@ -13,8 +13,8 @@ import Button from "../common/button/Button";
 import { signupAPI } from "../../lib/api/auth";
 import PasswordWarning from "./PasswordWarning";
 import { authActions } from "../../store/auth";
-import { SingUpAPIBody } from "../../types/api/auth";
 import Input from "../common/Input";
+import useValidateMode from "../../hooks/useValidateMode";
 
 const Container = styled.div`
   .sign-up-input-wrapper {
@@ -78,15 +78,13 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHided, setIsPasswordHided] = useState(true);
-  const [birthYear, setBirthYear] = useState("2020");
-  const [birthDay, setBirthDay] = useState("1");
-  const [birthMonth, setBirthMonth] = useState("1");
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [birthYear, setBirthYear] = useState<string | null>(null);
+  const [birthDay, setBirthDay] = useState<string | null>(null);
+  const [birthMonth, setBirthMonth] = useState<string | null>(null);
 
   const dispatch = useDispatch();
-
-  const [validateMode, setValidateMode] = useState(false);
-
-  const [passwordFocused, setPasswordFocused] = useState(false);
+  const { validateMode, setValidateMode } = useValidateMode();
 
   //*비밀번호 숨김 토글하기
   const togglePasswordHiding = () => {
@@ -127,6 +125,15 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     if (!firstname) {
       return false;
     }
+    if (!birthMonth) {
+      return false;
+    }
+    if (!birthDay) {
+      return false;
+    }
+    if (!birthYear) {
+      return false;
+    }
     if (
       !password ||
       isPasswordHasNameOrEmail ||
@@ -143,23 +150,23 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     event.preventDefault();
     setValidateMode(true);
 
-    const signUpBody = {
-      email,
-      lastname,
-      firstname,
-      password,
-      birthday: new Date(
-        `${birthYear}-${birthMonth.replace("월", "")}-${birthDay}`
-      ),
-    };
-
     if (validateSignUpForm()) {
       try {
+        const signUpBody = {
+          email,
+          lastname,
+          firstname,
+          password,
+          birthday: new Date(
+            `${birthYear}-${birthMonth!.replace("월", "")}-${birthDay}`
+          ),
+        };
         const { data } = await signupAPI(signUpBody);
         dispatch(userActions.setUser(data));
         closeModalPortal();
       } catch (e) {
         console.log(e);
+        alert(e.data);
       }
     }
   };
@@ -250,23 +257,29 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
         <div className="sign-up-modal-birthday-selectors">
           <div className="sign-up-modal-birthday-month-selector">
             <Selector
-              options={monthsList}
-              value={birthMonth}
+              options={["월", ...monthsList]}
+              value={birthMonth || "월"}
+              disabledOptions={["월"]}
               onChange={(e) => setBirthMonth(e.target.value)}
+              isValid={!!birthMonth}
             />
           </div>
           <div className="sign-up-modal-birthday-day-selector">
             <Selector
-              options={daysList}
-              value={birthDay}
+              options={["일", ...daysList]}
+              value={birthDay || "일"}
+              disabledOptions={["일"]}
               onChange={(e) => setBirthDay(e.target.value)}
+              isValid={!!birthDay}
             />
           </div>
           <div className="sign-up-modal-birthday-year-selector">
             <Selector
-              options={yearsList}
-              value={birthYear}
+              options={["년", ...yearsList]}
+              value={birthYear || "년"}
+              disabledOptions={["년"]}
               onChange={(e) => setBirthYear(e.target.value)}
+              isValid={!!birthYear}
             />
           </div>
         </div>

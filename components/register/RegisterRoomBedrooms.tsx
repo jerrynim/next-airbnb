@@ -12,7 +12,7 @@ import RegisterRoomBedList from "./RegisterRoomBedList";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -86,6 +86,7 @@ const RegisterRoomBedrooms: React.FC = () => {
           }
           label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
           options={bedroomCountList}
+          isValid={!!bedroomCount}
         />
       </div>
       <div className="register-room-bed-count-wrapper">
@@ -104,7 +105,7 @@ const RegisterRoomBedrooms: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/building"
         nextHref="/room/register/bathroom"
-        isAllValueFilled
+        isValid={!!bedroomCount}
       />
     </Container>
   );

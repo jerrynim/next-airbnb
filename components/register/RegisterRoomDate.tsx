@@ -10,7 +10,7 @@ import RegisterRoomFooter from "./RegisterRoomFooter";
 import { registerRoomActions } from "../../store/registerRoom";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -129,7 +129,7 @@ const RegisterRoomDate: React.FC = () => {
 
       <RegisterRoomFooter
         nextHref="/room/register/checklist"
-        isAllValueFilled={!startDate || !endDate || !(startDate > endDate)}
+        isValid={!startDate || !endDate || !(startDate > endDate)}
       />
     </Container>
   );

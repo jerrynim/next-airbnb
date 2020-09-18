@@ -13,7 +13,7 @@ import { registerRoomActions } from "../../store/registerRoom";
 import RegisterRoomPhotoCardList from "./RegisterRoomPhotoCardList";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -99,7 +99,7 @@ const RegisterRoomPhoto: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/conveniences"
         nextHref="/room/register/description"
-        isAllValueFilled
+        isValid
       />
     </Container>
   );

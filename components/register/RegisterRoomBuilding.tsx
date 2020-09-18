@@ -7,9 +7,10 @@ import { useSelector } from "../../store";
 import { registerRoomActions } from "../../store/registerRoom";
 import RadioGroup from "../common/RadioGroup";
 import RegisterRoomFooter from "./RegisterRoomFooter";
+import Selector from "../common/selector/Selector";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -96,7 +97,7 @@ const RegisterRoomBuilding: React.FC = () => {
   }, [largeBuildingType]);
 
   //* 모든 값이 있는지 확인하기
-  const isAllValueFilled = useMemo(() => {
+  const isValid = useMemo(() => {
     if (!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest) {
       return false;
     }
@@ -108,7 +109,8 @@ const RegisterRoomBuilding: React.FC = () => {
       <h2>등록하실 숙소 종류는 무엇인가요?</h2>
       <h3>1단계</h3>
       <div className="register-room-building-selector-wrapper">
-        <RegisterSelector
+        <Selector
+          type="register"
           value={largeBuildingType || "하나를 선택해주세요."}
           onChange={(e) =>
             dispatch(registerRoomActions.setLargeBuildingType(e.target.value))
@@ -199,7 +201,7 @@ const RegisterRoomBuilding: React.FC = () => {
       )}
 
       <RegisterRoomFooter
-        isAllValueFilled={isAllValueFilled}
+        isValid={isValid}
         prevHref="/"
         nextHref="/room/register/bedrooms"
       />

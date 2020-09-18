@@ -84,7 +84,7 @@ const RegisterSelector: React.FC<IProps> = ({
   label,
   options,
   isValid,
-  useValidation = false,
+  useValidation = true,
   errorMessage = "옵션을 선택하세요.",
   disabledOptions = [],
   ...props

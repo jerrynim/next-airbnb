@@ -9,7 +9,7 @@ import { registerRoomActions } from "../../store/registerRoom";
 import Textarea from "../common/Textarea";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -57,7 +57,7 @@ const RegisterRoomDescription: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/photo"
         nextHref="/room/register/title"
-        isAllValueFilled={!!description}
+        isValid={!!description}
       />
     </Container>
   );

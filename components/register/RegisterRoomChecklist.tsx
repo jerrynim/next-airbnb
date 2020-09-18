@@ -7,7 +7,7 @@ import RegisterRoomFooter from "./RegisterRoomFooter";
 import RegisterRoomSubmitFooter from "./RegisterRoomSubmitFooter";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   min-height: 100vh;
   .register-room-checklist-info {
     margin-bottom: 39px;
@@ -260,7 +260,11 @@ const RegisterRoomChecklist: React.FC = () => {
         />
       </ul>
 
-      {isDateActived ? <RegisterRoomSubmitFooter /> : <RegisterRoomFooter />}
+      {isDateActived ? (
+        <RegisterRoomSubmitFooter />
+      ) : (
+        <RegisterRoomFooter prevHref="/room/register/date" />
+      )}
     </Container>
   );
 };

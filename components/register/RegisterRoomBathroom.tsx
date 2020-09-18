@@ -9,7 +9,7 @@ import RadioGroup from "../common/RadioGroup";
 import { registerRoomActions } from "../../store/registerRoom";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -70,7 +70,7 @@ const RegisterBathroom: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/bedrooms"
         nextHref="/room/register/location"
-        isAllValueFilled={bathroomCount > 0}
+        isValid={bathroomCount > 0}
       />
     </Container>
   );

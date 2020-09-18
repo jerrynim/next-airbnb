@@ -13,7 +13,7 @@ import { useSelector } from "../../store";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   h2 {
     font-size: 19px;
     font-weight: 800;
@@ -117,7 +117,7 @@ const RegisterLocation: React.FC = () => {
     []
   );
 
-  const isAllValueFilled = useMemo(() => {
+  const isValid = useMemo(() => {
     if (!country || !city || !district || !streetAddress || !postcode) {
       return false;
     }
@@ -178,7 +178,7 @@ const RegisterLocation: React.FC = () => {
           options={countryList}
           onChange={onChangeCountry}
           disabledOptions={["국가/지역 선택"]}
-          value={country}
+          value={country || "국가/지역 선택"}
         />
       </div>
       <div className="register-room-location-city-district">
@@ -205,7 +205,7 @@ const RegisterLocation: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/bathroom"
         nextHref="/room/register/amentities"
-        isAllValueFilled={isAllValueFilled}
+        isValid={isValid}
       />
     </Container>
   );

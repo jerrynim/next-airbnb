@@ -5,8 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import jwt from "jsonwebtoken";
 import { SingUpAPIBody } from "../../../types/api/auth";
 import Data from "../../../lib/data";
-
-type StoredUserType = { id: number; profileImage: string } & SingUpAPIBody;
+import { StoredUserType } from "../../../types/user";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   //* 계정 생성하기
@@ -26,14 +25,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const users = await Data.user.getList();
     const hashedPassword = bcrypt.hashSync(password, 8);
     let newUser: StoredUserType;
-    if (!isEmpty(users)) {
+    if (isEmpty(users)) {
       newUser = {
         ...req.body,
         id: 1,
         password: hashedPassword,
         profileImage: "/static/image/default_user_profile_image.jpg",
       };
-      Data.user.write([newUser]);
+      Data.user.write([...users, newUser]);
     } else {
       const userExists = await Data.user.exist({ email });
       if (userExists) {

@@ -81,8 +81,10 @@ interface IProps {
 const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
   const rooms = useSelector((state) => state.room.rooms);
   const mapRef = useRef<HTMLDivElement>(null);
-  const [currentLatitude, setCurrentLatitude] = useState(-25.344);
-  const [currentLongitude, setCurrentLongitude] = useState(131.036);
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: -25.344,
+    longitude: 131.036,
+  });
 
   const loadMap = async () => {
     await loadMapScript();
@@ -92,7 +94,10 @@ const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
     //* 지도 불러오기
     if (mapRef.current) {
       const map = new google.maps.Map(mapRef.current, {
-        center: { lat: currentLatitude, lng: currentLongitude },
+        center: {
+          lat: currentLocation.latitude,
+          lng: currentLocation.longitude,
+        },
         zoom: 14,
       });
       rooms.forEach((room) => {
@@ -105,20 +110,22 @@ const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
   };
 
   useEffect(() => {
-    loadMap();
-  }, []);
-  console.log(currentLatitude, currentLongitude);
-  useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        setCurrentLatitude(coords.latitude);
-        setCurrentLongitude(coords.longitude);
+        setCurrentLocation({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
       },
       () => {
         console.log("위치 받기 에러");
       }
     );
-  }, [rooms]);
+  }, []);
+
+  useEffect(() => {
+    loadMap();
+  }, [rooms, currentLocation]);
 
   return (
     <>

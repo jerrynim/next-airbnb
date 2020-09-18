@@ -38,7 +38,7 @@ const Container = styled.footer`
 interface IProps {
   prevHref?: string;
   nextHref?: string;
-  isAllValueFilled?: boolean;
+  isValid?: boolean;
 }
 
 const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {

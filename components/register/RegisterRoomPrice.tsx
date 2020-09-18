@@ -9,7 +9,7 @@ import Input from "../common/Input";
 import { makeMoneyString } from "../../lib/utils";
 
 const Container = styled.div`
-  padding: 62px 30px;
+  padding: 62px 30px 100px;
   width: 445px;
   h2 {
     font-size: 19px;
@@ -42,7 +42,7 @@ const RegisterRoomPrice: React.FC = () => {
           }
         }}
       />
-      <RegisterRoomFooter nextHref="/room/register/date" isAllValueFilled />
+      <RegisterRoomFooter nextHref="/room/register/date" isValid />
     </Container>
   );
 };

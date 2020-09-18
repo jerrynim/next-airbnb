@@ -34,13 +34,13 @@ const Container = styled.footer`
 interface IProps {
   prevHref?: string;
   nextHref?: string;
-  isAllValueFilled?: boolean;
+  isValid?: boolean;
 }
 
 const RegisterRoomFooter: React.FC<IProps> = ({
   prevHref,
   nextHref,
-  isAllValueFilled,
+  isValid,
 }) => {
   const dispatch = useDispatch();
   return (
@@ -56,7 +56,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
           <Button
             color="dark_cyan"
             onClick={(e) => {
-              if (!isAllValueFilled) {
+              if (!isValid) {
                 e.preventDefault();
                 dispatch(commonActions.setValidateMode(true));
               }
