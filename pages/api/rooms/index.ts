@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const {
       checkInDate,
-      endDate,
+      checkOutDate,
       adultCount,
       childrenCount,
       latitude,
@@ -33,8 +33,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               return false;
             }
           }
-          if (endDate) {
-            if (new Date(endDate as string) > new Date(room.endDate)) {
+          if (checkOutDate) {
+            if (new Date(checkOutDate as string) > new Date(room.endDate)) {
               return false;
             }
           }

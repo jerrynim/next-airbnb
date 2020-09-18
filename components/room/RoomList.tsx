@@ -7,12 +7,11 @@ const Container = styled.ul<{ showMap: boolean }>`
   display: flex;
   flex-wrap: wrap;
   padding-top: 50px;
-
+  width: 100%;
   ${({ showMap }) =>
     showMap &&
     css`
       flex-direction: column;
-      width: 100%;
     `}
 `;
 

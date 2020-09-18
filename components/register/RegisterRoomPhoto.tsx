@@ -29,6 +29,9 @@ const Container = styled.div`
     margin-bottom: 32px;
   }
   .register-room-upload-photo-wrapper {
+    width: 858px;
+    height: 433px;
+    margin: auto;
     position: relative;
     display: flex;
     justify-content: center;

@@ -1,5 +1,5 @@
 import App, { AppContext, AppProps } from "next/app";
-import axios from "axios";
+import axios from "../lib/api";
 import GlobalStyle from "../styles/GlobalStyle";
 import Header from "../components/Header";
 import { cookieStringToObject } from "../lib/utils";
@@ -26,7 +26,7 @@ app.getInitialProps = async (context: AppContext) => {
   const { isLogged } = store.getState().user;
   try {
     if (!isLogged && cookieObject.access_token) {
-      axios.defaults.headers.Cookie = cookieObject.access_token;
+      axios.defaults.headers.cookie = cookieObject.access_token;
       const { data } = await getUser();
       store.dispatch(userActions.setUser(data));
     }
