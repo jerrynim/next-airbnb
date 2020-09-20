@@ -98,7 +98,6 @@ const RoomListPage: React.FC = () => {
         <div className="room-list-buttons-left-side">
           <button type="button">숙소 유형</button>
           <button type="button">요금</button>
-          <button type="button">필터 추가하기</button>
         </div>
         {!showMap && (
           <button

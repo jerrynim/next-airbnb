@@ -57,7 +57,7 @@ const RegisterRoomDescription: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/photo"
         nextHref="/room/register/title"
-        isValid={!!description}
+        isValid
       />
     </Container>
   );

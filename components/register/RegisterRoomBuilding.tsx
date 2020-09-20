@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import palette from "../../styles/palette";
-import RegisterSelector from "../common/selector/RegisterSelector";
 import { useSelector } from "../../store";
 import { registerRoomActions } from "../../store/registerRoom";
 import RadioGroup from "../common/RadioGroup";
@@ -130,7 +129,8 @@ const RegisterRoomBuilding: React.FC = () => {
         />
       </div>
       <div className="register-room-building-selector-wrapper">
-        <RegisterSelector
+        <Selector
+          type="register"
           value={buildingType || ""}
           disabled={!largeBuildingType}
           onChange={(e) =>

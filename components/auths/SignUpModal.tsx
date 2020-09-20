@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user";
@@ -171,6 +171,10 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
     }
   };
 
+  useEffect(() => {
+    setValidateMode(false);
+  }, []);
+
   return (
     <Container>
       <form onSubmit={onSubmitSignUp}>
@@ -182,7 +186,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             icon={<MailIcon />}
             value={email}
             isValid={!!email}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setEmail(e.target.value)}
             errorMessage="이메일이 필요합니다."
           />
@@ -194,7 +198,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             icon={<PersonIcon />}
             value={lastname}
             isValid={!!lastname}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setLastname(e.target.value)}
             errorMessage="이름을 입력하세요."
           />
@@ -206,7 +210,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             icon={<PersonIcon />}
             value={firstname}
             isValid={!!firstname}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setFirstname(e.target.value)}
             errorMessage="성을 입력하세요."
           />
@@ -226,7 +230,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModalPortal }) => {
             onFocus={() => setPasswordFocused(true)}
             value={password}
             isValid={!!password}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage="비밀번호를 입력하세요."
           />

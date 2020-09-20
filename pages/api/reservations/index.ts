@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
       Data.reservation.write([...reservations, reservation]);
       res.statusCode = 201;
-      return res.send({});
+      return res.end();
     } catch (e) {
       console.log(e);
       return res.send(e.message);

@@ -2,13 +2,13 @@ import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import RegisterButton from "../common/button/RegisterButton";
-import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedTypes } from "../../lib/staticData";
 import Counter from "../common/Counter";
 import palette from "../../styles/palette";
 import { registerRoomActions } from "../../store/registerRoom";
 import { useSelector } from "../../store";
 import { BedType } from "../../types/room";
+import Selector from "../common/selector/Selector";
 
 const Container = styled.li`
   width: 100%;
@@ -111,10 +111,12 @@ const RegisterRoomPublicBedTypes: React.FC = () => {
               />
             </div>
           ))}
-          <RegisterSelector
+          <Selector
+            type="register"
             options={lastBedOptions}
             disabledOptions={["다른 침대 추가"]}
             value="다른 침대 추가"
+            useValidation={false}
             onChange={(e) =>
               setActivedBedOptions([
                 ...activedBedOptions,

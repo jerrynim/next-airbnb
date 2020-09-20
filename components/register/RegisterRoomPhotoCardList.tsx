@@ -144,7 +144,7 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
   const addPhoto = () => {
     const el = document.createElement("input");
     el.type = "file";
-
+    el.accept = "image/*";
     el.onchange = (event) => {
       const file = (event.target as HTMLInputElement)?.files?.[0];
       if (file) {
@@ -176,7 +176,12 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
                 >
                   <TrashCanIcon />
                 </button>
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={() => {
+                    editPhoto(index);
+                  }}
+                >
                   <PencilIcon />
                 </button>
               </div>

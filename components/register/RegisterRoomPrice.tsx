@@ -36,13 +36,21 @@ const RegisterRoomPrice: React.FC = () => {
         label="기본요금"
         value={makeMoneyString(String(price))}
         onChange={(e) => {
-          const numberPrice = Number(e.target.value.replace(/,/g, ""));
+          const input = e.target.value;
+          if (!input) {
+            dispatch(registerRoomActions.setPrice(0));
+          }
+          const numberPrice = Number(input.replace(/,/g, ""));
           if (numberPrice) {
             dispatch(registerRoomActions.setPrice(numberPrice));
           }
         }}
       />
-      <RegisterRoomFooter nextHref="/room/register/date" isValid />
+      <RegisterRoomFooter
+        prevHref="/room/register/title"
+        nextHref="/room/register/date"
+        isValid
+      />
     </Container>
   );
 };

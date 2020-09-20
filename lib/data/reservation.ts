@@ -5,7 +5,7 @@ import { StoredReservation } from "../../types/reservation";
 const getList = async () => {
   try {
     const rooms = await new Promise<StoredReservation[]>((resolve, reject) => {
-      fs.readFile("/public/data/reservations.json", (err, data) => {
+      fs.readFile("data/reservations.json", (err, data) => {
         if (err) {
           return reject(err.message);
         }
@@ -29,7 +29,7 @@ const getList = async () => {
 //* 숙소 저장하기
 const write = async (reservations: StoredReservation[]) => {
   fs.writeFile(
-    "/public/data/reservations.json",
+    "data/reservations.json",
     JSON.stringify(reservations),
     (err) => {
       if (err) {

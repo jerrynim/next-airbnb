@@ -99,11 +99,17 @@ const SearchRoomBarLocation: React.FC = () => {
   //* 근처 추천 장소 클릭시
   const onClickNearPlaces = () => {
     setPopupOpened(false);
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setLocationDispatch("근처 추천 장소");
-      setLatitudeDispatch(coords.latitude);
-      setLongitudeDispatch(coords.longitude);
-    });
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setLocationDispatch("근처 추천 장소");
+        setLatitudeDispatch(coords.latitude);
+        setLongitudeDispatch(coords.longitude);
+      },
+      (e) => {
+        console.log(e);
+        alert(e.message);
+      }
+    );
   };
 
   //* 검색된 장소 클릭시

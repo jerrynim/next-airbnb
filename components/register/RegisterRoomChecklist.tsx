@@ -33,7 +33,6 @@ const RegisterRoomChecklist: React.FC = () => {
       return false;
     }
     return true;
-    // return !(!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest)
   }, []);
 
   //* 숙소 종류가 활성화 됬는지
@@ -133,6 +132,7 @@ const RegisterRoomChecklist: React.FC = () => {
   //* 숙소 금액이 채워져 있는지
   const isPriceActived = useMemo(() => {
     const { price } = registerRoom;
+    console.log(!isTitleActived, !price);
     if (!isTitleActived || !price) {
       return false;
     }
@@ -171,14 +171,14 @@ const RegisterRoomChecklist: React.FC = () => {
     if (!isPhotoActived) {
       return "photo";
     }
-    if (!isPriceActived) {
-      return "price";
-    }
     if (!isDescriptionActived) {
       return "description";
     }
     if (!isTitleActived) {
       return "title";
+    }
+    if (!isPriceActived) {
+      return "price";
     }
     if (!isDateActived) {
       return "date";

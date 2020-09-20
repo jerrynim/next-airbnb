@@ -10,6 +10,7 @@ import { makeReservationAPI } from "../../lib/api/reservation";
 import usePortal from "../../hooks/usePortal";
 import LoginModal from "../auths/LoginModal";
 import AuthModal from "../auths/AuthModal";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: sticky;
@@ -171,6 +172,8 @@ const RoomDetailReservation: React.FC = () => {
 
   const [guestCountPopupOpened, setGuestCountPopupOpened] = useState(false);
 
+  const router = useRouter();
+
   const getGuestCountText = useMemo(
     () =>
       `게스트 ${adultCount + childrenCount}명${
@@ -200,8 +203,9 @@ const RoomDetailReservation: React.FC = () => {
           childrenCount,
           infantsCount,
         };
-        const { data } = await makeReservationAPI(body);
-        console.log(data);
+        await makeReservationAPI(body);
+        alert("숙소 등록을 완료하였습니다.");
+        router.push("/");
       } catch (e) {
         console.log(e);
       }

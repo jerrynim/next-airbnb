@@ -5,11 +5,11 @@ import palette from "../../styles/palette";
 import { useSelector } from "../../store";
 import Counter from "../common/Counter";
 import { registerRoomActions } from "../../store/registerRoom";
-import RegisterSelector from "../common/selector/RegisterSelector";
 import { bedroomCountList } from "../../lib/staticData";
 import { getNumber } from "../../lib/utils";
 import RegisterRoomBedList from "./RegisterRoomBedList";
 import RegisterRoomFooter from "./RegisterRoomFooter";
+import Selector from "../common/selector/Selector";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -75,7 +75,8 @@ const RegisterRoomBedrooms: React.FC = () => {
         />
       </div>
       <div className="register-room-bedroom-count-wrapper">
-        <RegisterSelector
+        <Selector
+          type="register"
           value={`침실 ${bedroomCount}개`}
           onChange={(e) =>
             dispatch(

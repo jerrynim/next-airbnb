@@ -1,10 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "../../store";
 import palette from "../../styles/palette";
 
 type InputContainerProps = {
   isValid: boolean;
-  validation: boolean;
+  useValidation: boolean;
 };
 
 const Container = styled.div<InputContainerProps>`
@@ -40,8 +41,8 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
-  ${({ validation, isValid }) =>
-    validation &&
+  ${({ useValidation, isValid }) =>
+    useValidation &&
     !isValid &&
     css`
       textarea {
@@ -52,8 +53,8 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ validation, isValid }) =>
-    validation &&
+  ${({ useValidation, isValid }) =>
+    useValidation &&
     isValid &&
     css`
       textarea {
@@ -66,7 +67,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   icon?: JSX.Element;
   label?: string;
   isValid?: boolean;
-  validation?: boolean;
+  useValidation?: boolean;
   errorMessage?: string;
 }
 
@@ -74,16 +75,18 @@ const Textarea: React.FC<IProps> = ({
   icon,
   label,
   isValid = false,
-  validation = true,
+  useValidation = true,
   errorMessage,
   ...props
 }) => {
+  const validateMode = useSelector((state) => state.common.validateMode);
+
   return (
-    <Container isValid={isValid} validation={validation}>
+    <Container isValid={isValid} useValidation={useValidation && validateMode}>
       {label && <label>{label}</label>}
       <textarea {...props} />
       {icon}
-      {validation && !isValid && errorMessage && (
+      {useValidation && validateMode && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>

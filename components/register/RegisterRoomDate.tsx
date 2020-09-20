@@ -128,8 +128,9 @@ const RegisterRoomDate: React.FC = () => {
       </div>
 
       <RegisterRoomFooter
+        prevHref="/room/register/price"
         nextHref="/room/register/checklist"
-        isValid={!startDate || !endDate || !(startDate > endDate)}
+        isValid
       />
     </Container>
   );

@@ -1,11 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import useValidateMode from "../../hooks/useValidateMode";
 import palette from "../../styles/palette";
 
 type InputContainerProps = {
   iconExist: boolean;
   isValid: boolean;
-  validation: boolean;
+  useValidation: boolean;
 };
 
 const Container = styled.div<InputContainerProps>`
@@ -40,8 +41,8 @@ const Container = styled.div<InputContainerProps>`
     font-size: 14px;
     color: ${palette.tawny};
   }
-  ${({ validation, isValid }) =>
-    validation &&
+  ${({ useValidation, isValid }) =>
+    useValidation &&
     !isValid &&
     css`
       input {
@@ -52,8 +53,8 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ validation, isValid }) =>
-    validation &&
+  ${({ useValidation, isValid }) =>
+    useValidation &&
     isValid &&
     css`
       input {
@@ -66,7 +67,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
   label?: string;
   isValid?: boolean;
-  validation?: boolean;
+  useValidation?: boolean;
   errorMessage?: string;
 }
 
@@ -74,16 +75,21 @@ const Input: React.FC<IProps> = ({
   icon,
   label,
   isValid = false,
-  validation = false,
+  useValidation = true,
   errorMessage,
   ...props
 }) => {
+  const { validateMode } = useValidateMode();
   return (
-    <Container iconExist={!!icon} isValid={isValid} validation={validation}>
+    <Container
+      iconExist={!!icon}
+      isValid={isValid}
+      useValidation={validateMode && useValidation}
+    >
       {label && <label>{label}</label>}
       <input {...props} />
       {icon}
-      {validation && !isValid && errorMessage && (
+      {useValidation && validateMode && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>

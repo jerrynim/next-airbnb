@@ -12,44 +12,58 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       childrenCount,
       latitude,
       longitude,
+      limit,
     } = req.query;
     try {
       const rooms = await Data.room.getList();
       //* 위치로 필터링 하기
-      rooms.filter((room) => {
-        if (latitude && longitude) {
+      const filteredRooms = rooms.filter((room) => {
+        if (latitude && latitude !== "0" && longitude && longitude !== "0") {
           if (
             !(
               Number(latitude) - 0.5 < room.latitude &&
-              room.latitude < Number(latitude) + 0.5 &&
+              room.latitude < Number(latitude) + 0.05 &&
               Number(longitude) - 0.5 < room.longitude &&
-              room.longitude < Number(longitude) + 0.5
+              room.longitude < Number(longitude) + 0.05
             )
           ) {
+            console.log("위치필");
             return false;
           }
-          if (checkInDate) {
-            if (new Date(checkInDate as string) < new Date(room.startDate)) {
-              return false;
-            }
-          }
-          if (checkOutDate) {
-            if (new Date(checkOutDate as string) > new Date(room.endDate)) {
-              return false;
-            }
-          }
+        }
+        if (checkInDate) {
           if (
-            room.maximumGuestCount <
-            Number(adultCount as string) + Number(childrenCount as string) * 0.5
+            new Date(checkInDate as string) < new Date(room.startDate) ||
+            new Date(checkInDate as string) > new Date(room.endDate)
+          ) {
+            console.log("체크인핀터");
+            return false;
+          }
+        }
+        if (checkOutDate) {
+          if (
+            new Date(checkOutDate as string) < new Date(room.startDate) ||
+            new Date(checkOutDate as string) > new Date(room.endDate)
           ) {
             return false;
           }
         }
+
+        if (
+          room.maximumGuestCount <
+          Number(adultCount as string) +
+            (Number(childrenCount as string) * 0.5 || 0)
+        ) {
+          console.log("게스트필터");
+
+          return false;
+        }
+
         return true;
       });
 
       //* host 정보 넣기
-      const roomsWithHost = rooms.map((room) => {
+      const roomsWithHost = filteredRooms.map((room) => {
         const host = Data.user.find({ id: room.hostId });
         return { ...room, host };
       });

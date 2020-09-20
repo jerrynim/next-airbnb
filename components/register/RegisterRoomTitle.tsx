@@ -42,6 +42,7 @@ const RegisterRoomTitle: React.FC = () => {
           label="
 숙소의 특징과 장점을 강조하는 제목으로 게스트의 관심을 끌어보세요."
           value={title}
+          isValid={!!title}
           onChange={(e) =>
             dispatch(registerRoomActions.setTitle(e.target.value))
           }

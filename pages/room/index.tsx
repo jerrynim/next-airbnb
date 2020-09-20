@@ -10,10 +10,17 @@ const index: NextPage = () => {
 
 index.getInitialProps = async ({ store, query }) => {
   try {
-    const { data } = await getRoomListAPI(query);
+    const { data } = await getRoomListAPI({
+      ...query,
+      //? 한글은 encode해주세요.
+      location: query.location
+        ? encodeURI(query.location as string)
+        : undefined,
+      limit: 20,
+    });
     store.dispatch(roomActions.setRooms(data));
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
   }
 
   return {};

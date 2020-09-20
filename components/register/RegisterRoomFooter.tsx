@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/button/Button";
 import palette from "../../styles/palette";
-import { commonActions } from "../../store/common";
+import useValidateMode from "../../hooks/useValidateMode";
 
 const Container = styled.footer`
   position: fixed;
@@ -42,7 +41,13 @@ const RegisterRoomFooter: React.FC<IProps> = ({
   nextHref,
   isValid,
 }) => {
-  const dispatch = useDispatch();
+  const { setValidateMode } = useValidateMode();
+
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
   return (
     <Container>
       <Link href={prevHref || ""}>
@@ -58,7 +63,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
             onClick={(e) => {
               if (!isValid) {
                 e.preventDefault();
-                dispatch(commonActions.setValidateMode(true));
+                setValidateMode(true);
               }
             }}
           >

@@ -9,8 +9,6 @@ import palette from "../../styles/palette";
 import Button from "../common/button/Button";
 import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
-import SelfInput from "../common/SelfInput";
-import { LoginAPIBody } from "../../types/api/auth";
 import Input from "../common/Input";
 
 const Container = styled.div`
@@ -59,24 +57,19 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const onSubmitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValidateMode(true);
-    const form: any = event.target;
-    const loginBody: LoginAPIBody & { [key: string]: string } = {
-      email: "",
-      password: "",
-    };
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 입력해 주세요.");
+    } else {
+      const loginBody = { email, password };
 
-    Object.keys(loginBody).forEach((name) => {
-      if (form.elements[name]) {
-        const inputValue = form.elements[name].value;
-        loginBody[name] = inputValue;
+      try {
+        const { data } = await loginAPI(loginBody);
+        dispatch(userActions.setUser(data));
+        closeModalPortal();
+      } catch (e) {
+        console.log(e);
+        alert(e.data);
       }
-    });
-    try {
-      const { data } = await loginAPI(loginBody);
-      dispatch(userActions.setUser(data));
-      closeModalPortal();
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -91,7 +84,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
             icon={<MailIcon />}
             value={email}
             isValid={email !== ""}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setEmail(e.target.value)}
             errorMessage="이메일이 필요합니다."
           />
@@ -111,7 +104,7 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
             }
             value={password}
             isValid={password !== ""}
-            validation={validateMode}
+            useValidation={validateMode}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage="비밀번호를 입력하세요."
           />

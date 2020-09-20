@@ -1,16 +1,16 @@
 import React, { useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import palette from "../../styles/palette";
 import Button from "../common/button/Button";
 import NavigationIcon from "../../public/static/svg/register/navigation.svg";
 import Input from "../common/Input";
 import { countryList } from "../../lib/staticData";
-import RegisterSelector from "../common/selector/RegisterSelector";
 import { registerRoomActions } from "../../store/registerRoom";
 import { useSelector } from "../../store";
 import RegisterRoomFooter from "./RegisterRoomFooter";
+import { getCurrentLocationInfoAPI } from "../../lib/api/map";
+import Selector from "../common/selector/Selector";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -124,23 +124,22 @@ const RegisterLocation: React.FC = () => {
     return true;
   }, [country, city, district, streetAddress, postcode]);
 
+  //* 현재 위치 불러오기 성공 function
   const onSuccessGetLocation = async ({ coords }: { coords: Coordinates }) => {
     try {
-      const URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`;
-      const { data } = await axios.get(URL);
-      const addressComponent = data.results[0].address_components;
-      const { lat, lng } = data.results[0].geometry.location;
-      dispatch(registerRoomActions.setCountry(addressComponent[4].long_name));
-      dispatch(registerRoomActions.setCity(addressComponent[3].long_name));
-      dispatch(registerRoomActions.setDistrict(addressComponent[2].long_name));
+      const currentLocation = await getCurrentLocationInfoAPI({
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
+      dispatch(registerRoomActions.setCountry(currentLocation.country));
+      dispatch(registerRoomActions.setCity(currentLocation.city));
+      dispatch(registerRoomActions.setDistrict(currentLocation.district));
       dispatch(
-        registerRoomActions.setStreetAddress(
-          `${addressComponent[1].long_name} ${addressComponent[0].long_name}`
-        )
+        registerRoomActions.setStreetAddress(currentLocation.streetAddress)
       );
-      dispatch(registerRoomActions.setPostcode(addressComponent[5].long_name));
-      dispatch(registerRoomActions.setLatitude(lat));
-      dispatch(registerRoomActions.setLongitude(lng));
+      dispatch(registerRoomActions.setPostcode(currentLocation.postcode));
+      dispatch(registerRoomActions.setLatitude(currentLocation.latitude));
+      dispatch(registerRoomActions.setLongitude(currentLocation.longitude));
 
       setLoading(false);
     } catch (e) {
@@ -148,7 +147,7 @@ const RegisterLocation: React.FC = () => {
     }
   };
 
-  //* 현재 위치 사용하기
+  //* 현재 위치
   const onClickGetCurrentLocation = () => {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(onSuccessGetLocation, (e) => {
@@ -174,7 +173,8 @@ const RegisterLocation: React.FC = () => {
         </Button>
       </div>
       <div className="register-room-location-country-selector-wrapper">
-        <RegisterSelector
+        <Selector
+          type="register"
           options={countryList}
           onChange={onChangeCountry}
           disabledOptions={["국가/지역 선택"]}
@@ -197,6 +197,7 @@ const RegisterLocation: React.FC = () => {
           label="동호수(선택 사항)"
           value={detailAddress}
           onChange={onChangeDetailAddress}
+          useValidation={false}
         />
       </div>
       <div className="register-room-location-postcode">
@@ -205,7 +206,7 @@ const RegisterLocation: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/bathroom"
         nextHref="/room/register/amentities"
-        isValid={isValid}
+        isValid
       />
     </Container>
   );

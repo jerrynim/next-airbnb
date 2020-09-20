@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import ko from "date-fns/locale/ko";
+import addHours from "date-fns/addHours";
 import palette from "../../styles/palette";
 
 const Container = styled.div`
@@ -81,6 +82,11 @@ const Container = styled.div`
   .react-datepicker__day--in-selecting-range {
     background-color: ${palette.gray_f7};
   }
+  .react-datepicker__day--selected {
+    background-color: ${palette.black};
+    color: white;
+    border-radius: 50%;
+  }
   .react-datepicker__day--range-start {
     background-color: ${palette.black};
     color: white;
@@ -100,10 +106,21 @@ const Container = styled.div`
   }
 `;
 
-const DatePicker: React.FC<ReactDatePickerProps> = ({ ...props }) => {
+const DatePicker: React.FC<ReactDatePickerProps> = ({ onChange, ...props }) => {
   return (
     <Container>
-      <ReactDatePicker {...props} locale={ko} dateFormat="MM월 dd일" />
+      <ReactDatePicker
+        {...props}
+        locale={ko}
+        dateFormat="MM월 dd일"
+        onChange={(date, event) => {
+          if (date) {
+            onChange(addHours(date as Date, 9), event);
+          } else {
+            onChange(null, event);
+          }
+        }}
+      />
     </Container>
   );
 };

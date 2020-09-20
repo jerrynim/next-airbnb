@@ -56,8 +56,8 @@ const SearchRoomBar: React.FC = () => {
     router.push(
       makeQueryString("/room", {
         location,
-        checkInDate,
-        checkOutDate,
+        checkInDate: checkInDate?.toISOString(),
+        checkOutDate: checkOutDate?.toISOString(),
         adultCount,
         childrenCount,
         infantsCount,
