@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import differenceInDays from "date-fns/differenceInDays";
 import Link from "next/link";
 import { RoomType } from "../../types/room";
 import palette from "../../styles/palette";
@@ -139,8 +140,7 @@ const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
   const remainDays =
     checkOutDate &&
     checkInDate &&
-    new Date(checkOutDate).getDate() - new Date(checkInDate).getDate();
-
+    differenceInDays(new Date(checkOutDate), new Date(checkInDate));
   return (
     <Container showMap={showMap}>
       <Link href="/room/[id]" as={`/room/${room.id}`}>

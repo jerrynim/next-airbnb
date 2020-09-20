@@ -44,7 +44,7 @@ const Container = styled.div`
   }
 `;
 
-const SearchRoomStartDate: React.FC = () => {
+const SearchRoomCheckOutDate: React.FC = () => {
   const {
     checkInDate,
     checkOutDate,
@@ -53,7 +53,7 @@ const SearchRoomStartDate: React.FC = () => {
   return (
     <Container>
       <div>
-        <p className="search-room-bar-date-label">체크인</p>
+        <p className="search-room-bar-date-label">체크아웃</p>
         <DatePicker
           selected={checkOutDate}
           monthsShown={2}
@@ -71,4 +71,4 @@ const SearchRoomStartDate: React.FC = () => {
   );
 };
 
-export default SearchRoomStartDate;
+export default SearchRoomCheckOutDate;

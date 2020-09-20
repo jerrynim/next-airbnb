@@ -27,7 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               room.longitude < Number(longitude) + 0.05
             )
           ) {
-            console.log("위치필");
             return false;
           }
         }
@@ -36,7 +35,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             new Date(checkInDate as string) < new Date(room.startDate) ||
             new Date(checkInDate as string) > new Date(room.endDate)
           ) {
-            console.log("체크인핀터");
             return false;
           }
         }
@@ -54,16 +52,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           Number(adultCount as string) +
             (Number(childrenCount as string) * 0.5 || 0)
         ) {
-          console.log("게스트필터");
-
           return false;
         }
 
         return true;
       });
 
+      //* 갯수 자르기
+      const limitedRooms = filteredRooms.splice(0, Number(limit));
+
       //* host 정보 넣기
-      const roomsWithHost = filteredRooms.map((room) => {
+      const roomsWithHost = limitedRooms.map((room) => {
         const host = Data.user.find({ id: room.hostId });
         return { ...room, host };
       });

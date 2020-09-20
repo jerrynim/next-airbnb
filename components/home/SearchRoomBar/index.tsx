@@ -6,7 +6,7 @@ import SearchIcon from "../../../public/static/svg/button/white_search.svg";
 import palette from "../../../styles/palette";
 import SearchRoomBarLocation from "./SearchRoomBarLocation";
 import SearchRoomCheckInDate from "./SearchRoomCheckInDate";
-import SearchRoomEndDate from "./SearchRoomEndDate";
+import SearchRoomCheckOutDate from "./SearchRoomCheckOutDate";
 import SearchRoomGuests from "./SearchRoomGuests";
 import { makeQueryString } from "../../../lib/utils";
 import useSearchRoom from "../../../hooks/useSearchRoom";
@@ -77,7 +77,7 @@ const SearchRoomBar: React.FC = () => {
           <SearchRoomCheckInDate />
         </div>
         <div className="search-room-bar-input-wrapper">
-          <SearchRoomEndDate />
+          <SearchRoomCheckOutDate />
         </div>
         <div className="search-room-bar-input-wrapper">
           <SearchRoomGuests />
