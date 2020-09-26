@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "../../store";
-import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 import RegisterRoomPublicBedTypes from "./RegisterRoomPublicBedTypes";
+import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 
 const RegisterRoomBedList: React.FC = () => {
   const bedList = useSelector((state) => state.registerRoom.bedList);

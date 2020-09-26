@@ -2,6 +2,7 @@ import Axios, { AxiosError } from "axios";
 
 const axios = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_CLIENT_URL,
+  withCredentials: true,
 });
 
 axios.interceptors.response.use(

@@ -30,13 +30,13 @@ const Container = styled.li`
     width: 320px;
     margin-top: 28px;
   }
-  .register-room-bed-type-bedroom-counts {
-    font-size: 19px;
-    color: ${palette.gray_76};
-  }
   .register-room-bed-type-counter {
     width: 290px;
     margin-bottom: 18px;
+  }
+  .register-room-bed-type-bedroom-counts {
+    font-size: 19px;
+    color: ${palette.gray_76};
   }
 `;
 
@@ -49,6 +49,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
 
   const dispatch = useDispatch();
 
+  //* 침대 개수 총합
   const totalBedsCount = useMemo(() => {
     let total = 0;
     bedroom.beds.forEach((bed) => {
@@ -57,6 +58,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
     return total;
   }, [bedroom]);
 
+  //* 침대 종류 텍스트
   const bedsText = useMemo(() => {
     const texts = bedroom.beds.map((bed) => `${bed.type} ${bed.count}개`);
     return texts.join(",");
@@ -113,7 +115,6 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({ bedroom }) => {
             </div>
           ))}
           <Selector
-            type="register"
             options={lastBedOptions}
             value="다른 침대 추가"
             disabledOptions={["다른 침대 추가"]}

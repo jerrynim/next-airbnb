@@ -133,9 +133,7 @@ const RegisterRoomBuilding: React.FC = () => {
           type="register"
           value={buildingType || ""}
           disabled={!largeBuildingType}
-          onChange={(e) =>
-            dispatch(registerRoomActions.setBuildingType(e.target.value))
-          }
+          onChange={(e) => setBuildingTypeDispatch(e.target.value)}
           isValid={!!buildingType}
           label="건물 유형을 선택하세요."
           options={detailBuildingOptions}

@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/button/Button";
 import palette from "../../styles/palette";
-import { commonActions } from "../../store/common";
 import { registerRoomAPI } from "../../lib/api/room";
 import { useSelector } from "../../store";
-import { RegisterRoomState } from "../../types/reduxState";
 
 const Container = styled.footer`
   position: fixed;

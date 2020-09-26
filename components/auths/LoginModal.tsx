@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
@@ -10,6 +10,7 @@ import Button from "../common/button/Button";
 import { loginAPI } from "../../lib/api/auth";
 import { userActions } from "../../store/user";
 import Input from "../common/Input";
+import useValidateMode from "../../hooks/useValidateMode";
 
 const Container = styled.div`
   .login-input-wrapper {
@@ -45,8 +46,9 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [validateMode, setValidateMode] = useState(false);
   const [isPasswordHided, setIsPasswordHided] = useState(true);
+
+  const { validateMode, setValidateMode } = useValidateMode();
 
   //*비밀번호 숨김 토글하기
   const togglePasswordHiding = () => {
@@ -72,6 +74,12 @@ const LoginModal: React.FC<IProps> = ({ closeModalPortal }) => {
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setValidateMode(false);
+    };
+  }, []);
 
   return (
     <Container>

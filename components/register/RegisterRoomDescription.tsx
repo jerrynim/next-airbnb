@@ -21,8 +21,9 @@ const Container = styled.div`
     margin-bottom: 6px;
   }
   .register-room-step-info {
-    margin-top: 6px;
-    margin-bottom: 32px;
+    font-size: 14px;
+    max-width: 400px;
+    margin-bottom: 24px;
   }
   .register-room-description-wrapper {
     width: 430px;

@@ -20,15 +20,12 @@ const initialState: RegisterRoomState = {
   bedCount: 1,
   //* 침대 유형
   bedList: [],
-  //* 공용공간 침대
+  //* 공용공간 침대 유형
   publicBedList: [],
   //* 욕실 개수
   bathroomCount: 1,
   //* 욕실 유형
-  bathroomType: "private",
-  //* 지도 위치
-  latitude: 0,
-  longitude: 0,
+  bathroomType: null,
   //* 국가/지역
   country: "",
   //* 시/도
@@ -41,6 +38,10 @@ const initialState: RegisterRoomState = {
   detailAddress: "",
   //* 우편번호
   postcode: "",
+  //* 위도
+  latitude: 0,
+  //* 경도
+  longitude: 0,
   //* 편의시설
   amentities: [],
   //* 편의공간
@@ -97,21 +98,23 @@ const registerRoom = createSlice({
       return state;
     },
 
-    //* 최대 침실 갯수 변경하기
+    //* 침실 갯수 변경하기
     setBedroomCount(state, action: PayloadAction<number>) {
       const bedroomCount = action.payload;
       let { bedList } = state;
+
       state.bedroomCount = bedroomCount;
 
       if (bedroomCount < bedList.length) {
-        //* 침대 리스트의 갯수가 더 많으면 초과부분 잘라내기
+        //* 기존 침대 개수가 더 많으면 초과부분 잘라내기
         bedList = state.bedList.slice(0, bedroomCount);
+      } else {
+        //* 변경될 침대 개수가 더 많으면 나머지 침실 채우기
+        for (let i = bedList.length + 1; i < bedroomCount + 1; i += 1) {
+          bedList.push({ id: i, beds: [] });
+        }
       }
 
-      //* 침대 리스트의 갯수를 침실 갯수만큼 채우기
-      for (let i = bedList.length + 1; i < bedroomCount + 1; i += 1) {
-        bedList.push({ id: i, beds: [] });
-      }
       state.bedList = bedList;
 
       return state;
@@ -129,11 +132,10 @@ const registerRoom = createSlice({
       action: PayloadAction<{ bedroomId: number; type: BedType; count: number }>
     ) {
       const { bedroomId, type, count } = action.payload;
+
       const bedroom = state.bedList[bedroomId - 1];
-      if (!bedroom) {
-        //*
-      }
-      const prevBeds = state.bedList[bedroomId - 1].beds || [];
+
+      const prevBeds = bedroom.beds;
       const index = prevBeds.findIndex((bed) => bed.type === type);
       if (index === -1) {
         //* 타입이 없다면

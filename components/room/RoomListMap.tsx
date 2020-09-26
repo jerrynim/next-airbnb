@@ -17,7 +17,7 @@ const Container = styled.div`
   .gmnoprint .gm-style-mtc {
     display: none;
   }
-  /** 사람 아이콘 제거 */
+  /** 로드뷰 아이콘 제거 */
   .gm-svpc {
     display: none;
   }

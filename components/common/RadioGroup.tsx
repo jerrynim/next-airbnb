@@ -101,7 +101,7 @@ const Container = styled.div<{ isValid: boolean; validateMode: boolean }>`
   }
 `;
 
-interface IProps {
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   value?: any;
   onChange?: (value: any) => void;

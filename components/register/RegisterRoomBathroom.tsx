@@ -21,8 +21,9 @@ const Container = styled.div`
     margin-bottom: 6px;
   }
   .register-room-step-info {
-    margin-top: 6px;
-    margin-bottom: 30px;
+    font-size: 14px;
+    max-width: 400px;
+    margin-bottom: 24px;
   }
   .register-room-bathroom-counter-wrapper {
     width: 290px;
@@ -70,7 +71,7 @@ const RegisterBathroom: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/bedrooms"
         nextHref="/room/register/location"
-        isValid={bathroomCount > 0}
+        isValid={bathroomCount > 0 && !!bathroomType}
       />
     </Container>
   );

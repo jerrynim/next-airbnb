@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import palette from "../../styles/palette";
@@ -8,8 +8,6 @@ import Input from "../common/Input";
 import { countryList } from "../../lib/staticData";
 import { registerRoomActions } from "../../store/registerRoom";
 import { useSelector } from "../../store";
-import RegisterRoomFooter from "./RegisterRoomFooter";
-import { getLocationInfoAPI } from "../../lib/api/map";
 import Selector from "../common/selector/Selector";
 
 const Container = styled.div`
@@ -54,12 +52,18 @@ const Container = styled.div`
   }
   .register-room-location-postcode {
     max-width: 385px;
+    margin-bottom: 24px;
+  }
+  .register-room-location-latitude-longitude {
+    max-width: 385px;
+    display: flex;
+    > div:first-child {
+      margin-right: 24px;
+    }
   }
 `;
 
 const RegisterLocation: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>();
-
   const country = useSelector((state) => state.registerRoom.country);
   const city = useSelector((state) => state.registerRoom.city);
   const district = useSelector((state) => state.registerRoom.district);
@@ -71,6 +75,8 @@ const RegisterLocation: React.FC = () => {
   );
 
   const postcode = useSelector((state) => state.registerRoom.postcode);
+  const latitude = useSelector((state) => state.registerRoom.latitude);
+  const longitude = useSelector((state) => state.registerRoom.longitude);
 
   const dispatch = useDispatch();
 
@@ -118,44 +124,27 @@ const RegisterLocation: React.FC = () => {
     []
   );
 
-  const isValid = useMemo(() => {
-    if (!country || !city || !district || !streetAddress || !postcode) {
-      return false;
-    }
-    return true;
-  }, [country, city, district, streetAddress, postcode]);
+  //* 위도 변경시
+  const onChangeLatitude = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const numberValue = Number(e.target.value.replace(".", ""));
+      if (numberValue) {
+        dispatch(registerRoomActions.setLatitude(numberValue));
+      }
+    },
+    []
+  );
 
-  //* 현재 위치 불러오기 성공 function
-  const onSuccessGetLocation = async ({ coords }: { coords: Coordinates }) => {
-    try {
-      const { data: currentLocation } = await getLocationInfoAPI({
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-      });
-      dispatch(registerRoomActions.setCountry(currentLocation.country));
-      dispatch(registerRoomActions.setCity(currentLocation.city));
-      dispatch(registerRoomActions.setDistrict(currentLocation.district));
-      dispatch(
-        registerRoomActions.setStreetAddress(currentLocation.streetAddress)
-      );
-      dispatch(registerRoomActions.setPostcode(currentLocation.postcode));
-      dispatch(registerRoomActions.setLatitude(currentLocation.latitude));
-      dispatch(registerRoomActions.setLongitude(currentLocation.longitude));
+  //* 경도 변경시
+  const onChangeLongitude = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (/^\d*(\.\d{0,2)?$/.test(e.target.value)) {
+        dispatch(registerRoomActions.setLongitude(Number(e.target.value)));
+      }
+    },
+    []
+  );
 
-      setLoading(false);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  //* 현재 위치
-  const onClickGetCurrentLocation = () => {
-    setLoading(true);
-    navigator.geolocation.getCurrentPosition(onSuccessGetLocation, (e) => {
-      console.log(e);
-      alert(e?.message);
-    });
-  };
   return (
     <Container>
       <h2>숙소의 위치를 알려주세요.</h2>
@@ -168,9 +157,9 @@ const RegisterLocation: React.FC = () => {
           color="dark_cyan"
           colorReverse
           icon={<NavigationIcon />}
-          onClick={onClickGetCurrentLocation}
+          onClick={() => {}}
         >
-          {loading ? "불러오는 중..." : "현재 위치 사용"}
+          현재 위치 사용
         </Button>
       </div>
       <div className="register-room-location-country-selector-wrapper">
@@ -204,11 +193,18 @@ const RegisterLocation: React.FC = () => {
       <div className="register-room-location-postcode">
         <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
       </div>
-      <RegisterRoomFooter
-        prevHref="/room/register/bathroom"
-        nextHref="/room/register/geometry"
-        isValid
-      />
+      <div className="register-room-location-latitude-longitude">
+        <Input
+          label="위도"
+          value={String(latitude)}
+          onChange={onChangeLatitude}
+        />
+        <Input
+          label="경도"
+          value={String(longitude)}
+          onChange={onChangeLongitude}
+        />
+      </div>
     </Container>
   );
 };

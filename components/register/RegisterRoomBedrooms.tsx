@@ -23,9 +23,7 @@ const Container = styled.div`
     color: ${palette.gray_76};
     margin-bottom: 6px;
   }
-  .register-room-step-info {
-    margin-top: 6px;
-  }
+
   .register-room-mamximum-guest-count-wrapper {
     width: 320px;
     margin-top: 24px;
@@ -61,7 +59,7 @@ const RegisterRoomBedrooms: React.FC = () => {
     <Container>
       <h2>숙소에 얼마나 많은 인원이 숙박할 수 있나요?</h2>
       <h3>2단계</h3>
-      <p className="register-room-step-info">
+      <p>
         모든 게스트가 편안하게 숙박할 수 있도록 침대가 충분히 구비되어 있는지
         확인하세요.
       </p>
@@ -86,8 +84,8 @@ const RegisterRoomBedrooms: React.FC = () => {
             )
           }
           label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
-          options={bedroomCountList}
           isValid={!!bedroomCount}
+          options={bedroomCountList}
         />
       </div>
       <div className="register-room-bed-count-wrapper">

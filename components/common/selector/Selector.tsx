@@ -112,8 +112,8 @@ interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   isValid?: boolean;
   useValidation?: boolean;
   errorMessage?: string;
-  disabledOptions?: string[];
   type?: "register" | "normal";
+  disabledOptions?: string[];
 }
 
 const Selector: React.FC<IProps> = ({
@@ -122,8 +122,8 @@ const Selector: React.FC<IProps> = ({
   isValid,
   useValidation = true,
   errorMessage = "옵션을 선택하세요.",
-  disabledOptions = [],
   type = "normal",
+  disabledOptions = [],
   ...props
 }) => {
   const validateMode = useSelector((state) => state.common.validateMode);

@@ -1,4 +1,3 @@
-import { BedType } from "./reduxState";
 import { UserType } from "./user";
 
 //* 침대 유형

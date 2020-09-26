@@ -39,7 +39,7 @@ interface IProps {
 const RegisterRoomFooter: React.FC<IProps> = ({
   prevHref,
   nextHref,
-  isValid,
+  isValid = true,
 }) => {
   const { setValidateMode } = useValidateMode();
 

@@ -17,15 +17,15 @@ export type RegisterRoomState = {
   bedList: { id: number; beds: { type: BedType; count: number }[] }[];
   publicBedList: { type: BedType; count: number }[];
   bathroomCount: number;
-  bathroomType: "private" | "public";
-  latitude: number;
-  longitude: number;
+  bathroomType: "private" | "public" | null;
   country: string;
   city: string;
   district: string;
   streetAddress: string;
   detailAddress: string;
   postcode: string;
+  latitude: number;
+  longitude: number;
   amentities: string[];
   conveniences: string[];
   photos: string[];
