@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import palette from "../../styles/palette";
@@ -58,7 +58,7 @@ const Container = styled.div`
 `;
 
 const RegisterLocation: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const country = useSelector((state) => state.registerRoom.country);
   const city = useSelector((state) => state.registerRoom.city);
@@ -118,14 +118,7 @@ const RegisterLocation: React.FC = () => {
     []
   );
 
-  const isValid = useMemo(() => {
-    if (!country || !city || !district || !streetAddress || !postcode) {
-      return false;
-    }
-    return true;
-  }, [country, city, district, streetAddress, postcode]);
-
-  //* 현재 위치 불러오기 성공 function
+  //* 현재 위치 불러오기에 성공했을 때
   const onSuccessGetLocation = async ({ coords }: { coords: Coordinates }) => {
     try {
       const { data: currentLocation } = await getLocationInfoAPI({
@@ -141,11 +134,11 @@ const RegisterLocation: React.FC = () => {
       dispatch(registerRoomActions.setPostcode(currentLocation.postcode));
       dispatch(registerRoomActions.setLatitude(currentLocation.latitude));
       dispatch(registerRoomActions.setLongitude(currentLocation.longitude));
-
-      setLoading(false);
     } catch (e) {
       console.log(e.message);
+      alert(e?.message);
     }
+    setLoading(false);
   };
 
   //* 현재 위치
@@ -207,7 +200,6 @@ const RegisterLocation: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/bathroom"
         nextHref="/room/register/geometry"
-        isValid
       />
     </Container>
   );

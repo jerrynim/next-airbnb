@@ -1,14 +1,12 @@
-import React, { useCallback } from "react";
-import styled from "styled-components";
+import { throttle } from "lodash";
+/* eslint-disable no-undef */
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import palette from "../../styles/palette";
-import Button from "../common/button/Button";
-import NavigationIcon from "../../public/static/svg/register/navigation.svg";
-import Input from "../common/Input";
-import { countryList } from "../../lib/staticData";
-import { registerRoomActions } from "../../store/registerRoom";
+import styled from "styled-components";
 import { useSelector } from "../../store";
-import Selector from "../common/selector/Selector";
+import { registerRoomActions } from "../../store/registerRoom";
+import palette from "../../styles/palette";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -22,191 +20,92 @@ const Container = styled.div`
     color: ${palette.gray_76};
     margin-bottom: 6px;
   }
-  .register-room-step-info {
-    font-size: 14px;
-    max-width: 400px;
-    margin-bottom: 24px;
-  }
-  .register-room-location-country-selector-wrapper {
-    width: 385px;
-    margin-bottom: 24px;
-  }
-  .register-room-location-button-wrapper {
-    margin-bottom: 24px;
-  }
-  .register-room-location-city-district {
-    max-width: 385px;
-    display: flex;
-    margin-bottom: 24px;
-    > div:first-child {
-      margin-right: 24px;
+  .register-room-geometry-map-wrapper {
+    width: 487px;
+    height: 280px;
+    margin-top: 24px;
+    > div {
+      width: 100%;
+      height: 100%;
     }
   }
-  .register-room-location-street-address {
-    max-width: 385px;
-    margin-bottom: 24px;
+  /** 지도 위성 제거 */
+  .gmnoprint .gm-style-mtc {
+    display: none;
   }
-  .register-room-location-detail-address {
-    max-width: 385px;
-    margin-bottom: 24px;
+  /** 로드뷰 아이콘 제거 */
+  .gm-svpc {
+    display: none;
   }
-  .register-room-location-postcode {
-    max-width: 385px;
-    margin-bottom: 24px;
-  }
-  .register-room-location-latitude-longitude {
-    max-width: 385px;
-    display: flex;
-    > div:first-child {
-      margin-right: 24px;
-    }
+  /** 풀스크린 제거 */
+  .gm-fullscreen-control {
+    display: none;
   }
 `;
 
-const RegisterLocation: React.FC = () => {
-  const country = useSelector((state) => state.registerRoom.country);
-  const city = useSelector((state) => state.registerRoom.city);
-  const district = useSelector((state) => state.registerRoom.district);
-  const streetAddress = useSelector(
-    (state) => state.registerRoom.streetAddress
-  );
-  const detailAddress = useSelector(
-    (state) => state.registerRoom.detailAddress
-  );
+//* 구글 지도 script 불러오기
+const loadMapScript = () => {
+  return new Promise<void>((resolve) => {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&callback=initMap`;
+    script.defer = true;
+    document.head.appendChild(script);
+    script.onload = () => {
+      resolve();
+    };
+  });
+};
 
-  const postcode = useSelector((state) => state.registerRoom.postcode);
+const RegisterRoomGeometry: React.FC = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
   const latitude = useSelector((state) => state.registerRoom.latitude);
   const longitude = useSelector((state) => state.registerRoom.longitude);
 
-  const dispatch = useDispatch();
+  const loadMap = async () => {
+    await loadMapScript();
+  };
 
-  //* 나라 변경시
-  const onChangeCountry = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(registerRoomActions.setCountry(e.target.value));
-    },
-    []
-  );
+  window.initMap = () => {
+    //* 지도 불러오기
+    if (mapRef.current) {
+      const map = new google.maps.Map(mapRef.current, {
+        center: {
+          lat: latitude || 37.5666784,
+          lng: longitude || 126.9778436,
+        },
+        zoom: 14,
+      });
+      const marker = new google.maps.Marker({
+        position: {
+          lat: latitude || 37.5666784,
+          lng: longitude || 126.9778436,
+        },
+        map,
+      });
+      map.addListener("center_changed", () => {
+        const centerLat = map.getCenter().lat();
+        const centerLng = map.getCenter().lng();
+        console.log(centerLat, centerLng);
+      });
+    }
+  };
 
-  //* 시/도 변경시
-  const onChangeCity = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(registerRoomActions.setCity(e.target.value));
+  useEffect(() => {
+    loadMap();
   }, []);
 
-  //* 시/군/구 변경시
-  const onChangeDistrict = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(registerRoomActions.setDistrict(e.target.value));
-    },
-    []
-  );
-
-  //* 도로명주소 변경시
-  const onChangeStreetAdress = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(registerRoomActions.setStreetAddress(e.target.value));
-    },
-    []
-  );
-  //*동호수 변경시
-  const onChangeDetailAddress = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(registerRoomActions.setDetailAddress(e.target.value));
-    },
-    []
-  );
-
-  //*우편번호 변경시
-  const onChangePostcode = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(registerRoomActions.setPostcode(e.target.value));
-    },
-    []
-  );
-
-  //* 위도 변경시
-  const onChangeLatitude = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const numberValue = Number(e.target.value.replace(".", ""));
-      if (numberValue) {
-        dispatch(registerRoomActions.setLatitude(numberValue));
-      }
-    },
-    []
-  );
-
-  //* 경도 변경시
-  const onChangeLongitude = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (/^\d*(\.\d{0,2)?$/.test(e.target.value)) {
-        dispatch(registerRoomActions.setLongitude(Number(e.target.value)));
-      }
-    },
-    []
-  );
-
   return (
-    <Container>
-      <h2>숙소의 위치를 알려주세요.</h2>
-      <h3>4단계</h3>
-      <p className="register-room-step-info">
-        정확한 숙소 주소는 게스트가 예약을 완료한 후에만 공개됩니다.
-      </p>
-      <div className="register-room-location-button-wrapper">
-        <Button
-          color="dark_cyan"
-          colorReverse
-          icon={<NavigationIcon />}
-          onClick={() => {}}
-        >
-          현재 위치 사용
-        </Button>
-      </div>
-      <div className="register-room-location-country-selector-wrapper">
-        <Selector
-          type="register"
-          options={countryList}
-          onChange={onChangeCountry}
-          disabledOptions={["국가/지역 선택"]}
-          value={country || "국가/지역 선택"}
-        />
-      </div>
-      <div className="register-room-location-city-district">
-        <Input label="시/도" value={city} onChange={onChangeCity} />
-        <Input label="시/군/구" value={district} onChange={onChangeDistrict} />
-      </div>
-      <div className="register-room-location-street-address">
-        <Input
-          label="도로명주소"
-          value={streetAddress}
-          onChange={onChangeStreetAdress}
-        />
-      </div>
-      <div className="register-room-location-detail-address">
-        <Input
-          label="동호수(선택 사항)"
-          value={detailAddress}
-          onChange={onChangeDetailAddress}
-          useValidation={false}
-        />
-      </div>
-      <div className="register-room-location-postcode">
-        <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
-      </div>
-      <div className="register-room-location-latitude-longitude">
-        <Input
-          label="위도"
-          value={String(latitude)}
-          onChange={onChangeLatitude}
-        />
-        <Input
-          label="경도"
-          value={String(longitude)}
-          onChange={onChangeLongitude}
-        />
-      </div>
-    </Container>
+    <>
+      <Container>
+        <h2>핀이 놓인 위치가 정확한가요?</h2>
+        <h3>4단계</h3>
+        <p>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요.</p>
+        <div className="register-room-geometry-map-wrapper">
+          <div ref={mapRef} id="map" />
+        </div>
+      </Container>
+    </>
   );
 };
 
-export default RegisterLocation;
+export default RegisterRoomGeometry;

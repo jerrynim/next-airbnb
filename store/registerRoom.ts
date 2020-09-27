@@ -200,6 +200,7 @@ const registerRoom = createSlice({
       state.longitude = action.payload;
     },
 
+    //* 편의시설 변경하기
     setAmentities(state, action: PayloadAction<string[]>) {
       state.amentities = action.payload;
     },

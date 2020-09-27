@@ -1,5 +1,4 @@
-import { throttle } from "lodash";
-/* eslint-disable no-undef */
+import throttle from "lodash/throttle";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -44,10 +43,10 @@ const Container = styled.div`
   }
 `;
 
+//* 구글 지도 script 불러오기
 const loadMapScript = () => {
   return new Promise<void>((resolve) => {
     const script = document.createElement("script");
-
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&callback=initMap`;
     script.defer = true;
     document.head.appendChild(script);
@@ -71,15 +70,18 @@ const RegisterRoomGeometry: React.FC = () => {
   window.initMap = () => {
     //* 지도 불러오기
     if (mapRef.current) {
-      const map = new google.maps.Map(mapRef.current, {
+      const map = new window.google.maps.Map(mapRef.current, {
         center: {
-          lat: latitude,
-          lng: longitude,
+          lat: latitude || 37.5666784,
+          lng: longitude || 126.9778436,
         },
         zoom: 14,
       });
-      const marker = new google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
+      const marker = new window.google.maps.Marker({
+        position: {
+          lat: latitude || 37.5666784,
+          lng: longitude || 126.9778436,
+        },
         map,
       });
       map.addListener(
@@ -90,7 +92,7 @@ const RegisterRoomGeometry: React.FC = () => {
           marker.setPosition({ lat: centerLat, lng: centerLng });
           dispatch(registerRoomActions.setLatitude(centerLat));
           dispatch(registerRoomActions.setLongitude(longitude));
-        }, 300)
+        }, 150)
       );
     }
   };
@@ -104,17 +106,13 @@ const RegisterRoomGeometry: React.FC = () => {
       <Container>
         <h2>핀이 놓인 위치가 정확한가요?</h2>
         <h3>4단계</h3>
-        <p>
-          필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시
-          숙소를
-          <br /> 찾을 수 있도록 예약이 확정된 게스트만 핀을 볼 수 있습니다.
-        </p>
+        <p>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요.</p>
         <div className="register-room-geometry-map-wrapper">
           <div ref={mapRef} id="map" />
         </div>
         <RegisterRoomFooter
           prevHref="/room/register/location"
-          nextHref="/room/register/geometry"
+          nextHref="/room/register/amentities"
         />
       </Container>
     </>
