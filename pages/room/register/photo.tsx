@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import { NextPage } from "next";
 import RegisterRoomPhoto from "../../../components/register/RegisterRoomPhoto";
 
-const photo: React.FC = () => {
+const photo: NextPage = () => {
   return <RegisterRoomPhoto />;
 };
 

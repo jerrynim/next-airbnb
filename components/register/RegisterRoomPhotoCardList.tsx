@@ -163,7 +163,7 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
   return (
     <Container>
       {photos.map((photo, index) => (
-        <>
+        <React.Fragment key={index}>
           {index === 0 && (
             <li className="register-room-first-photo-wrapper">
               <img src={photo} alt="" />
@@ -210,7 +210,7 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
               </div>
             </li>
           )}
-        </>
+        </React.Fragment>
       ))}
       <li
         className="register-room-photo-card"

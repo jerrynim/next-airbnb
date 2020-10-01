@@ -53,7 +53,6 @@ const RegisterConveniences: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/amentities"
         nextHref="/room/register/photo"
-        isValid
       />
     </Container>
   );

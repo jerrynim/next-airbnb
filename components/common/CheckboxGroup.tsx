@@ -19,6 +19,7 @@ const Container = styled.div`
     float: left;
     clear: both;
   }
+
   /** ie input x버튼 삭제 */
   input::-ms-clear {
     display: none;

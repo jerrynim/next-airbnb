@@ -205,10 +205,12 @@ const registerRoom = createSlice({
       state.amentities = action.payload;
     },
 
+    //* 편의공간 변경하기
     setConveniences(state, action: PayloadAction<string[]>) {
       state.conveniences = action.payload;
     },
 
+    //* 숙소 사진 변경하기
     setPhotos(state, action: PayloadAction<string[]>) {
       state.photos = action.payload;
     },

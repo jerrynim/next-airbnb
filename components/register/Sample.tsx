@@ -1,12 +1,10 @@
-import { throttle } from "lodash";
-/* eslint-disable no-undef */
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { isEmpty } from "lodash";
+import React from "react";
 import styled from "styled-components";
+import UploadIcon from "../../public/static/svg/button/upload.svg";
 import { useSelector } from "../../store";
-import { registerRoomActions } from "../../store/registerRoom";
 import palette from "../../styles/palette";
-import RegisterRoomFooter from "./RegisterRoomFooter";
+import Button from "../common/button/Button";
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -20,92 +18,63 @@ const Container = styled.div`
     color: ${palette.gray_76};
     margin-bottom: 6px;
   }
-  .register-room-geometry-map-wrapper {
-    width: 487px;
-    height: 280px;
-    margin-top: 24px;
-    > div {
+  .register-room-step-info {
+    font-size: 14px;
+    max-width: 400px;
+    margin-bottom: 24px;
+  }
+  .register-room-upload-photo-wrapper {
+    width: 858px;
+    height: 433px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed ${palette.gray_bb};
+    border-radius: 6px;
+
+    input {
+      position: absolute;
       width: 100%;
       height: 100%;
+      opacity: 0;
+      cursor: pointer;
     }
-  }
-  /** 지도 위성 제거 */
-  .gmnoprint .gm-style-mtc {
-    display: none;
-  }
-  /** 로드뷰 아이콘 제거 */
-  .gm-svpc {
-    display: none;
-  }
-  /** 풀스크린 제거 */
-  .gm-fullscreen-control {
-    display: none;
+    img {
+      width: 100%;
+      max-height: 100%;
+    }
   }
 `;
 
-//* 구글 지도 script 불러오기
-const loadMapScript = () => {
-  return new Promise<void>((resolve) => {
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}&callback=initMap`;
-    script.defer = true;
-    document.head.appendChild(script);
-    script.onload = () => {
-      resolve();
-    };
-  });
-};
+const RegisterRoomPhoto: React.FC = () => {
+  const photos = useSelector((state) => state.registerRoom.photos);
 
-const RegisterRoomGeometry: React.FC = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const latitude = useSelector((state) => state.registerRoom.latitude);
-  const longitude = useSelector((state) => state.registerRoom.longitude);
-
-  const loadMap = async () => {
-    await loadMapScript();
+  //* 이미지 업로드 하기
+  const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    console.log(files);
   };
-
-  window.initMap = () => {
-    //* 지도 불러오기
-    if (mapRef.current) {
-      const map = new google.maps.Map(mapRef.current, {
-        center: {
-          lat: latitude || 37.5666784,
-          lng: longitude || 126.9778436,
-        },
-        zoom: 14,
-      });
-      const marker = new google.maps.Marker({
-        position: {
-          lat: latitude || 37.5666784,
-          lng: longitude || 126.9778436,
-        },
-        map,
-      });
-      map.addListener("center_changed", () => {
-        const centerLat = map.getCenter().lat();
-        const centerLng = map.getCenter().lng();
-        console.log(centerLat, centerLng);
-      });
-    }
-  };
-
-  useEffect(() => {
-    loadMap();
-  }, []);
 
   return (
-    <>
-      <Container>
-        <h2>핀이 놓인 위치가 정확한가요?</h2>
-        <h3>4단계</h3>
-        <p>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요.</p>
-        <div className="register-room-geometry-map-wrapper">
-          <div ref={mapRef} id="map" />
+    <Container>
+      <h2>숙소 사진 올리기</h2>
+      <h3>7단계</h3>
+      <p className="register-room-step-info">
+        게스트가 사진을 보고 숙소의 느낌을 생생히 떠올려볼 수 있도록 해주세요.
+        우선 사진 1장을 업로드하고 숙소를 등록한 후에 추가할 수 있습니다.
+      </p>
+      {isEmpty(photos) && (
+        <div className="register-room-upload-photo-wrapper">
+          <>
+            <input type="file" accept="image/*" onChange={uploadImage} />
+            <Button icon={<UploadIcon />}>사진 업로드</Button>
+          </>
         </div>
-      </Container>
-    </>
+      )}
+    </Container>
   );
 };
 
-export default RegisterRoomGeometry;
+export default RegisterRoomPhoto;

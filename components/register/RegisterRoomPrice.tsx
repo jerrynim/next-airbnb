@@ -49,7 +49,6 @@ const RegisterRoomPrice: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/title"
         nextHref="/room/register/date"
-        isValid
       />
     </Container>
   );

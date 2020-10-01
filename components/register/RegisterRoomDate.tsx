@@ -131,7 +131,6 @@ const RegisterRoomDate: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/price"
         nextHref="/room/register/checklist"
-        isValid
       />
     </Container>
   );

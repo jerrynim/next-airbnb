@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import palette from "../../styles/palette";
 
 import { useSelector } from "../../store";
@@ -38,7 +38,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     border: 2px dashed ${palette.gray_bb};
-
+    border-radius: 6px;
     input {
       position: absolute;
       width: 100%;
@@ -58,9 +58,9 @@ const RegisterRoomPhoto: React.FC = () => {
 
   const photos = useSelector((state) => state.registerRoom.photos);
 
-  const uploadImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
       const file = files[0];
       const formdata = new FormData();
       formdata.append("file", file);
@@ -86,12 +86,7 @@ const RegisterRoomPhoto: React.FC = () => {
       {isEmpty(photos) && (
         <div className="register-room-upload-photo-wrapper">
           <>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={uploadImages}
-            />
+            <input type="file" accept="image/*" onChange={uploadImage} />
             <Button icon={<UploadIcon />}>사진 업로드</Button>
           </>
         </div>
@@ -100,7 +95,6 @@ const RegisterRoomPhoto: React.FC = () => {
       <RegisterRoomFooter
         prevHref="/room/register/conveniences"
         nextHref="/room/register/description"
-        isValid
       />
     </Container>
   );
