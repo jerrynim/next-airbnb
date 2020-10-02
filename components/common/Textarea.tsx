@@ -1,4 +1,5 @@
 import React from "react";
+import ReactAutosizeTextarea from "react-autosize-textarea";
 import styled, { css } from "styled-components";
 import { useSelector } from "../../store";
 import palette from "../../styles/palette";
@@ -64,7 +65,6 @@ const Container = styled.div<InputContainerProps>`
 `;
 
 interface IProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
-  icon?: JSX.Element;
   label?: string;
   isValid?: boolean;
   useValidation?: boolean;
@@ -72,7 +72,6 @@ interface IProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
 }
 
 const Textarea: React.FC<IProps> = ({
-  icon,
   label,
   isValid = false,
   useValidation = true,
@@ -84,8 +83,7 @@ const Textarea: React.FC<IProps> = ({
   return (
     <Container isValid={isValid} useValidation={useValidation && validateMode}>
       {label && <label>{label}</label>}
-      <textarea {...props} />
-      {icon}
+      <ReactAutosizeTextarea {...props} />
       {useValidation && validateMode && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}

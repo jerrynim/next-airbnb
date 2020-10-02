@@ -215,22 +215,25 @@ const registerRoom = createSlice({
       state.photos = action.payload;
     },
 
-    setPrice(state, action: PayloadAction<number>) {
-      state.price = action.payload;
-    },
-
+    //* 숙소 설명 변경하기
     setDescription(state, action: PayloadAction<string>) {
       state.description = action.payload;
     },
 
+    //* 숙소 제목 변경하기
     setTitle(state, action: PayloadAction<string>) {
       state.title = action.payload;
     },
 
+    //* 숙소 요금 변경하기
+    setPrice(state, action: PayloadAction<number>) {
+      state.price = action.payload;
+    },
+    //* 예약 가능 시작 날짜 변경하기
     setStartDate(state, action: PayloadAction<string | null>) {
       state.startDate = action.payload;
     },
-
+    //* 예약 가능 마감 날짜 변경하기
     setEndDate(state, action: PayloadAction<string | null>) {
       state.endDate = action.payload;
     },

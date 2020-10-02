@@ -34,7 +34,7 @@ const RegisterRoomPrice: React.FC = () => {
       <h3>10단계</h3>
       <Input
         label="기본요금"
-        value={makeMoneyString(String(price))}
+        value={makeMoneyString(String(price || ""))}
         onChange={(e) => {
           const input = e.target.value;
           if (!input) {

@@ -58,6 +58,7 @@ const RegisterRoomPhoto: React.FC = () => {
 
   const photos = useSelector((state) => state.registerRoom.photos);
 
+  //* 파일 업로드 하기
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files && files.length > 0) {
@@ -86,7 +87,12 @@ const RegisterRoomPhoto: React.FC = () => {
       {isEmpty(photos) && (
         <div className="register-room-upload-photo-wrapper">
           <>
-            <input type="file" accept="image/*" onChange={uploadImage} />
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={uploadImage}
+            />
             <Button icon={<UploadIcon />}>사진 업로드</Button>
           </>
         </div>

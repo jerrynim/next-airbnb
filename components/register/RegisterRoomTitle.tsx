@@ -40,8 +40,7 @@ const RegisterRoomTitle: React.FC = () => {
       <h3>9단계</h3>
       <div className="register-room-description-wrapper">
         <Input
-          label="
-숙소의 특징과 장점을 강조하는 제목으로 게스트의 관심을 끌어보세요."
+          label="숙소의 특징과 장점을 강조하는 제목으로 게스트의 관심을 끌어보세요."
           value={title}
           isValid={!!title}
           onChange={(e) =>

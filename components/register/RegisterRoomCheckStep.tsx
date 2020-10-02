@@ -22,6 +22,9 @@ const Container = styled.li`
       text-decoration: underline;
     }
   }
+  .register-room-check-step-in-progress {
+    margin-left: 28px;
+  }
   .register-room-check-step-continue-button {
     margin: 8px 0 0 28px;
   }
@@ -49,8 +52,7 @@ const RegisterRoomCheckStep: React.FC<IProps> = ({
     return (
       <Container>
         <Link href={href}>
-          <a>
-            <CheckMarkIcon />
+          <a className="register-room-check-step-in-progress">
             <span>{step}</span>
           </a>
         </Link>

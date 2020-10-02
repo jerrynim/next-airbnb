@@ -32,8 +32,8 @@ export type RegisterRoomState = {
   description: string;
   title: string;
   price: number;
-  startDate: Date | string | null;
-  endDate: Date | string | null;
+  startDate: string | null;
+  endDate: string | null;
 };
 
 //* 공통 redux state

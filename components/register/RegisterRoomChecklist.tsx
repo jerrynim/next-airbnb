@@ -132,7 +132,6 @@ const RegisterRoomChecklist: React.FC = () => {
   //* 숙소 금액이 채워져 있는지
   const isPriceActived = useMemo(() => {
     const { price } = registerRoom;
-    console.log(!isTitleActived, !price);
     if (!isTitleActived || !price) {
       return false;
     }
@@ -151,10 +150,10 @@ const RegisterRoomChecklist: React.FC = () => {
   //* 진행중인 단계
   const stepInProgress = useMemo(() => {
     if (!isBuildingTypeActived) {
-      return "buildingType";
+      return "building";
     }
     if (!isRoomTypeActived) {
-      return "roomType";
+      return "bedrooms";
     }
     if (!isBathroomActived) {
       return "bathroom";
@@ -196,13 +195,13 @@ const RegisterRoomChecklist: React.FC = () => {
           step="숙소 유형"
           href="/room/register/building"
           disabled={!isBuildingTypeActived}
-          inProgress={stepInProgress === "buildingType"}
+          inProgress={stepInProgress === "building"}
         />
         <RegisterRoomCheckStep
           step="숙소 종류"
           href="/room/register/bedrooms"
           disabled={!isRoomTypeActived}
-          inProgress={stepInProgress === "roomType"}
+          inProgress={stepInProgress === "bedrooms"}
         />
         <RegisterRoomCheckStep
           step="욕실"
@@ -263,7 +262,10 @@ const RegisterRoomChecklist: React.FC = () => {
       {isDateActived ? (
         <RegisterRoomSubmitFooter />
       ) : (
-        <RegisterRoomFooter prevHref="/room/register/date" />
+        <RegisterRoomFooter
+          prevHref="/room/register/date"
+          nextHref={`/room/register/${stepInProgress}`}
+        />
       )}
     </Container>
   );

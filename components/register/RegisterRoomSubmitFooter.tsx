@@ -32,13 +32,7 @@ const Container = styled.footer`
   }
 `;
 
-interface IProps {
-  prevHref?: string;
-  nextHref?: string;
-  isValid?: boolean;
-}
-
-const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
+const RegisterRoomSubmitFooter: React.FC = () => {
   const userId = useSelector((state) => state.user.id);
   const registerRoom = useSelector((state) => state.registerRoom);
   const registerRoomBody = {
@@ -56,17 +50,13 @@ const RegisterRoomSubmitFooter: React.FC<IProps> = ({ prevHref, nextHref }) => {
   };
   return (
     <Container>
-      <Link href={prevHref || ""}>
+      <Link href="/room/register/date">
         <a className="register-room-footer-back">
           <BackArrowIcon />
           뒤로
         </a>
       </Link>
-      <Link href={nextHref || ""}>
-        <a>
-          <Button onClick={onClickregisterRoom}>등록하기</Button>
-        </a>
-      </Link>
+      <Button onClick={onClickregisterRoom}>등록하기</Button>
     </Container>
   );
 };

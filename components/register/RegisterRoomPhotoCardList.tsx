@@ -63,8 +63,10 @@ const Container = styled.ul`
       top: 0;
       left: 0;
       width: 100%;
+      height: 100%;
     }
   }
+  /** 사진 추가하기 카드 */
   .register-room-add-more-photo-card {
     position: relative;
     flex-direction: column;
@@ -84,6 +86,7 @@ const Container = styled.ul`
       margin-bottom: 12px;
     }
   }
+  /** 수정,삭제 버튼 */
   .register-room-photo-interaction-buttons {
     display: none;
     position: absolute;
@@ -146,17 +149,19 @@ const RegisterRoomPhotoCardList: React.FC<IProps> = ({ photos }) => {
     el.type = "file";
     el.accept = "image/*";
     el.onchange = (event) => {
-      const file = (event.target as HTMLInputElement)?.files?.[0];
-      if (file) {
+      const { files } = event.target as HTMLInputElement;
+      if (files && files.length > 0) {
+        const file = files[0];
         const formData = new FormData();
         formData.append("file", file);
         uploadFileAPI(formData)
           .then(({ data }) => {
             dispatch(registerRoomActions.setPhotos([...photos, data]));
           })
-          .catch((e) => console.log(e.message));
+          .catch((e) => console.log(e));
       }
     };
+
     el.click();
   };
 

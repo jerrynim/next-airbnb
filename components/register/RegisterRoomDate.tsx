@@ -21,19 +21,12 @@ const Container = styled.div`
     color: ${palette.gray_76};
     margin-bottom: 6px;
   }
-  .register-room-step-info {
-    font-size: 14px;
-    max-width: 400px;
-    margin-bottom: 24px;
-  }
-  .register-room-description-wrapper {
-    width: 430px;
-    font-size: 14px;
-    margin-bottom: 16px;
-  }
+
   label {
-    display: block;
-    margin-bottom: 8px;
+    span {
+      display: block;
+      margin-bottom: 8px;
+    }
   }
   input {
     display: block;
@@ -68,18 +61,11 @@ const Container = styled.div`
 
 const RegisterRoomDate: React.FC = () => {
   const dispatch = useDispatch();
-  const startDateSelector = (state: RootState) => state.registerRoom.startDate;
-  const endDateSelector = (state: RootState) => state.registerRoom.endDate;
+  const startDate = useSelector((state) => state.registerRoom.startDate);
+  const endDate = useSelector((state) => state.registerRoom.endDate);
 
-  const dateSelector = createSelector(
-    [startDateSelector, endDateSelector],
-    (startDate, endDate) => ({
-      startDate: startDate ? new Date(startDate as string) : null,
-      endDate: endDate ? new Date(endDate as string) : null,
-    })
-  );
-
-  const { startDate, endDate } = useSelector(dateSelector);
+  const dateStartDate = startDate ? new Date(startDate) : null;
+  const dateEndDate = endDate ? new Date(endDate) : null;
 
   return (
     <Container>
@@ -88,43 +74,47 @@ const RegisterRoomDate: React.FC = () => {
 
       <div className="register-room-date-wrapper">
         <div className="register-room-start-date">
-          <label>예약 시작일</label>
-          <DatePicker
-            selected={startDate}
-            monthsShown={2}
-            onChange={(date) =>
-              dispatch(
-                registerRoomActions.setStartDate(
-                  date ? (date as Date).toISOString() : null
+          <label>
+            <span>예약 시작일</span>
+            <DatePicker
+              selected={dateStartDate}
+              onChange={(date) =>
+                dispatch(
+                  registerRoomActions.setStartDate(
+                    date ? (date as Date).toISOString() : null
+                  )
                 )
-              )
-            }
-            selectsStart
-            startDate={startDate as Date}
-            endDate={new Date(endDate as Date)}
-            disabledKeyboardNavigation
-            minDate={new Date()}
-          />
+              }
+              disabledKeyboardNavigation
+              monthsShown={2}
+              selectsStart
+              startDate={dateStartDate}
+              endDate={dateEndDate}
+              minDate={new Date()}
+            />
+          </label>
         </div>
 
         <div className="register-room-end-date">
-          <label>예약 마감일</label>
-          <DatePicker
-            selected={endDate}
-            monthsShown={2}
-            onChange={(date) =>
-              dispatch(
-                registerRoomActions.setEndDate(
-                  date ? (date as Date).toISOString() : null
+          <label>
+            <span>예약 마감일</span>
+            <DatePicker
+              selected={dateEndDate}
+              onChange={(date) =>
+                dispatch(
+                  registerRoomActions.setEndDate(
+                    date ? (date as Date).toISOString() : null
+                  )
                 )
-              )
-            }
-            selectsEnd
-            startDate={startDate as Date}
-            endDate={new Date(endDate as Date)}
-            disabledKeyboardNavigation
-            minDate={new Date(startDate as Date)}
-          />
+              }
+              disabledKeyboardNavigation
+              monthsShown={2}
+              selectsEnd
+              startDate={dateStartDate}
+              endDate={dateEndDate}
+              minDate={dateStartDate}
+            />
+          </label>
         </div>
       </div>
 
