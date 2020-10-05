@@ -82,8 +82,8 @@ const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
   const rooms = useSelector((state) => state.room.rooms);
   const mapRef = useRef<HTMLDivElement>(null);
   const [currentLocation, setCurrentLocation] = useState({
-    latitude: -25.344,
-    longitude: 131.036,
+    latitude: 37.5666784,
+    longitude: 126.9778436,
   });
 
   const loadMap = async () => {
@@ -105,6 +105,7 @@ const RoomListMap: React.FC<IProps> = ({ setShowMap }) => {
           position: { lat: room.latitude, lng: room.longitude },
           map,
         });
+        console.log(marker);
       });
     }
   };

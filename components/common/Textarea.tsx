@@ -24,6 +24,7 @@ const Container = styled.div<InputContainerProps>`
     font-size: 16px;
     outline: none;
     resize: none;
+    font: inherit;
     & ::placeholder {
       color: ${palette.gray_76};
     }

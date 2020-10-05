@@ -4,13 +4,13 @@ import { SearchRoomState } from "../types/reduxState";
 //* 초기 상태
 const initialState: SearchRoomState = {
   location: "",
+  latitude: 0,
+  longitude: 0,
   checkInDate: null,
   checkOutDate: null,
   adultCount: 1,
   childrenCount: 0,
   infantsCount: 0,
-  latitude: 0,
-  longitude: 0,
 };
 
 const searchRoom = createSlice({
@@ -28,7 +28,7 @@ const searchRoom = createSlice({
       return state;
     },
 
-    //? 이런식으로도 가능하다
+    //? SearchRoomState["checkOutDate"] 처럼 타입 지정도 가능하다.
     //* 체크아웃 날짜 변경하기
     setEndDate(state, action: PayloadAction<SearchRoomState["checkOutDate"]>) {
       state.checkOutDate = action.payload;

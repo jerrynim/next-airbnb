@@ -35,12 +35,15 @@ const Container = styled.footer`
 const RegisterRoomSubmitFooter: React.FC = () => {
   const userId = useSelector((state) => state.user.id);
   const registerRoom = useSelector((state) => state.registerRoom);
-  const registerRoomBody = {
-    ...registerRoom,
-    hostId: userId,
-  };
+
   const router = useRouter();
+
+  //* 등록하기 클릭 시
   const onClickregisterRoom = async () => {
+    const registerRoomBody = {
+      ...registerRoom,
+      hostId: userId,
+    };
     try {
       await registerRoomAPI(registerRoomBody);
       router.push("/");

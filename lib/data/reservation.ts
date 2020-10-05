@@ -1,7 +1,7 @@
 import fs from "fs";
 import { StoredReservation } from "../../types/reservation";
 
-//* 저장된 유저 리스트 불러오기
+//* 저장된 숙소 예약 리스트 불러오기
 const getList = async () => {
   try {
     const rooms = await new Promise<StoredReservation[]>((resolve, reject) => {
@@ -26,7 +26,7 @@ const getList = async () => {
   }
 };
 
-//* 숙소 저장하기
+//* 숙소 예약 저장하기
 const write = async (reservations: StoredReservation[]) => {
   fs.writeFile(
     "data/reservations.json",

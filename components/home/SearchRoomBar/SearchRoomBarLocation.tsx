@@ -1,21 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
 import { searchPlacesAPI, getPlaceAPI } from "../../../lib/api/map";
 import useDebounce from "../../../hooks/useDebounce";
 import palette from "../../../styles/palette";
-import useSearchRoom from "../../../hooks/useSearchRoom";
+import { useSelector } from "../../../store";
+import { searchRoomActions } from "../../../store/searchRoom";
 
 const Container = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 70px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  &:hover {
+    border-color: ${palette.gray_dd};
+  }
   .search-room-bar-location-texts {
     position: absolute;
-    width: calc(100% - 32px);
-    top: 22px;
-    left: 16px;
+    width: calc(100% - 40px);
+    top: 16px;
+    left: 20px;
     .search-room-bar-location-label {
       font-size: 10px;
       font-weight: 800;
@@ -23,6 +31,7 @@ const Container = styled.div`
     }
     input {
       width: 100%;
+      padding: 0;
       border: 0;
       font-size: 14px;
       font-weight: 600;
@@ -61,12 +70,24 @@ const Container = styled.div`
 `;
 
 const SearchRoomBarLocation: React.FC = () => {
-  const {
-    location,
-    setLocationDispatch,
-    setLatitudeDispatch,
-    setLongitudeDispatch,
-  } = useSearchRoom();
+  const location = useSelector((state) => state.searchRoom.location);
+
+  const dispatch = useDispatch();
+
+  //* 위치  변경 Dispatch
+  const setLocationDispatch = (value: string) => {
+    dispatch(searchRoomActions.setLocation(value));
+  };
+
+  //* 위도 변경 Dispatch
+  const setLatitudeDispatch = (value: number) => {
+    dispatch(searchRoomActions.setLatitude(value));
+  };
+
+  //* 경도  변경 Dispatch
+  const setLongitudeDispatch = (value: number) => {
+    dispatch(searchRoomActions.setLongitude(value));
+  };
 
   //* 검색 결과
   const [results, setResults] = useState<
@@ -79,7 +100,9 @@ const SearchRoomBarLocation: React.FC = () => {
   const [popupOpened, setPopupOpened] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+
   const searchKeyword = useDebounce(location, 150);
+
   const searchPlaces = async () => {
     try {
       const { data } = await searchPlacesAPI(encodeURI(location));
@@ -107,7 +130,6 @@ const SearchRoomBarLocation: React.FC = () => {
       },
       (e) => {
         console.log(e);
-        alert(e.message);
       }
     );
   };
@@ -116,12 +138,9 @@ const SearchRoomBarLocation: React.FC = () => {
   const onClickResult = async (placeId: string) => {
     try {
       const { data } = await getPlaceAPI(placeId);
-      console.log(data);
-      const location = data.results[0].formatted_address;
-      const { lat, lng } = data.results[0].geometry.location;
-      setLocationDispatch(location);
-      setLatitudeDispatch(lat);
-      setLongitudeDispatch(lng);
+      setLocationDispatch(data.location);
+      setLatitudeDispatch(data.latitude);
+      setLongitudeDispatch(data.longitude);
       setPopupOpened(false);
     } catch (e) {
       console.log(e);
@@ -142,7 +161,7 @@ const SearchRoomBarLocation: React.FC = () => {
     <Container onClick={onClickInput}>
       <OutsideClickHandler onOutsideClick={() => setPopupOpened(false)}>
         <div className="search-room-bar-location-texts">
-          <p className="search-room-bar-location-label">인원</p>
+          <p className="search-room-bar-location-label">위치</p>
           <input
             value={location}
             onChange={(e) => setLocationDispatch(e.target.value)}
@@ -158,10 +177,10 @@ const SearchRoomBarLocation: React.FC = () => {
               </li>
             )}
             {!isEmpty(results) &&
-              results.map((result) => (
+              results.map((result, index) => (
                 <li
                   role="presentation"
-                  key={result.placeId}
+                  key={index}
                   onClick={() => onClickResult(result.placeId)}
                 >
                   {result.description}

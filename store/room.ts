@@ -16,6 +16,7 @@ const room = createSlice({
     setRooms(state, action: PayloadAction<RoomType[]>) {
       state.rooms = action.payload;
     },
+    //* 상세 숙소 변경하기
     setDetailRoom(state, action: PayloadAction<RoomType>) {
       state.detail = action.payload;
     },

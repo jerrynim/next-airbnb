@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useRef } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useRouter } from "next/router";
 import styled from "styled-components";
+import { differenceInDays } from "date-fns";
 import DatePicker from "../common/DatePicker";
 import Counter from "../common/Counter";
 import palette from "../../styles/palette";
@@ -8,13 +10,11 @@ import Button from "../common/button/Button";
 import { useSelector } from "../../store";
 import { makeReservationAPI } from "../../lib/api/reservation";
 import usePortal from "../../hooks/usePortal";
-import LoginModal from "../auths/LoginModal";
 import AuthModal from "../auths/AuthModal";
-import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: sticky;
-  top: 48px;
+  top: 128px;
   padding: 24px 24px 16px;
   width: 362px;
   height: fit-content;
@@ -152,12 +152,11 @@ const Container = styled.div`
 `;
 
 const RoomDetailReservation: React.FC = () => {
-  const roomId = useSelector((state) => state.room.detail?.id);
-  if (!roomId) {
+  const room = useSelector((state) => state.room.detail);
+  if (!room) {
     return null;
   }
-  const roomStartDate = useSelector((state) => state.room.detail?.startDate);
-  const roomEndDate = useSelector((state) => state.room.detail?.endDate);
+
   const price = useSelector((state) => state.room.detail?.price);
   const userId = useSelector((state) => state.user.id);
 
@@ -186,16 +185,16 @@ const RoomDetailReservation: React.FC = () => {
   const checkOutRef = useRef<HTMLLabelElement>(null);
 
   const onClickReservation = async () => {
-    if (checkInRef.current && !startDate) {
+    if (!userId) {
+      openModalPortal();
+    } else if (checkInRef.current && !startDate) {
       checkInRef.current.focus();
     } else if (checkOutRef.current && !endDate) {
       checkOutRef.current.focus();
-    } else if (!userId) {
-      openModalPortal();
     } else {
       try {
         const body = {
-          roomId,
+          roomId: room.id,
           userId,
           checkInDate: startDate as Date,
           checkOutDate: endDate!,
@@ -232,8 +231,8 @@ const RoomDetailReservation: React.FC = () => {
                 startDate={startDate as Date}
                 endDate={new Date(endDate as Date)}
                 disabledKeyboardNavigation
-                minDate={roomStartDate && new Date(roomStartDate)}
-                maxDate={roomEndDate && new Date(roomEndDate)}
+                minDate={new Date(room.startDate)}
+                maxDate={new Date(room.endDate)}
               />
             </label>
           </div>
@@ -251,7 +250,7 @@ const RoomDetailReservation: React.FC = () => {
                 endDate={new Date(endDate as Date)}
                 disabledKeyboardNavigation
                 minDate={new Date(startDate as Date)}
-                maxDate={roomEndDate && new Date(roomEndDate)}
+                maxDate={new Date(room.endDate)}
               />
             </label>
           </div>
@@ -296,7 +295,8 @@ const RoomDetailReservation: React.FC = () => {
                   onChange={(count) => setInfantsCount(count)}
                 />
                 <p className="room-detail-reservation-guests-info">
-                  최대 6명. 유아는 숙박인원에 포함되지 않습니다.
+                  최대 {room.maximumGuestCount}명. 유아는 숙박인원에 포함되지
+                  않습니다.
                 </p>
               </div>
             )}
@@ -310,16 +310,12 @@ const RoomDetailReservation: React.FC = () => {
       {startDate && endDate && (
         <>
           <p className="room-detail-reservation-price-date">
-            {price} X {endDate.getDay() - startDate.getDay()}박
-            <span>
-              {Number(price) * (endDate.getDay() - startDate.getDay())}
-            </span>
+            {price} X {differenceInDays(endDate, startDate)}박
+            <span>{Number(price) * differenceInDays(endDate, startDate)}</span>
           </p>
           <p className="room-detail-reservation-total-price">
             총 합계
-            <span>
-              {Number(price) * (endDate.getDay() - startDate.getDay())}
-            </span>
+            <span>{Number(price) * differenceInDays(endDate, startDate)}</span>
           </p>
         </>
       )}

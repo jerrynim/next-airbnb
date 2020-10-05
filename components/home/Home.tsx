@@ -22,7 +22,6 @@ const Container = styled.div`
     display: flex;
     width: 100%;
     list-style: none;
-    overflow: hidden;
     padding-bottom: 60px;
     li {
       width: 100%;
@@ -70,7 +69,7 @@ const Home: React.FC = () => {
       <p className="home-serach-bar-label">숙소</p>
       <SearchRoomBar />
       <h2>가까운 여행지, 에어비엔비와 탐험해보세요.</h2>
-      <ul className="home-category-card-list">
+      {/* <ul className="home-category-card-list">
         <li>
           <div className="home-category-card-image-wrapper">
             <img
@@ -111,7 +110,7 @@ const Home: React.FC = () => {
             </p>
           </div>
         </li>
-      </ul>
+      </ul> */}
     </Container>
   );
 };

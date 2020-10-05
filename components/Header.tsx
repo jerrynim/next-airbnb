@@ -133,7 +133,6 @@ const Header: React.FC = () => {
   //* 유저메뉴 열고,닫힘 여부
   const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
 
-  const router = useRouter();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -143,7 +142,6 @@ const Header: React.FC = () => {
       await logoutAPI();
       dispatch(userActions.initUser());
       setIsUsermenuOpened(false);
-      router.push("/");
     } catch (e) {
       console.log(e.message);
     }

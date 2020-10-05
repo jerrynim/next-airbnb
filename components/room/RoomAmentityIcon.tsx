@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import TvIcon from "../../public/static/svg/room/detail/tv.svg";
 import WifiIcon from "../../public/static/svg/room/detail/wifi.svg";
 import ThermometerIcon from "../../public/static/svg/room/detail/thermometer.svg";
@@ -12,17 +11,6 @@ import NotebookIcon from "../../public/static/svg/room/detail/notebook.svg";
 import FireplaceIcon from "../../public/static/svg/room/detail/fireplace.svg";
 import ClosetIcon from "../../public/static/svg/room/detail/closet.svg";
 import DoorIcon from "../../public/static/svg/room/detail/door.svg";
-
-const Container = styled.li`
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  svg {
-    width: 24px;
-    height: 24px;
-    margin-right: 16px;
-  }
-`;
 
 interface IProps {
   amentity: string;

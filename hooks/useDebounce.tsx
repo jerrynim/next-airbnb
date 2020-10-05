@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-/**
- * * debounce 된 값을 return
- */
+//* debounce 된 값을 return
 export default (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {

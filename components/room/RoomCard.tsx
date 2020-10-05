@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
 import differenceInDays from "date-fns/differenceInDays";
 import Link from "next/link";
@@ -86,6 +86,7 @@ const Container = styled.li<{ showMap: boolean }>`
         }
         .room-card-photo-wrapper {
           width: 300px;
+          min-width: 300px;
           height: 200px;
           margin-right: 16px;
           margin-bottom: 0;
@@ -99,6 +100,7 @@ const Container = styled.li<{ showMap: boolean }>`
         }
         .room-card-title {
           font-size: 18px;
+          white-space: break-spaces;
           margin-bottom: 11px;
         }
         .room-card-text-divider {
@@ -141,6 +143,20 @@ const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
     checkOutDate &&
     checkInDate &&
     differenceInDays(new Date(checkOutDate), new Date(checkInDate));
+
+  //* 한글로 된 숙소 유형
+  const translatedRoomType = useMemo(() => {
+    switch (room.roomType) {
+      case "entire":
+        return "집 전체";
+      case "private":
+        return "개인실";
+      case "public":
+        return "공용";
+      default:
+        return "";
+    }
+  }, []);
   return (
     <Container showMap={showMap}>
       <Link href="/room/[id]" as={`/room/${room.id}`}>
@@ -150,7 +166,8 @@ const RoomCard: React.FC<IProps> = ({ room, showMap }) => {
           </div>
           <div className="room-card-info-texts">
             <p className="room-card-room-info">
-              {room.buildingType} {room.roomType} {room.district} {room.city}
+              {room.buildingType} {translatedRoomType} {room.district}&nbsp;
+              {room.city}
             </p>
             <p className="room-card-title">{room.title}</p>
             <div className="room-card-text-divider" />

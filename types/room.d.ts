@@ -43,10 +43,10 @@ export type RoomType = {
   description: string;
   title: string;
   price: string;
-  startDate: Date;
-  endDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
   host: UserType;
 };
 
@@ -77,9 +77,9 @@ export type StoredRoomType = {
   description: string;
   title: string;
   price: string;
-  startDate: Date;
-  endDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
   hostId: number;
 };

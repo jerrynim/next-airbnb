@@ -12,6 +12,7 @@ const Container = styled.div`
   width: 1120px;
   margin: auto;
   padding-top: 26px;
+  padding-bottom: 100px;
 
   .room-detail-title {
     font-size: 26px;
@@ -45,6 +46,10 @@ const Container = styled.div`
       height: 1px;
       background-color: ${palette.gray_dd};
       margin: 32px 0;
+    }
+    .room-detail-description {
+      white-space: break-spaces;
+      word-break: keep-all;
     }
     .room-detatil-bed-type-label {
       font-size: 22px;
@@ -138,14 +143,14 @@ const RoomDetail: React.FC = () => {
             {room.bedCount}개 · 욕실 {room.bathroomCount}개
           </p>
           <div className="room-detail-divider" />
-          <p>{room.description}</p>
+          <p className="room-detail-description">{room.description}</p>
           <div className="room-detail-divider" />
           {!isEmpty(room.bedList) && (
             <>
               <p className="room-detatil-bed-type-label">침대/침구 유형</p>
               <ul className="room-detail-bed-type-list">
                 {room.bedList.map((bedroom) => (
-                  <li className="room-detail-bedroom-card">
+                  <li className="room-detail-bedroom-card" key={bedroom.id}>
                     <BedIcon />
                     <p className="room-detail-bed-card-number">
                       {bedroom.id}번 침실

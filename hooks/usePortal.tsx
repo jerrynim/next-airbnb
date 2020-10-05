@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
@@ -49,6 +50,13 @@ export default () => {
   interface IProps {
     children: React.ReactNode;
   }
+
+  const router = useRouter();
+  useEffect(() => {
+    return () => {
+      closeModalPortal();
+    };
+  }, [router]);
 
   const ModalPortal: React.FC<IProps> = ({ children }) => {
     const ref = useRef<Element | null>();

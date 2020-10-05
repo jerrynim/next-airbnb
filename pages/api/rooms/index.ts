@@ -13,6 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       latitude,
       longitude,
       limit,
+      page = "1",
     } = req.query;
     try {
       const rooms = await Data.room.getList();
@@ -59,13 +60,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       //* 갯수 자르기
-      const limitedRooms = filteredRooms.splice(0, Number(limit));
-
+      const limitedRooms = filteredRooms.splice(
+        0 + (Number(page) - 1) * Number(limit),
+        Number(limit)
+      );
       //* host 정보 넣기
-      const roomsWithHost = limitedRooms.map((room) => {
-        const host = Data.user.find({ id: room.hostId });
-        return { ...room, host };
-      });
+      const roomsWithHost = await Promise.all(
+        limitedRooms.map(async (room) => {
+          const host = await Data.user.find({ id: room.hostId });
+          return { ...room, host };
+        })
+      );
       res.statusCode = 200;
       return res.send(roomsWithHost);
     } catch (e) {
@@ -97,7 +102,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
       Data.room.write([...rooms, newRoom]);
       res.statusCode = 201;
-      return res.send({});
+      return res.end();
     } catch (e) {
       console.log(e);
       return res.send(e.message);

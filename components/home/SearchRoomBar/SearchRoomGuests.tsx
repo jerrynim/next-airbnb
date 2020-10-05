@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useDispatch } from "react-redux";
 import Counter from "../../common/Counter";
 import palette from "../../../styles/palette";
-import useSearchRoom from "../../../hooks/useSearchRoom";
+import { useSelector } from "../../../store";
+import { searchRoomActions } from "../../../store/searchRoom";
+import SearchRoomButton from "./SearchRoomButton";
 
 const Container = styled.div`
   position: relative;
-  padding: 16px 24px;
+  width: 100%;
+  height: 70px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  &:hover {
+    border-color: ${palette.gray_dd};
+  }
+  > div {
+    width: 100%;
+    height: 100%;
+  }
+  .search-room-bar-guests-texts {
+    position: absolute;
+    width: calc(100% - 114px);
+    top: 16px;
+    left: 20px;
+  }
   .search-room-bar-guests-label {
     font-size: 10px;
     font-weight: 800;
@@ -17,7 +37,7 @@ const Container = styled.div`
     position: absolute;
     width: 394px;
     top: 78px;
-    left: 0;
+    right: 0;
     padding: 16px 32px;
     background-color: white;
     border-radius: 32px;
@@ -32,31 +52,42 @@ const Container = styled.div`
     }
   }
   .search-room-bar-guests-text {
+    font-size: 14px;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .search-room-bar-button-wrapper {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    right: 12px;
+  }
 `;
 
-interface IProps {
-  adultCount: number;
-  setAdultCount: React.Dispatch<React.SetStateAction<number>>;
-  childrenCount: number;
-  setChildrenCount: React.Dispatch<React.SetStateAction<number>>;
-  infantsCount: number;
-  setInfantsCount: React.Dispatch<React.SetStateAction<number>>;
-}
-
 const SearchRoomGuests: React.FC = () => {
-  const {
-    adultCount,
-    setAdultCountDispatch,
-    childrenCount,
-    setChildrenCountDispatch,
-    infantsCount,
-    setInfantsCountDispatch,
-  } = useSearchRoom();
   const [popupOpened, setPopupOpened] = useState(false);
+
+  const adultCount = useSelector((state) => state.searchRoom.adultCount);
+  const childrenCount = useSelector((state) => state.searchRoom.childrenCount);
+  const infantsCount = useSelector((state) => state.searchRoom.infantsCount);
+
+  const dispatch = useDispatch();
+
+  //* 성인 수 변경하기 Dispatch
+  const setAdultCountDispatch = (value: number) => {
+    dispatch(searchRoomActions.setAdultCount(value));
+  };
+  //* 어린이 수 변경하기 Dispatch
+  const setChildrenCountDispatch = (value: number) => {
+    dispatch(searchRoomActions.setChildrenCount(value));
+  };
+
+  //* 유아 수 변경하기 Dispatch
+  const setInfantsCountDispatch = (value: number) => {
+    dispatch(searchRoomActions.setInfantsCount(value));
+  };
 
   //* 게스트 인원 수 텍스트
   const guetsText = `게스트 ${adultCount}명${
@@ -66,9 +97,14 @@ const SearchRoomGuests: React.FC = () => {
   return (
     <Container onClick={() => setPopupOpened(true)}>
       <OutsideClickHandler onOutsideClick={() => setPopupOpened(false)}>
-        <p className="search-room-bar-guests-label">인원</p>
-        <p className="search-room-bar-guests-text">{guetsText}</p>
+        <div className="search-room-bar-guests-texts">
+          <p className="search-room-bar-guests-label">인원</p>
+          <p className="search-room-bar-guests-text">{guetsText}</p>
+        </div>
 
+        <div className="search-room-bar-button-wrapper">
+          <SearchRoomButton />
+        </div>
         {popupOpened && (
           <div className="search-room-bar-guests-popup">
             <div className="search-room-bar-guests-counter-wrapper">

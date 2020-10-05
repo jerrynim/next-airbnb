@@ -68,7 +68,7 @@ const Container = styled.div<{ showMap: boolean }>`
       padding: 50px 24px;
       margin: 0;
     `}
-  .flex {
+  .room-list-wrapper {
     display: flex;
   }
 `;
@@ -111,7 +111,7 @@ const RoomListPage: React.FC = () => {
           </button>
         )}
       </div>
-      <div className="flex">
+      <div className="room-list-wrapper">
         <RoomList showMap={showMap} />
         {showMap && <RoomListMap showMap={showMap} setShowMap={setShowMap} />}
       </div>
